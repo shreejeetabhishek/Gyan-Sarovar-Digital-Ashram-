@@ -1268,3 +1268,18 @@ input[type="text"], input[type="date"], select, textarea {
   .bottom-nav { display: none; }
   body { padding-bottom: 24px; }
 }
+
+.share-quick-bar {
+  margin-top: 12px;
+  padding: 10px 14px;
+  border-radius: 14px;
+  background: #fdf5e4;
+  border: 1px solid #e2c287;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  text-align: left;
+}
+.share-quick-bar strong { display: block; font-size: 0.86rem; color: var(--ruby-deep); }
+.share-quick-bar span { font-size: 0.76rem; color: var(--ink-muted); }

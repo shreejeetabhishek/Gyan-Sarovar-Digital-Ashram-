@@ -1207,6 +1207,7 @@
 
     // Share modal bindings
     document.getElementById("header-share-btn").addEventListener("click", () => openShareModal("atma"));
+    document.getElementById("home-share-btn").addEventListener("click", () => openShareModal("atma"));
     document.getElementById("open-ashram-share-btn").addEventListener("click", () => openShareModal("ashram"));
     document.getElementById("close-share-modal-btn").addEventListener("click", () => {
       document.getElementById("share-modal").classList.add("hidden");
