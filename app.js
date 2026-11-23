@@ -712,6 +712,71 @@
     renderAll();
   };
 
+
+  let murliFontScale = 1.0;
+
+  function renderFullMurliModal() {
+    const lang = state.lang || "en";
+    document.querySelectorAll("#mfs-lang-switcher .lang-pill").forEach((b) => {
+      b.classList.toggle("active", b.dataset.lang === lang);
+    });
+
+    const list = window.BK_FULL_MURLI_DISCOURSES || [];
+    if (!list.length) return;
+    const item = list[state.murliCardIdx % list.length];
+    const doc = item[lang] || item.en;
+
+    const todayLabel = new Date().toLocaleDateString(
+      lang === "hi" ? "hi-IN" : lang === "or" ? "or-IN" : "en-IN",
+      { weekday: "long", year: "numeric", month: "long", day: "numeric" }
+    );
+
+    const setT = (id, v) => { const el = document.getElementById(id); if (el && v !== undefined) el.textContent = v; };
+    setT("mfs-header-title", doc.headerTitle);
+    setT("mfs-date-subtitle", `Om Shanti · ${todayLabel}`);
+    setT("mfs-live-badge", doc.liveBadge);
+    setT("mfs-title", doc.title);
+    setT("mfs-lbl-essence", doc.lblEssence);
+    setT("mfs-essence", doc.essence);
+    setT("mfs-lbl-qa", doc.lblQa);
+    setT("mfs-question", doc.question);
+    setT("mfs-answer", doc.answer);
+    setT("mfs-lbl-song", doc.lblSong);
+    setT("mfs-song", doc.song);
+    setT("mfs-lbl-mahavakya", doc.lblMahavakya);
+    setT("mfs-lbl-dharna", doc.lblDharna);
+    setT("mfs-lbl-vardaan", doc.lblVardaan);
+    setT("mfs-vardaan", doc.vardaan);
+    setT("mfs-lbl-slogan", doc.lblSlogan);
+    setT("mfs-slogan", doc.slogan);
+    setT("mfs-mark-read-btn", doc.markBtn);
+
+    const pBox = document.getElementById("mfs-full-paragraphs");
+    if (pBox) {
+      pBox.innerHTML = (doc.paragraphs || []).map((p) => `<p>${esc(p)}</p>`).join("");
+    }
+    const dBox = document.getElementById("mfs-dharna-list");
+    if (dBox) {
+      dBox.innerHTML = (doc.dharna || []).map((li) => `<li>${esc(li)}</li>`).join("");
+    }
+    const paper = document.getElementById("mfs-paper");
+    if (paper) {
+      paper.style.fontSize = `${murliFontScale}rem`;
+    }
+  }
+
+  function openFullMurliModal() {
+    renderFullMurliModal();
+    document.getElementById("murli-fullscreen-modal").classList.remove("hidden");
+  }
+
+  function closeFullMurliModal() {
+    if ("speechSynthesis" in window) {
+      try { window.speechSynthesis.cancel(); } catch (e) {}
+    }
+    document.getElementById("murli-fullscreen-modal").classList.add("hidden");
+  }
+
   function applyLanguage() {
     const lang = state.lang || "en";
     const t = (window.BK_I18N && window.BK_I18N[lang]) || window.BK_I18N.en;
@@ -775,6 +840,7 @@
     if (ashramH1) ashramH1.textContent = t.ashramTitle;
     if (murliH1) murliH1.textContent = t.murliPageTitle;
 
+    renderFullMurliModal();
     const cards = window.BK_MURLI_TRILINGUAL || [];
     if (cards.length) {
       const m = cards[state.murliCardIdx % cards.length][lang] || cards[0].en;
@@ -1351,6 +1417,66 @@
       applyLanguage();
     });
     if (openJ) openJ.addEventListener("click", () => switchTab("murli"));
+
+
+    const hmFsBtn = document.getElementById("hm-fullscreen-murli-btn");
+    const tabFsBtn = document.getElementById("murli-tab-fullscreen-btn");
+    const mfsCloseBtn = document.getElementById("mfs-close-btn");
+    const mfsPrevBtn = document.getElementById("mfs-prev-btn");
+    const mfsNextBtn = document.getElementById("mfs-next-btn");
+    const mfsFontInc = document.getElementById("mfs-font-inc");
+    const mfsFontDec = document.getElementById("mfs-font-dec");
+    const mfsSpeakBtn = document.getElementById("mfs-speak-btn");
+    const mfsMarkBtn = document.getElementById("mfs-mark-read-btn");
+
+    if (hmFsBtn) hmFsBtn.addEventListener("click", openFullMurliModal);
+    if (tabFsBtn) tabFsBtn.addEventListener("click", openFullMurliModal);
+    if (mfsCloseBtn) mfsCloseBtn.addEventListener("click", closeFullMurliModal);
+
+    if (mfsPrevBtn) mfsPrevBtn.addEventListener("click", () => {
+      const len = (window.BK_FULL_MURLI_DISCOURSES || []).length || 1;
+      state.murliCardIdx = (state.murliCardIdx - 1 + len) % len;
+      saveState();
+      renderAll();
+    });
+    if (mfsNextBtn) mfsNextBtn.addEventListener("click", () => {
+      const len = (window.BK_FULL_MURLI_DISCOURSES || []).length || 1;
+      state.murliCardIdx = (state.murliCardIdx + 1) % len;
+      saveState();
+      renderAll();
+    });
+    if (mfsFontInc) mfsFontInc.addEventListener("click", () => {
+      murliFontScale = Math.min(1.45, Number((murliFontScale + 0.08).toFixed(2)));
+      renderFullMurliModal();
+    });
+    if (mfsFontDec) mfsFontDec.addEventListener("click", () => {
+      murliFontScale = Math.max(0.85, Number((murliFontScale - 0.08).toFixed(2)));
+      renderFullMurliModal();
+    });
+    if (mfsSpeakBtn) mfsSpeakBtn.addEventListener("click", () => {
+      if (!("speechSynthesis" in window)) return;
+      if (window.speechSynthesis.speaking) {
+        window.speechSynthesis.cancel();
+        mfsSpeakBtn.textContent = "🔊 Listen";
+        return;
+      }
+      const lang = state.lang || "en";
+      const list = window.BK_FULL_MURLI_DISCOURSES || [];
+      const doc = (list[state.murliCardIdx % list.length] || {})[lang] || list[0].en;
+      const text = [doc.title, doc.essence, ...(doc.paragraphs || []), doc.vardaan].join(". ");
+      const utter = new SpeechSynthesisUtterance(text);
+      utter.lang = lang === "hi" ? "hi-IN" : lang === "or" ? "or-IN" : "en-IN";
+      utter.onend = () => { mfsSpeakBtn.textContent = "🔊 Listen"; };
+      mfsSpeakBtn.textContent = "⏹ Stop";
+      window.speechSynthesis.speak(utter);
+    });
+    if (mfsMarkBtn) mfsMarkBtn.addEventListener("click", () => {
+      getChartForDate(isoDate(0)).checks.murli = true;
+      saveState();
+      playChime();
+      renderAll();
+      closeFullMurliModal();
+    });
 
   if ("serviceWorker" in navigator && window.location.protocol !== "file:") {
     window.addEventListener("load", () => {

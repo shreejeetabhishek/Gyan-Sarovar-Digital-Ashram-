@@ -234,3 +234,182 @@ window.BK_MURLI_TRILINGUAL = [
     }
   }
 ];
+
+
+window.BK_FULL_MURLI_DISCOURSES = [
+  {
+    en: {
+      headerTitle: "Sakar Murli — Live Daily Edition",
+      liveBadge: "● LIVE DAILY SAKAR MURLI",
+      title: "Sweet Children, Become a Lighthouse & Mighthouse in Soul-Consciousness",
+      lblEssence: "ESSENCE (SAAR)",
+      essence: "Sweet children, remember the Unlimited Father with a true heart so your sins of many births are absolved and you become pure, double-crowned deities.",
+      lblQa: "QUESTION & ANSWER",
+      question: "Question: What is the highest spiritual effort (Purusharth) that keeps the soul constantly light and carefree?",
+      answer: "Answer: To consider yourself a soul, a trustee, and to hand over every burden and karmic account to Shiv Baba. When you remain a detached observer, nothing can shake your inner peace.",
+      lblSong: "SONG (GEET)",
+      song: "“O Traveller of the Night, Do Not Become Weary; the Destination of Dawn Is Near...”",
+      lblMahavakya: "OM SHANTI — FULL MAHAVAKYAS",
+      paragraphs: [
+        "Om Shanti. The Spiritual Father sits here and explains to you sweetest spiritual children: first of all, stabilize yourself in the awareness that you are an imperishable point of light seated in the center of the forehead. The body is simply an old costume through which you play your part in this eternal 5,000-year world drama.",
+        "In the Golden Age (Satyug), there is one religion, one language, and complete peace, purity, and prosperity. Now, at this most auspicious Confluence Age (Sangamyug), Shiv Baba has come personally to transform you children from ordinary humans into elevated deities through the ancient fire of Rajyoga.",
+        "Practise Traffic Control throughout the day: pause for just one minute amidst your duties, withdraw from body-consciousness, fly up to Paramdham in your intellect, and absorb golden-red rays of peace and almighty power from BapDada. Radiate those pure vibrations to all souls in the world like a spiritual lighthouse and mighthouse.",
+        "Before going to sleep at night, sit quietly and give your honest daily chart (Pothamel) to Baba. Acknowledge every victory with gratitude and surrender any minor mistake at Baba's lotus feet so you sleep completely light and wake up fresh for nectar-like Amritvela."
+      ],
+      lblDharna: "ESSENCE FOR DHARNA",
+      dharna: [
+        "1. Practice being soul-conscious while walking, speaking, and performing daily responsibilities.",
+        "2. Speak sweet, peaceful, and elevated words; never allow anger or waste thoughts to disturb your stage."
+      ],
+      lblVardaan: "BLESSING (VARDAAN)",
+      vardaan: "May you be a constantly carefree emperor seated on BapDada's heart-throne, radiating light and might to every soul.",
+      lblSlogan: "SLOGAN",
+      slogan: "“Purity is the mother of peace and happiness; where there is purity, there is natural royalty.”",
+      markBtn: "✓ Mark Today's Full Murli Studied (+40 pts)"
+    },
+    hi: {
+      headerTitle: "साकार मुरली — लाइव दैनिक संस्करण",
+      liveBadge: "● लाइव दैनिक साकार मुरली",
+      title: "मीठे बच्चे, आत्म-अभिमानी स्थिति में स्थित होकर लाइटहाउस और माइटहाउस बनो",
+      lblEssence: "सार (ESSENCE)",
+      essence: "मीठे बच्चे, सच्चे दिल से बेहद के बाप को याद करो तो जन्म-जन्मान्तर के विकर्म विनाश होंगे और तुम पावन, डबल ताजधारी देवता बन जायेंगे।",
+      lblQa: "प्रश्न और उत्तर",
+      question: "प्रश्न: कौन-सा श्रेष्ठ पुरुषार्थ आत्मा को सदा हल्का और निश्चिन्त रखता है?",
+      answer: "उत्तर: स्वयं को आत्मा और ट्रस्टी समझकर हर बोझ व हिसाब-किताब शिव बाबा के हवाले कर देना। जब तुम साक्षी द्रष्टा रहते हो, तो कोई भी परिस्थिति तुम्हारी आन्तरिक शान्ति को हिला नहीं सकती।",
+      lblSong: "गीत (SONG)",
+      song: "“ओ राही रात के मत थक जाना, भोर की मंज़िल पास है...”",
+      lblMahavakya: "ओम शान्ति — सम्पूर्ण महावाक्य",
+      paragraphs: [
+        "ओम शान्ति। रूहानी बाप बैठ रूहानी बच्चों को समझाते हैं: सबसे पहले स्वयं को इस निश्चय में स्थित करो कि मैं भृकुटि के बीच चमकता हुआ एक अविनाशी ज्योति-बिन्दु आत्मा हूँ। यह शरीर केवल एक पुराना वस्त्र है जिसके द्वारा तुम इस 5,000 वर्ष के अनादि ड्रामा में अपना पार्ट बजाते हो।",
+        "सतयुग में एक धर्म, एक भाषा और सम्पूर्ण शान्ति, पवित्रता तथा सुख-समृद्धि होती है। अब इस अति कल्याणकारी संगमयुग पर स्वयं शिव बाबा तुम बच्चों को राजयोग की अग्नि द्वारा साधारण मनुष्य से श्रेष्ठ देवता बनाने आये हैं।",
+        "सारे दिन में ट्रैफिक कंट्रोल का अभ्यास करो: अपने कर्म करते हुए बीच-बीच में एक मिनट के लिए रुक जाओ, देह-भान से उपराम होकर बुद्धि द्वारा परमधाम में पहुँचो और बापदादा से शान्ति व सर्वशक्तियों की सुनहरी किरणें ग्रहण कर सारे विश्व को सकाश दो।",
+        "रात को सोने से पहले शान्त बैठकर बापदादा को अपना सच्चा दैनिक चार्ट (पोथामेल) दो। हर सफलता के लिए धन्यवाद करो और किसी भी भूल को बाबा के चरणों में समर्पित कर हल्के मन से सो जाओ ताकि प्रातः अमृतवेले के लिए ताज़गी बनी रहे।"
+      ],
+      lblDharna: "धारणा के लिए मुख्य सार",
+      dharna: [
+        "1. चलते-फिरते, बोलते और कर्म करते हुए आत्म-अभिमानी रहने का अभ्यास करना है।",
+        "2. सदा मीठे, शान्त और श्रेष्ठ बोल बोलने हैं; क्रोध या व्यर्थ संकल्पों को अपनी स्थिति हिलाने नहीं देना है।"
+      ],
+      lblVardaan: "वरदान (VARDAAN)",
+      vardaan: "बापदादा के दिलतख्त पर विराजमान रहकर सर्व आत्माओं को लाइट और माइट देने वाले सदा बेफिक्र बादशाह भव।",
+      lblSlogan: "स्लोगन (SLOGAN)",
+      slogan: "“पवित्रता ही सुख और शान्ति की जननी है; जहाँ पवित्रता है वहाँ स्वतः रूहानी रॉयल्टी है।”",
+      markBtn: "✓ आज की सम्पूर्ण मुरली अध्ययन पूर्ण करें (+40 pts)"
+    },
+    or: {
+      headerTitle: "ସାକାର ମୁରଲୀ — ଲାଇଭ୍ ଦୈନିକ ସଂସ୍କରଣ",
+      liveBadge: "● ଲାଇଭ୍ ଦୈନିକ ସାକାର ମୁରଲୀ",
+      title: "ମିଠା ପିଲାମାନେ, ଆତ୍ମ-ଅଭିମାନୀ ସ୍ଥିତିରେ ରହି ଲାଇଟ୍‌ହାଉସ୍ ଓ ମାଇଟ୍‌ହାଉସ୍ ହୁଅ",
+      lblEssence: "ସାର (ESSENCE)",
+      essence: "ମିଠା ପିଲାମାନେ, ସଚ୍ଚା ହୃଦୟରେ ବେହଦର ପିତାଙ୍କୁ ସ୍ମରଣ କଲେ ଜନ୍ମ-ଜନ୍ମାନ୍ତରର ବିକର୍ମ ବିନାଶ ହେବ ଏବଂ ତୁମେ ପବିତ୍ର, ଡବଲ୍ ତାଜଧାରୀ ଦେବତା ହୋଇଯିବ ।",
+      lblQa: "ପ୍ରଶ୍ନ ଓ ଉତ୍ତର",
+      question: "ପ୍ରଶ୍ନ: କେଉଁ ଶ୍ରେଷ୍ଠ ପୁରୁଷାର୍ଥ ଆତ୍ମାକୁ ସଦା ହାଲୁକା ଓ ନିଶ୍ଚିନ୍ତ ରଖେ?",
+      answer: "ଉତ୍ତର: ନିଜକୁ ଆତ୍ମା ଓ ଟ୍ରଷ୍ଟି ଭାବି ସମସ୍ତ ଭାର ଏବଂ ହିସାବ-କିତାବ ଶିବ ବାବାଙ୍କ ହାତରେ ସମର୍ପଣ କରିଦେବା । ଯେତେବେଳେ ତୁମେ ସାକ୍ଷୀ ଦ୍ରଷ୍ଟା ହୋଇ ରୁହ, କୌଣସି ପରିସ୍ଥିତି ତୁମର ଆଭ୍ୟନ୍ତରୀଣ ଶାନ୍ତିକୁ ହଲାଇ ପାରିବ ନାହିଁ ।",
+      lblSong: "ଗୀତ (SONG)",
+      song: "“ହେ ରାତିର ପଥିକ ଥକି ଯାଅ ନାହିଁ, ପ୍ରଭାତର ମଞ୍ଜିଲ୍ ନିକଟରେ ଅଛି...”",
+      lblMahavakya: "ଓଁ ଶାନ୍ତି — ସମ୍ପୂର୍ଣ୍ଣ ମହାବାକ୍ୟ",
+      paragraphs: [
+        "ଓଁ ଶାନ୍ତି । ରୁହାନୀ ପିତା ବସି ରୁହାନୀ ପିଲାମାନଙ୍କୁ ବୁଝାଉଛନ୍ତି: ସର୍ବପ୍ରଥମେ ନିଜକୁ ଏହି ନିଶ୍ଚୟରେ ସ୍ଥିତ କର ଯେ ମୁଁ ଭ୍ରୁକୁଟି ମଧ୍ୟରେ ଚମକୁଥିବା ଏକ ଅବିନାଶୀ ଜ୍ୟୋତିର୍ବିନ୍ଦୁ ଆତ୍ମା ଅଟେ । ଏହି ଶରୀର କେବଳ ଏକ ପୁରୁଣା ବସ୍ତ୍ର, ଯାହା ମାଧ୍ୟମରେ ତୁମେ ଏହି ୫,୦୦୦ ବର୍ଷର ଅନାଦି ଡ୍ରାମାରେ ନିଜର ପାର୍ଟ ବଜାଉଛ ।",
+        "ସତ୍ୟଯୁଗରେ ଏକ ଧର୍ମ, ଏକ ଭାଷା ଏବଂ ସମ୍ପୂର୍ଣ୍ଣ ଶାନ୍ତି, ପବିତ୍ରତା ଓ ସୁଖ-ସମୃଦ୍ଧି ରହିଥାଏ । ବର୍ତ୍ତମାନ ଏହି ଅତି କଲ୍ୟାଣକାରୀ ସଙ୍ଗମଯୁଗରେ ସ୍ୱୟଂ ଶିବ ବାବା ତୁମ ପିଲାମାନଙ୍କୁ ରାଜଯୋଗର ଅଗ୍ନି ଦ୍ୱାରା ସାଧାରଣ ମଣିଷରୁ ଶ୍ରେଷ୍ଠ ଦେବତା କରିବା ପାଇଁ ଆସିଛନ୍ତି ।",
+        "ସାରା ଦିନରେ ଟ୍ରାଫିକ୍ କଣ୍ଟ୍ରୋଲ୍ ଅଭ୍ୟାସ କରନ୍ତୁ: ନିଜର କର୍ମ କରୁକରୁ ମଝିରେ ମଝିରେ ଏକ ମିନିଟ୍ ପାଇଁ ଅଟକି ଯାଆନ୍ତୁ, ଦେହ-ଭାନରୁ ଉପରାମ ହୋଇ ବୁଦ୍ଧି ଦ୍ୱାରା ପରମଧାମକୁ ଯାଆନ୍ତୁ ଏବଂ ବାପଦାଦାଙ୍କଠାରୁ ଶାନ୍ତି ଓ ସର୍ବଶକ୍ତିର ସୁନେଲି କିରଣ ଗ୍ରହଣ କରି ସମଗ୍ର ବିଶ୍ୱକୁ ସକାଶ ଦିଅନ୍ତୁ ।",
+        "ରାତିରେ ଶୋଇବା ପୂର୍ବରୁ ଶାନ୍ତ ଭାବରେ ବସି ବାପଦାଦାଙ୍କୁ ନିଜର ସଚ୍ଚା ଦୈନିକ ଚାର୍ଟ (ପୋଥାମେଲ୍) ଦିଅନ୍ତୁ । ପ୍ରତ୍ୟେକ ସଫଳତା ପାଇଁ ଧନ୍ୟବାଦ ଦିଅନ୍ତୁ ଏବଂ କୌଣସି ଭୁଲ୍ ଥିଲେ ବାବାଙ୍କ ଚରଣରେ ସମର୍ପଣ କରି ହାଲୁକା ମନରେ ଶୋଇଯାଆନ୍ତୁ ।"
+      ],
+      lblDharna: "ଧାରଣ ପାଇଁ ମୁଖ୍ୟ ସାର",
+      dharna: [
+        "୧. ଚାଲିବା, କହିବା ଏବଂ ଦୈନିକ କର୍ମ କରିବା ସମୟରେ ଆତ୍ମ-ଅଭିମାନୀ ରହିବାର ଅଭ୍ୟାସ କରନ୍ତୁ ।",
+        "୨. ସଦା ମଧୁର, ଶାନ୍ତ ଓ ଶ୍ରେଷ୍ଠ କଥା କୁହନ୍ତୁ; କ୍ରୋଧ ବା ବ୍ୟର୍ଥ ସଂକଳ୍ପକୁ ନିଜ ସ୍ଥିତି ନଷ୍ଟ କରିବାକୁ ଦିଅନ୍ତୁ ନାହିଁ ।"
+      ],
+      lblVardaan: "ବରଦାନ (VARDAAN)",
+      vardaan: "ବାପଦାଦାଙ୍କ ହୃଦୟ-ସିଂହାସନରେ ବିରାଜମାନ ରହି ସର୍ବ ଆତ୍ମାଙ୍କୁ ଲାଇଟ୍ ଓ ମାଇଟ୍ ଦେଉଥିବା ସଦା ବେଫିକର ବାଦଶାହ ଭବ ।",
+      lblSlogan: "ସ୍ଲୋଗାନ (SLOGAN)",
+      slogan: "“ପବିତ୍ରତା ହିଁ ସୁଖ ଓ ଶାନ୍ତିର ଜନନୀ ଅଟେ; ଯେଉଁଠାରେ ପବିତ୍ରତା ଅଛି, ସେଠାରେ ସ୍ୱତଃ ରୁହାନୀ ରୟାଲଟି ଅଛି ।”",
+      markBtn: "✓ ଆଜିର ସମ୍ପୂର୍ଣ୍ଣ ମୁରଲୀ ଅଧ୍ୟୟନ ସମ୍ପୂର୍ଣ୍ଣ କରନ୍ତୁ (+40 pts)"
+    }
+  },
+  {
+    en: {
+      headerTitle: "Sakar Murli — Live Daily Edition",
+      liveBadge: "● LIVE DAILY SAKAR MURLI",
+      title: "Sweet Children, Conquer Maya Through Sweet Silence and Remembrance",
+      lblEssence: "ESSENCE (SAAR)",
+      essence: "Sweet children, remain stable in your original religion of peace. When you stay connected to the Almighty Authority, every obstacle dissolves like water.",
+      lblQa: "QUESTION & ANSWER",
+      question: "Question: What is the sign of children who are true helpers in Baba's Yagya?",
+      answer: "Answer: They remain light, cooperative, and free from any trace of ego or jealousy. They use their thoughts, time, and breath in elevated service.",
+      lblSong: "SONG (GEET)",
+      song: "“Look at Your Own Face in the Mirror of the Heart...”",
+      lblMahavakya: "OM SHANTI — FULL MAHAVAKYAS",
+      paragraphs: [
+        "Om Shanti. Sweet children, you know that you are claiming your unlimited inheritance of constant happiness and peace from the Unlimited Father for twenty-one births. Never allow small situations to bring clouds of worry onto your forehead.",
+        "Just as the sun dispels darkness effortlessly, one second of powerful soul-consciousness dispels years of heavy sanskars. Practice churnings (Manan Chintan) of today's Murli points while preparing meals or walking.",
+        "Serve through your drishti and vibrations (Mansa Seva). Even if someone speaks harshly, bestow blessings of peace and goodwill from your heart."
+      ],
+      lblDharna: "ESSENCE FOR DHARNA",
+      dharna: [
+        "1. Keep a cheerful, angelic face that reflects inner peace and contentment.",
+        "2. Check your chart every evening and offer pure good wishes to every soul."
+      ],
+      lblVardaan: "BLESSING (VARDAAN)",
+      vardaan: "May you be an embodiment of pure vibrations who transforms every atmosphere into a peaceful temple.",
+      lblSlogan: "SLOGAN",
+      slogan: "“Those who remain merged in the Ocean of Love never feel waves of sorrow.”",
+      markBtn: "✓ Mark Today's Full Murli Studied (+40 pts)"
+    },
+    hi: {
+      headerTitle: "साकार मुरली — लाइव दैनिक संस्करण",
+      liveBadge: "● लाइव दैनिक साकार मुरली",
+      title: "मीठे बच्चे, मधुर शान्ति और याद की शक्ति से माया पर विजयी बनो",
+      lblEssence: "सार (ESSENCE)",
+      essence: "मीठे बच्चे, अपने स्वधर्म शान्ति में स्थित रहो। जब सर्वशक्तिमान बाप से बुद्धि का योग जुड़ा रहता है तो हर विघ्न पानी की तरह समाप्त हो जाता है।",
+      lblQa: "प्रश्न और उत्तर",
+      question: "प्रश्न: बाबा के यज्ञ में सच्चे सहयोगी बच्चों की निशानी क्या है?",
+      answer: "उत्तर: वे सदा हल्के, सहयोगी और अभिमान या ईर्ष्या से मुक्त रहते हैं। वे अपने संकल्प, समय और श्वास को श्रेष्ठ सेवा में सफल करते हैं।",
+      lblSong: "गीत (SONG)",
+      song: "“मुखड़ा देख ले प्राणी ज़रा दिल के दर्पण में...”",
+      lblMahavakya: "ओम शान्ति — सम्पूर्ण महावाक्य",
+      paragraphs: [
+        "ओम शान्ति। मीठे बच्चे, तुम जानते हो कि तुम बेहद के बाप से 21 जन्मों के लिए सदा सुख और शान्ति का अविनाशी वर्सा ले रहे हो। छोटी-छोटी बातों से कभी भी अपने मस्तक पर चिन्ता की लकीरें न आने दो।",
+        "जैसे सूर्य सहज ही अन्धकार को मिटा देता है, वैसे ही एक सेकण्ड की शक्तिशाली आत्म-अभिमानी स्थिति वर्षों के भारी संस्कारों को समाप्त कर देती है। भोजन बनाते या चलते-फिरते आज की मुरली के महावाक्यों का मनन-चिन्तन करो।",
+        "अपनी दृष्टि और वाइब्रेशन द्वारा मनसा सेवा करो। यदि कोई कड़वे बोल भी बोले तो भी अपने दिल से शान्ति और शुभ भावना की दुआएं दो।"
+      ],
+      lblDharna: "धारणा के लिए मुख्य सार",
+      dharna: [
+        "1. सदा हर्षितमुख और फरिश्ता स्वरूप रहो जिससे आन्तरिक शान्ति झलके।",
+        "2. प्रतिदिन शाम को अपना चार्ट चेक करो और हर आत्मा के प्रति शुभ भावना रखो।"
+      ],
+      lblVardaan: "वरदान (VARDAAN)",
+      vardaan: "शुद्ध वाइब्रेशन के स्वरूप बनकर हर वायुमण्डल को शान्त मन्दिर बनाने वाले मास्टर सर्वशक्तिमान भव।",
+      lblSlogan: "स्लोगन (SLOGAN)",
+      slogan: "“जो प्रेम के सागर में समाये रहते हैं, उन्हें कभी दुःख की लहर स्पर्श नहीं कर सकती।”",
+      markBtn: "✓ आज की सम्पूर्ण मुरली अध्ययन पूर्ण करें (+40 pts)"
+    },
+    or: {
+      headerTitle: "ସାକାର ମୁରଲୀ — ଲାଇଭ୍ ଦୈନିକ ସଂସ୍କରଣ",
+      liveBadge: "● ଲାଇଭ୍ ଦୈନିକ ସାକାର ମୁରଲୀ",
+      title: "ମିଠା ପିଲାମାନେ, ମଧୁର ଶାନ୍ତି ଓ ସ୍ମରଣ ଶକ୍ତି ଦ୍ୱାରା ମାୟା ଉପରେ ବିଜୟୀ ହୁଅ",
+      lblEssence: "ସାର (ESSENCE)",
+      essence: "ମିଠା ପିଲାମାନେ, ନିଜ ସ୍ୱଧର୍ମ ଶାନ୍ତିରେ ସ୍ଥିତ ରୁହନ୍ତୁ । ଯେତେବେଳେ ସର୍ବଶକ୍ତିମାନ ପିତାଙ୍କ ସହ ବୁଦ୍ଧିର ଯୋଗ ଯୋଡ଼ି ହୋଇ ରହେ, ପ୍ରତ୍ୟେକ ବିଘ୍ନ ପାଣି ପରି ଦୂର ହୋଇଯାଏ ।",
+      lblQa: "ପ୍ରଶ୍ନ ଓ ଉତ୍ତର",
+      question: "ପ୍ରଶ୍ନ: ବାବାଙ୍କ ଯଜ୍ଞରେ ସଚ୍ଚା ସହଯୋଗୀ ପିଲାମାନଙ୍କର ଲକ୍ଷଣ କ’ଣ?",
+      answer: "ଉତ୍ତର: ସେମାନେ ସଦା ହାଲୁକା, ସହଯୋଗୀ ଏବଂ ଅଭିମାନ ବା ଈର୍ଷାରୁ ମୁକ୍ତ ରୁହନ୍ତି । ସେମାନେ ନିଜର ସଂକଳ୍ପ, ସମୟ ଓ ଶ୍ୱାସକୁ ଶ୍ରେଷ୍ଠ ସେବାରେ ସଫଳ କରନ୍ତି ।",
+      lblSong: "ଗୀତ (SONG)",
+      song: "“ହୃଦୟ ଦର୍ପଣରେ ଟିକେ ନିଜ ମୁଖ ଦେଖ...”",
+      lblMahavakya: "ଓଁ ଶାନ୍ତି — ସମ୍ପୂର୍ଣ୍ଣ ମହାବାକ୍ୟ",
+      paragraphs: [
+        "ଓଁ ଶାନ୍ତି । ମିଠା ପିଲାମାନେ, ତୁମେ ଜାଣ ଯେ ତୁମେ ବେହଦର ପିତାଙ୍କଠାରୁ ୨୧ ଜନ୍ମ ପାଇଁ ସଦା ସୁଖ ଓ ଶାନ୍ତିର ଅବିନାଶୀ ଉତ୍ତରାଧିକାର ନେଉଛ । ଛୋଟ ଛୋଟ କଥାରେ କେବେବି ନିଜ ମସ୍ତକରେ ଚିନ୍ତାର ରେଖା ଆସିବାକୁ ଦିଅ ନାହିଁ ।",
+        "ଯେପରି ସୂର୍ଯ୍ୟ ସହଜରେ ଅନ୍ଧକାରକୁ ଦୂର କରିଦିଏ, ସେହିପରି ଏକ ସେକେଣ୍ଡର ଶକ୍ତିଶାଳୀ ଆତ୍ମ-ଅଭିମାନୀ ସ୍ଥିତି ବର୍ଷ ବର୍ଷର ଭାରୀ ସଂସ୍କାରକୁ ସମାପ୍ତ କରିଦିଏ । ଭୋଜନ ପ୍ରସ୍ତୁତ କରିବା ବା ଚାଲିବା ସମୟରେ ଆଜିର ମୁରଲୀ ମହାବାକ୍ୟର ମନନ-ଚିନ୍ତନ କରନ୍ତୁ ।",
+        "ନିଜ ଦୃଷ୍ଟି ଓ ଭାଇବ୍ରେସନ୍ ଦ୍ୱାରା ମନସା ସେବା କରନ୍ତୁ । ଯଦି କେହି କଟୁ କଥା ମଧ୍ୟ କୁହନ୍ତି, ତଥାପି ନିଜ ହୃଦୟରୁ ଶାନ୍ତି ଓ ଶୁଭ ଭାବନାର ଆଶୀର୍ବାଦ ଦିଅନ୍ତୁ ।"
+      ],
+      lblDharna: "ଧାରଣ ପାଇଁ ମୁଖ୍ୟ ସାର",
+      dharna: [
+        "୧. ସଦା ହର୍ଷିତମୁଖ ଓ ଫରିସ୍ତା ସ୍ୱରୂପ ରୁହନ୍ତୁ ଯେପରି ଆଭ୍ୟନ୍ତରୀଣ ଶାନ୍ତି ଝଲସିବ ।",
+        "୨. ପ୍ରତିଦିନ ସନ୍ଧ୍ୟାରେ ନିଜ ଚାର୍ଟ ଯାଞ୍ଚ କରନ୍ତୁ ଏବଂ ପ୍ରତ୍ୟେକ ଆତ୍ମା ପ୍ରତି ଶୁଭ ଭାବନା ରଖନ୍ତୁ ।"
+      ],
+      lblVardaan: "ବରଦାନ (VARDAAN)",
+      vardaan: "ଶୁଦ୍ଧ ଭାଇବ୍ରେସନର ସ୍ୱରୂପ ହୋଇ ପ୍ରତ୍ୟେକ ବାୟୁମଣ୍ଡଳକୁ ଶାନ୍ତ ମନ୍ଦିର କରୁଥିବା ମାଷ୍ଟର ସର୍ବଶକ୍ତିମାନ ଭବ ।",
+      lblSlogan: "ସ୍ଲୋଗାନ (SLOGAN)",
+      slogan: "“ଯେଉଁମାନେ ପ୍ରେମ ସାଗରରେ ଲୀନ ରହିଥାନ୍ତି, ସେମାନଙ୍କୁ କେବେବି ଦୁଃଖର ଲହରୀ ସ୍ପର୍ଶ କରିପାରେ ନାହିଁ ।”",
+      markBtn: "✓ ଆଜିର ସମ୍ପୂର୍ଣ୍ଣ ମୁରଲୀ ଅଧ୍ୟୟନ ସମ୍ପୂର୍ଣ୍ଣ କରନ୍ତୁ (+40 pts)"
+    }
+  }
+];
