@@ -701,7 +701,33 @@
     }[m]));
   }
 
+
+  if (!state.lang) state.lang = "en";
+  if (typeof state.murliCardIdx !== "number") state.murliCardIdx = 0;
+
+  function applyLanguage() {
+    const lang = state.lang || "en";
+    const t = (window.BK_I18N && window.BK_I18N[lang]) || window.BK_I18N.en;
+    document.querySelectorAll("#lang-switcher .lang-pill").forEach((b) => {
+      b.classList.toggle("active", b.dataset.lang === lang);
+    });
+
+    const setTxt = (id, val) => { const el = document.getElementById(id); if (el && val) el.textContent = val; };
+    setTxt("hm-eyebrow", t.hmEyebrow);
+    setTxt("hm-title", t.hmTitle);
+    setTxt("hm-open-journal", t.hmNotebook);
+
+    const cards = window.BK_MURLI_TRILINGUAL || [];
+    if (cards.length) {
+      const m = cards[state.murliCardIdx % cards.length][lang] || cards[0].en;
+      setTxt("hm-murli-quote", m.mahavakya);
+      setTxt("hm-murli-body", m.body);
+      setTxt("hm-murli-dharna", m.dharna);
+    }
+  }
+
   function renderAll() {
+    applyLanguage();
     renderHome();
     renderKamra();
     renderChart();
@@ -1243,6 +1269,31 @@
     });
 
   consumeIncomingShareHash();
+
+    document.querySelectorAll("#lang-switcher .lang-pill").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        state.lang = btn.dataset.lang;
+        saveState();
+        renderAll();
+      });
+    });
+    const prevM = document.getElementById("hm-prev-murli");
+    const nextM = document.getElementById("hm-next-murli");
+    const openJ = document.getElementById("hm-open-journal");
+    if (prevM) prevM.addEventListener("click", () => {
+      const len = (window.BK_MURLI_TRILINGUAL || []).length || 1;
+      state.murliCardIdx = (state.murliCardIdx - 1 + len) % len;
+      saveState();
+      applyLanguage();
+    });
+    if (nextM) nextM.addEventListener("click", () => {
+      const len = (window.BK_MURLI_TRILINGUAL || []).length || 1;
+      state.murliCardIdx = (state.murliCardIdx + 1) % len;
+      saveState();
+      applyLanguage();
+    });
+    if (openJ) openJ.addEventListener("click", () => switchTab("murli"));
+
   if ("serviceWorker" in navigator && window.location.protocol !== "file:") {
     window.addEventListener("load", () => {
       navigator.serviceWorker.register("./sw.js").catch(() => {});

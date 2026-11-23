@@ -31,6 +31,7 @@
       <nav class="desktop-nav" aria-label="Primary Navigation">
         <button type="button" class="dnav-btn active" data-tab="home">Home</button>
         <button type="button" class="dnav-btn" data-tab="kamra">Baba Ka Kamra</button>
+        <button type="button" class="dnav-btn" data-tab="murli">Murli</button>
         <button type="button" class="dnav-btn" data-tab="chart">Purusharth Chart</button>
         <button type="button" class="dnav-btn" data-tab="rankings">Top 100</button>
         <button type="button" class="dnav-btn" data-tab="ashram">Ashram</button>
@@ -40,6 +41,12 @@
       </nav>
 
       <div class="header-actions">
+        <div class="lang-toggle-group" id="lang-switcher" role="group" aria-label="Language">
+          <button type="button" class="lang-pill active" data-lang="en">EN</button>
+          <button type="button" class="lang-pill" data-lang="hi">हिं</button>
+          <button type="button" class="lang-pill" data-lang="or">ଓଡ଼ିଆ</button>
+        </div>
+
         <button type="button" class="btn-cream-sm" id="header-share-btn">🔗 Share</button>
         <button type="button" class="btn-ruby-pill" id="header-pause-btn">✨ 1m Pause</button>
         <button type="button" class="icon-menu-btn" id="drawer-open-btn" aria-label="Open Ashram Menu">☰</button>
@@ -171,6 +178,24 @@
           <button type="button" class="link-gold-btn" id="next-thought-btn">Next Thought →</button>
           <button type="button" class="link-gold-btn" id="home-drone-btn">🎶 Om Shanti Drone: Off</button>
         </div>
+      </div>
+
+      <!-- UPFRONT DAILY MURLI & MANAN CHINTAN CARD -->
+      <div class="card-ivory murli-upfront-card" id="home-murli-card">
+        <div class="card-head-row">
+          <div>
+            <div class="eyebrow-ruby" id="hm-eyebrow">TODAY'S MURLI · MANAN CHINTAN</div>
+            <h2 class="section-heading" id="hm-title">Murli Essence &amp; Spiritual Churning</h2>
+          </div>
+          <div class="row-gap-sm">
+            <button type="button" class="btn-cream-sm" id="hm-prev-murli">◀</button>
+            <button type="button" class="btn-cream-sm" id="hm-next-murli">▶</button>
+            <button type="button" class="btn-amber-sm" id="hm-open-journal">✍️ Notebook</button>
+          </div>
+        </div>
+        <div class="murli-quote-banner" id="hm-murli-quote"></div>
+        <p class="body-muted" id="hm-murli-body" style="margin-top:8px;"></p>
+        <div class="murli-dharna-box" id="hm-murli-dharna"></div>
       </div>
 
       <!-- MADHUBAN DAILY RHYTHM -->
