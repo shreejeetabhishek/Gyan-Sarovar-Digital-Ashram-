@@ -1,10 +1,10 @@
-const CACHE_NAME = "gyan-sarovar-sanctuary-v8";
+const CACHE_NAME = "gyan-sarovar-sanctuary-v9";
 const ASSETS = [
   "./",
   "./index.html",
-  "./styles.css",
-  "./data.js",
-  "./app.js",
+  "./styles.css?v=9",
+  "./data.js?v=9",
+  "./app.js?v=9",
   "./manifest.json",
   "./baba-portrait.png",
   "./icon-192.png",
@@ -28,15 +28,12 @@ self.addEventListener("activate", (event) => {
 self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") return;
   event.respondWith(
-    caches.match(event.request).then((cached) => {
-      if (cached) return cached;
-      return fetch(event.request).then((resp) => {
-        if (resp && resp.status === 200 && resp.type === "basic") {
-          const copy = resp.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
-        }
-        return resp;
-      }).catch(() => caches.match("./index.html"));
-    })
+    fetch(event.request).then((resp) => {
+      if (resp && resp.status === 200 && resp.type === "basic") {
+        const copy = resp.clone();
+        caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
+      }
+      return resp;
+    }).catch(() => caches.match(event.request).then((c) => c || caches.match("./index.html")))
   );
 });

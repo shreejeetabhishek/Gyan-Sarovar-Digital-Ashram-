@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="./styles.css" />
+  <link rel="stylesheet" href="./styles.css?v=9" />
 </head>
 <body>
   <!-- TOP STICKY HEADER -->
@@ -42,9 +42,9 @@
 
       <div class="header-actions">
         <div class="lang-toggle-group" id="lang-switcher" role="group" aria-label="Language">
-          <button type="button" class="lang-pill active" data-lang="en">EN</button>
-          <button type="button" class="lang-pill" data-lang="hi">हिं</button>
-          <button type="button" class="lang-pill" data-lang="or">ଓଡ଼ିଆ</button>
+          <button type="button" class="lang-pill active" data-lang="en" onclick="window.__setBKLang && window.__setBKLang('en')">EN</button>
+          <button type="button" class="lang-pill" data-lang="hi" onclick="window.__setBKLang && window.__setBKLang('hi')">हिं</button>
+          <button type="button" class="lang-pill" data-lang="or" onclick="window.__setBKLang && window.__setBKLang('or')">ଓଡ଼ିଆ</button>
         </div>
 
         <button type="button" class="btn-cream-sm" id="header-share-btn">🔗 Share</button>
@@ -715,7 +715,7 @@
     </div>
   </div>
 
-  <script src="./data.js"></script>
-  <script src="./app.js"></script>
+  <script src="./data.js?v=9"></script>
+  <script src="./app.js?v=9"></script>
 </body>
 </html>

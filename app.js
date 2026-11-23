@@ -705,6 +705,13 @@
   if (!state.lang) state.lang = "en";
   if (typeof state.murliCardIdx !== "number") state.murliCardIdx = 0;
 
+
+  window.__setBKLang = function (langCode) {
+    state.lang = langCode || "en";
+    saveState();
+    renderAll();
+  };
+
   function applyLanguage() {
     const lang = state.lang || "en";
     const t = (window.BK_I18N && window.BK_I18N[lang]) || window.BK_I18N.en;
@@ -727,6 +734,46 @@
     setTxt("lbl-share-title", t.shareTitle);
     setTxt("lbl-share-sub", t.shareSub);
     setTxt("home-share-btn", t.shareBtn);
+
+
+    const navLabels = {
+      en: { home: "Home", kamra: "Kamra", chart: "Chart", rankings: "Top 100", ashram: "Ashram", share: "Share", pause: "✨ 1m Pause" },
+      hi: { home: "होम", kamra: "कमरा", chart: "चार्ट", rankings: "टॉप 100", ashram: "आश्रम", share: "शेयर", pause: "✨ 1m विराम" },
+      or: { home: "ହୋମ୍", kamra: "କୋଠରୀ", chart: "ଚାର୍ଟ", rankings: "ଟପ୍ ୧୦୦", ashram: "ଆଶ୍ରମ", share: "ସେୟାର୍", pause: "✨ 1m ବିରାମ" }
+    }[lang] || { home: "Home", kamra: "Kamra", chart: "Chart", rankings: "Top 100", ashram: "Ashram", share: "Share", pause: "✨ 1m Pause" };
+
+    document.querySelectorAll(".bnav-btn").forEach((b) => {
+      const sp = b.querySelector("span:last-child");
+      if (sp && navLabels[b.dataset.tab]) sp.textContent = navLabels[b.dataset.tab];
+    });
+    const hsBtn = document.getElementById("header-share-btn");
+    if (hsBtn) hsBtn.textContent = "🔗 " + navLabels.share;
+    const hpBtn = document.getElementById("header-pause-btn");
+    if (hpBtn) hpBtn.textContent = navLabels.pause;
+
+    const studioEyebrow = document.querySelector(".studio-dark-card .eyebrow-gold");
+    const studioTitle = document.querySelector(".studio-dark-card .studio-title");
+    const yogStart = document.getElementById("yog-start-btn");
+    const yogReset = document.getElementById("yog-reset-btn");
+    const nextThought = document.getElementById("next-thought-btn");
+    if (studioEyebrow) studioEyebrow.textContent = t.studioEyebrow;
+    if (studioTitle) studioTitle.textContent = t.studioTitle;
+    if (yogStart && !yogTimer) yogStart.textContent = t.beginSilence;
+    if (yogReset) yogReset.textContent = t.resetBtn;
+    if (nextThought) nextThought.textContent = t.nextThought;
+
+    const kamraH1 = document.querySelector("#view-kamra .page-serif-title");
+    const kamraSub = document.querySelector("#view-kamra .body-muted");
+    const chartH1 = document.querySelector("#view-chart .page-serif-title");
+    const rankH1 = document.querySelector("#view-rankings .page-serif-title");
+    const ashramH1 = document.querySelector("#view-ashram .page-serif-title");
+    const murliH1 = document.querySelector("#view-murli .page-serif-title");
+    if (kamraH1) kamraH1.textContent = t.kamraTitle;
+    if (kamraSub) kamraSub.textContent = t.kamraSub;
+    if (chartH1) chartH1.textContent = t.chartTitle;
+    if (rankH1) rankH1.textContent = t.rankingsTitle;
+    if (ashramH1) ashramH1.textContent = t.ashramTitle;
+    if (murliH1) murliH1.textContent = t.murliPageTitle;
 
     const cards = window.BK_MURLI_TRILINGUAL || [];
     if (cards.length) {
