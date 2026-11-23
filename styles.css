@@ -1479,3 +1479,52 @@ input[type="text"], input[type="date"], select, textarea {
 .murli-fs-list li {
   margin-bottom: 6px;
 }
+
+
+/* Clean responsive mobile header & smooth modal appearance */
+@media (max-width: 600px) {
+  .header-inner {
+    padding: 8px 8px;
+    gap: 4px;
+  }
+  .brand-cluster {
+    gap: 6px;
+    min-width: 0;
+  }
+  .shiv-emblem {
+    width: 28px;
+    height: 28px;
+  }
+  .brand-name {
+    font-size: 0.98rem;
+    white-space: nowrap;
+  }
+  .brand-tagline {
+    display: none;
+  }
+  .header-actions {
+    gap: 4px;
+    flex-shrink: 0;
+  }
+  .lang-toggle-group {
+    padding: 1px;
+    gap: 0px;
+  }
+  .lang-pill {
+    padding: 3px 5px;
+    font-size: 0.65rem;
+  }
+  .btn-cream-sm {
+    padding: 4px 7px;
+    font-size: 0.66rem;
+  }
+  .btn-ruby-pill {
+    padding: 5px 8px;
+    font-size: 0.66rem;
+  }
+  .icon-menu-btn {
+    width: 28px;
+    height: 28px;
+    font-size: 0.9rem;
+  }
+}
