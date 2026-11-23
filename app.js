@@ -1,5 +1,5 @@
 (function () {
-  const STORAGE_KEY = "gyan_sarovar_sanctuary_v12";
+  const STORAGE_KEY = "gyan_sarovar_sanctuary_v13";
   const DEFAULT_BABA_IMG = "./baba-portrait.png";
 
   function isoDate(offsetDays = 0) {
@@ -725,6 +725,40 @@
     };
   }
 
+
+  function localizeDynamicLabels() {
+    const lang = state.lang || "en";
+    if (lang === "en") return;
+    const offerEl = document.getElementById("offer-count-label");
+    if (offerEl) {
+      const cnt = state.offerCount || 0;
+      offerEl.textContent = lang === "hi" ? `आज ${cnt} अर्पित` : `ଆଜି ${cnt} ଅର୍ପିତ`;
+    }
+    const fitBtn = document.getElementById("baba-fit-btn");
+    if (fitBtn) {
+      const mode = state.babaFit === "cover" ? "Cover" : "Contain";
+      fitBtn.textContent = lang === "hi"
+        ? `फ़्रेम: ${mode === "Cover" ? "पूर्ण" : "फिट"} (${mode})`
+        : `ଫ୍ରେମ୍: ${mode === "Cover" ? "ପୂର୍ଣ୍ଣ" : "ଫିଟ୍"} (${mode})`;
+    }
+    const metaRow = document.querySelector(".tapasya-meta-row");
+    if (metaRow) {
+      const todaySpan = metaRow.querySelector("span:first-child");
+      if (todaySpan) {
+        const numMatch = todaySpan.textContent.match(/\d+/);
+        const dNum = numMatch ? numMatch[0] : "0";
+        todaySpan.innerHTML = lang === "hi" ? `आज <strong>${dNum} दिन</strong> 🔥` : `ଆଜି <strong>${dNum} ଦିନ</strong> 🔥`;
+      }
+      const pSpan = metaRow.querySelector("span:last-child");
+      if (pSpan) {
+        const done = getChartForDate(isoDate(0)).surrendered;
+        pSpan.innerHTML = lang === "hi"
+          ? `रात्रि पोथामेल: <strong>${done ? "समर्पित ✓" : "समर्पण शेष"}</strong>`
+          : `ରାତ୍ରି ପୋଥାମେଲ୍: <strong>${done ? "ସମର୍ପିତ ✓" : "ସମର୍ପଣ ବାକି ଅଛି"}</strong>`;
+      }
+    }
+  }
+
   function translateWholeDomToCurrentLang() {
     const lang = state.lang || "en";
     document.documentElement.lang = lang;
@@ -910,6 +944,7 @@
     renderCourse();
     renderMurliAndMore();
     translateWholeDomToCurrentLang();
+    localizeDynamicLabels();
   }
 
 

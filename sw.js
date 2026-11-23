@@ -1,10 +1,10 @@
-const CACHE_NAME = "gyan-sarovar-sanctuary-v12";
+const CACHE_NAME = "gyan-sarovar-sanctuary-v13";
 const ASSETS = [
   "./",
   "./index.html",
-  "./styles.css?v=12",
-  "./data.js?v=12",
-  "./app.js?v=12",
+  "./styles.css?v=13",
+  "./data.js?v=13",
+  "./app.js?v=13",
   "./manifest.json",
   "./baba-portrait.png",
   "./icon-192.png",
