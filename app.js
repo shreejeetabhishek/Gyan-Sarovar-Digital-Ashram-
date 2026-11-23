@@ -1,5 +1,5 @@
 (function () {
-  const STORAGE_KEY = "gyan_sarovar_sanctuary_v3";
+  const STORAGE_KEY = "gyan_sarovar_sanctuary_v12";
   const DEFAULT_BABA_IMG = "./baba-portrait.png";
 
   function isoDate(offsetDays = 0) {
@@ -134,7 +134,7 @@
   function computeUserScore() {
     let pts = 20;
     Object.values(state.chartsByDate).forEach((day) => {
-      window.BK_SANCTUARY_DATA.purusharthItems.forEach((item) => {
+      getLocalizedData().purusharthItems.forEach((item) => {
         if (day.checks && day.checks[item.id]) pts += item.pts;
       });
       if (day.virtues) {
@@ -327,7 +327,7 @@
     const board = getFullLeaderboard();
     const myRow = board.find((r) => r.isUser);
     const todayChart = getChartForDate(isoDate(0));
-    const items = window.BK_SANCTUARY_DATA.purusharthItems;
+    const items = getLocalizedData().purusharthItems;
     const done = items.filter((it) => todayChart.checks[it.id]).length;
     const pct = Math.round((done / items.length) * 100);
 
@@ -345,7 +345,7 @@
     document.getElementById("home-tc-count").textContent = `${state.tcCompletedToday || 0}/8`;
     document.getElementById("home-pothamel-status").textContent = todayChart.surrendered ? "Surrendered ✓" : "Pending Surrender";
 
-    const thoughts = window.BK_SANCTUARY_DATA.thoughts;
+    const thoughts = getLocalizedData().thoughts;
     document.getElementById("studio-thought-text").textContent = `“${thoughts[state.thoughtIdx % thoughts.length]}”`;
     updateDroneButtons();
   }
@@ -367,7 +367,7 @@
     document.getElementById("baba-fit-btn").textContent = `Frame: ${state.babaFit === "cover" ? "Cover" : "Contain"}`;
 
     document.getElementById("offer-count-label").textContent = `${state.offerCount || 0} offered today`;
-    const vards = window.BK_SANCTUARY_DATA.vardaans;
+    const vards = getLocalizedData().vardaans;
     document.getElementById("kamra-vardaan-text").textContent = `“${vards[state.vardaanIdx % vards.length]}”`;
 
     document.getElementById("letters-list-container").innerHTML = state.letters.map((l) => `
@@ -400,7 +400,7 @@
     document.getElementById("chart-date-picker").value = selectedChartDate;
     const day = getChartForDate(selectedChartDate);
 
-    document.getElementById("purusharth-checklist").innerHTML = window.BK_SANCTUARY_DATA.purusharthItems.map((it) => {
+    document.getElementById("purusharth-checklist").innerHTML = getLocalizedData().purusharthItems.map((it) => {
       const checked = Boolean(day.checks[it.id]);
       return `
         <div class="p-check-card ${checked ? "done" : ""}" data-pitem="${it.id}">
@@ -424,7 +424,7 @@
       });
     });
 
-    document.getElementById("virtues-rating-list").innerHTML = window.BK_SANCTUARY_DATA.virtues.map((v) => {
+    document.getElementById("virtues-rating-list").innerHTML = getLocalizedData().virtues.map((v) => {
       const stars = Number((day.virtues && day.virtues[v]) || 0);
       let starBtns = "";
       for (let s = 1; s <= 5; s++) {
@@ -630,7 +630,7 @@
   }
 
   function renderCourse() {
-    const lessons = window.BK_SANCTUARY_DATA.lessons;
+    const lessons = getLocalizedData().lessons;
     const idx = state.courseDayIdx % lessons.length;
     document.getElementById("course-day-pills").innerHTML = lessons.map((l, i) => `
       <button type="button" class="pill-choice ${i === idx ? "active" : ""}" data-cday="${i}">${l.day}</button>
@@ -654,7 +654,7 @@
 
   function renderMurliAndMore() {
     document.getElementById("murli-date-field").value = isoDate(0);
-    const sws = window.BK_SANCTUARY_DATA.thoughts;
+    const sws = getLocalizedData().thoughts;
     document.getElementById("murli-swaman-quote").textContent = `“${sws[state.thoughtIdx % sws.length]}”`;
 
     const mq = (document.getElementById("murli-search-field").value || "").trim().toLowerCase();
@@ -667,7 +667,7 @@
         </div>
       `).join("");
 
-    document.getElementById("ashta-shakti-cards").innerHTML = window.BK_SANCTUARY_DATA.ashtaShakti.map((s) => `
+    document.getElementById("ashta-shakti-cards").innerHTML = getLocalizedData().ashtaShakti.map((s) => `
       <div class="saved-entry-card">
         <strong style="color:var(--ruby-deep);display:block;">${esc(s.name)}</strong>
         <span style="font-size:0.8rem;color:var(--ink-muted);">${esc(s.desc)}</span>
@@ -689,7 +689,7 @@
       .join("");
 
     const gq = (document.getElementById("glossary-filter-input").value || "").trim().toLowerCase();
-    document.getElementById("glossary-stack").innerHTML = window.BK_SANCTUARY_DATA.glossary
+    document.getElementById("glossary-stack").innerHTML = getLocalizedData().glossary
       .filter((g) => !gq || g.term.toLowerCase().includes(gq) || g.def.toLowerCase().includes(gq))
       .map((g) => `<div class="saved-entry-card"><strong style="color:var(--ruby-deep);">${esc(g.term)}:</strong> ${esc(g.def)}</div>`)
       .join("");
@@ -705,6 +705,55 @@
   if (!state.lang) state.lang = "en";
   if (typeof state.murliCardIdx !== "number") state.murliCardIdx = 0;
 
+
+
+  function getLocalizedData() {
+    const lang = state.lang || "en";
+    const base = window.BK_SANCTUARY_DATA;
+    const loc = (window.BK_DATA_LOCALE && window.BK_DATA_LOCALE[lang]) || {};
+    return {
+      thoughts: loc.thoughts || base.thoughts,
+      vardaans: loc.vardaans || base.vardaans,
+      purusharthItems: loc.purusharthItems || base.purusharthItems,
+      virtues: loc.virtues || base.virtues,
+      trafficSlots: base.trafficSlots,
+      lessons: loc.lessons || base.lessons,
+      ashtaShakti: loc.ashtaShakti || base.ashtaShakti,
+      portals: base.portals,
+      wings: base.wings,
+      glossary: loc.glossary || base.glossary
+    };
+  }
+
+  function translateWholeDomToCurrentLang() {
+    const lang = state.lang || "en";
+    document.documentElement.lang = lang;
+    const dict = (window.BK_FULL_TRANSLATIONS && window.BK_FULL_TRANSLATIONS[lang]) || null;
+
+    // Cache original English text on first visit so switching back to EN restores 100% cleanly
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null);
+    let node;
+    while ((node = walker.nextNode())) {
+      const parent = node.parentElement;
+      if (!parent || parent.tagName === "SCRIPT" || parent.tagName === "STYLE" || parent.tagName === "TEXTAREA") continue;
+      const raw = node.nodeValue;
+      const trimmed = raw.trim();
+      if (!trimmed) continue;
+      if (!node.__origEn) {
+        node.__origEn = raw;
+      }
+      if (lang === "en") {
+        if (node.nodeValue !== node.__origEn) node.nodeValue = node.__origEn;
+      } else if (dict) {
+        const origTrim = node.__origEn.trim();
+        if (dict[origTrim]) {
+          const leading = node.__origEn.match(/^\s*/)[0];
+          const trailing = node.__origEn.match(/\s*$/)[0];
+          node.nodeValue = leading + dict[origTrim] + trailing;
+        }
+      }
+    }
+  }
 
   window.__setBKLang = function (langCode) {
     state.lang = langCode || "en";
@@ -860,6 +909,7 @@
     renderTraffic();
     renderCourse();
     renderMurliAndMore();
+    translateWholeDomToCurrentLang();
   }
 
 
@@ -895,8 +945,8 @@
       });
     }
     if (kind === "vardaan") {
-      const vards = window.BK_SANCTUARY_DATA.vardaans;
-      const sws = window.BK_SANCTUARY_DATA.thoughts;
+      const vards = getLocalizedData().vardaans;
+      const sws = getLocalizedData().thoughts;
       return encodeSharePayload({
         type: "vardaan",
         by: me.name,
@@ -958,7 +1008,7 @@
         switchTab(data.type === "ashram" ? "ashram" : "rankings");
       } else if (data.type === "vardaan") {
         if (data.vardaan) {
-          window.BK_SANCTUARY_DATA.vardaans.unshift(data.vardaan);
+          getLocalizedData().vardaans.unshift(data.vardaan);
           state.vardaanIdx = 0;
         }
         saveState();
@@ -1161,7 +1211,7 @@
     function openTcModal() {
       playChime();
       let rem = 60;
-      const prompts = window.BK_SANCTUARY_DATA.thoughts;
+      const prompts = getLocalizedData().thoughts;
       document.getElementById("tc-modal").classList.remove("hidden");
       document.getElementById("tc-modal-timer").textContent = "01 : 00";
       document.getElementById("tc-modal-prompt").textContent = `“${prompts[0]}”`;
