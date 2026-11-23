@@ -1,4 +1,4 @@
-const CACHE_NAME = "gyan-sarovar-sanctuary-v7";
+const CACHE_NAME = "gyan-sarovar-sanctuary-v8";
 const ASSETS = [
   "./",
   "./index.html",

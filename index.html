@@ -102,25 +102,22 @@
     <!-- ==================== TAB 1: HOME ==================== -->
     <section class="tab-view active" id="view-home">
       <div class="hero-sanctuary">
-        <div class="greeting-pill">🙏 Good Afternoon &amp; Om Shanti, Master Almighty</div>
-        <h1 class="hero-title">
-          Remember Who You Are:
-          <span class="hero-accent">A Radiant Point of Light</span>
-        </h1>
-        <p class="hero-desc">
+        <div class="greeting-pill" id="hero-greeting-pill">🙏 Good Afternoon &amp; Om Shanti, Master Almighty</div>
+        <h1 class="hero-title" id="hero-main-title"><span id="hero-title-top">Remember Who You Are:</span><span class="hero-accent" id="hero-title-accent">A Radiant Point of Light</span></h1>
+        <p class="hero-desc" id="hero-desc-p">
           Welcome to your serene, offline-first Brahma Kumaris sanctuary. Sit quietly in <strong>Baba Ka Kamra</strong>, record your daily <strong>Purusharth Chart</strong>, unite with your <strong>Digital Ashram</strong>, and inspire your spiritual flight on the <strong>Top 100 Atma Ranking</strong>.
         </p>
 
         <div class="hero-cta-stack">
-          <button type="button" class="btn-ruby-lg" data-jump="kamra">🕯️ Enter Baba Ka Kamra</button>
-          <button type="button" class="btn-cream-lg" data-jump="chart">📋 Daily Purusharth Chart</button>
-          <button type="button" class="btn-gold-lg" data-jump="rankings">🏆 Top 100 Atmas</button>
+          <button type="button" class="btn-ruby-lg" data-jump="kamra" id="cta-kamra-btn">🕯️ Enter Baba Ka Kamra</button>
+          <button type="button" class="btn-cream-lg" data-jump="chart" id="cta-chart-btn">📋 Daily Purusharth Chart</button>
+          <button type="button" class="btn-gold-lg" data-jump="rankings" id="cta-top100-btn">🏆 Top 100 Atmas</button>
         </div>
 
         <div class="tapasya-summary-card">
           <div class="tapasya-top-row">
             <div>
-              <div class="eyebrow-muted">Total Tapasya Score</div>
+              <div class="eyebrow-muted" id="lbl-total-tapasya">Total Tapasya Score</div>
               <div class="tapasya-score-line">
                 <span class="tapasya-big-num" id="home-total-pts">20 pts</span>
                 <span class="rank-chip" id="home-rank-chip">#108</span>
@@ -141,8 +138,8 @@
 
         <div class="share-quick-bar">
           <div>
-            <strong>🔗 Share Link</strong>
-            <span>Send your Atma score, Ashram circle, or Vardaan link</span>
+            <strong id="lbl-share-title">🔗 Share Link</strong>
+            <span id="lbl-share-sub">Send your Atma score, Ashram circle, or Vardaan link</span>
           </div>
           <button type="button" class="btn-amber-sm" id="home-share-btn">Share Link</button>
         </div>

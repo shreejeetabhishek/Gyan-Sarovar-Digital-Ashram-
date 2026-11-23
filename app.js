@@ -716,6 +716,17 @@
     setTxt("hm-eyebrow", t.hmEyebrow);
     setTxt("hm-title", t.hmTitle);
     setTxt("hm-open-journal", t.hmNotebook);
+    setTxt("hero-greeting-pill", t.greeting);
+    setTxt("hero-title-top", t.heroTitleTop);
+    setTxt("hero-title-accent", t.heroTitleAccent);
+    setTxt("hero-desc-p", t.heroDesc);
+    setTxt("cta-kamra-btn", t.btnKamra);
+    setTxt("cta-chart-btn", t.btnChart);
+    setTxt("cta-top100-btn", t.btnTop100);
+    setTxt("lbl-total-tapasya", t.totalTapasya);
+    setTxt("lbl-share-title", t.shareTitle);
+    setTxt("lbl-share-sub", t.shareSub);
+    setTxt("home-share-btn", t.shareBtn);
 
     const cards = window.BK_MURLI_TRILINGUAL || [];
     if (cards.length) {

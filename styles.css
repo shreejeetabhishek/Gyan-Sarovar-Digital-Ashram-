@@ -1335,3 +1335,49 @@ input[type="text"], input[type="date"], select, textarea {
   font-weight: 600;
   color: #5c3610;
 }
+
+
+@media (max-width: 560px) {
+  .header-inner {
+    padding: 8px 10px;
+    gap: 6px;
+  }
+  .shiv-emblem {
+    width: 30px;
+    height: 30px;
+  }
+  .brand-name {
+    font-size: 1.05rem;
+  }
+  .brand-tagline {
+    display: none;
+  }
+  .header-actions {
+    gap: 5px;
+    flex-shrink: 0;
+  }
+  .lang-toggle-group {
+    padding: 1px;
+    gap: 1px;
+  }
+  .lang-pill {
+    padding: 4px 6px;
+    font-size: 0.68rem;
+  }
+  .btn-cream-sm {
+    padding: 5px 8px;
+    font-size: 0.7rem;
+  }
+  .btn-ruby-pill {
+    padding: 6px 9px;
+    font-size: 0.7rem;
+  }
+  .icon-menu-btn {
+    width: 30px;
+    height: 30px;
+    font-size: 0.95rem;
+  }
+  .hero-title {
+    font-size: 1.85rem;
+  }
+}
