@@ -1,5 +1,5 @@
 (function () {
-  const STORAGE_KEY = "gyan_sarovar_sanctuary_v18";
+  const STORAGE_KEY = "gyan_sarovar_sanctuary_v19";
   const DEFAULT_BABA_IMG = "./baba-portrait.png";
 
   function isoDate(offsetDays = 0) {

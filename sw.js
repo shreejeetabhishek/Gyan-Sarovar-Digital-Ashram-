@@ -1,14 +1,14 @@
-const CACHE_NAME = "gyan-sarovar-sanctuary-v18";
+const CACHE_NAME = "gyan-sarovar-sanctuary-v19";
 const ASSETS = [
   "./",
   "./index.html",
-  "./styles.css?v=18",
-  "./data.js?v=18",
-  "./app.js?v=18",
+  "./styles.css?v=19",
+  "./data.js?v=19",
+  "./app.js?v=19",
   "./manifest.json",
   "./baba-portrait.png",
-  "./icon-192.png",
-  "./icon-512.png"
+  "./icon-192.png?v=19",
+  "./icon-512.png?v=19"
 ];
 
 self.addEventListener("install", (event) => {
