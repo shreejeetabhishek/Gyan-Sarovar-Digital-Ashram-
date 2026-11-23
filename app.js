@@ -712,6 +712,112 @@
     renderMurliAndMore();
   }
 
+
+  // SHAREABLE LINK BUILDER & HASH RECEIVER (#bkshare=...)
+  let currentShareType = "atma";
+
+  function encodeSharePayload(obj) {
+    const json = JSON.stringify(obj);
+    const b64 = btoa(unescape(encodeURIComponent(json)))
+      .replace(/\+/g, "-")
+      .replace(/\//g, "_")
+      .replace(/=+$/, "");
+    const baseUrl = window.location.origin && window.location.origin !== "null"
+      ? `${window.location.origin}${window.location.pathname}`
+      : window.location.href.split("#")[0];
+    return `${baseUrl}#bkshare=${b64}`;
+  }
+
+  function buildShareUrl(kind) {
+    const me = getActiveAtma();
+    const pts = computeUserScore();
+    if (kind === "ashram") {
+      return encodeSharePayload({
+        type: "ashram",
+        name: me.name,
+        zone: me.zone,
+        ashram: state.ashramInfo.name,
+        motto: state.ashramInfo.motto,
+        pts,
+        streak: 7,
+        yogHrs: Number((2.5 + pts / 30).toFixed(1)),
+        tier: pts >= 2500 ? "Tapasvi Ratna" : "Purusharthi"
+      });
+    }
+    if (kind === "vardaan") {
+      const vards = window.BK_SANCTUARY_DATA.vardaans;
+      const sws = window.BK_SANCTUARY_DATA.thoughts;
+      return encodeSharePayload({
+        type: "vardaan",
+        by: me.name,
+        vardaan: vards[state.vardaanIdx % vards.length],
+        swaman: sws[state.thoughtIdx % sws.length]
+      });
+    }
+    return encodeSharePayload({
+      type: "atma",
+      name: me.name,
+      zone: me.zone,
+      ashram: state.ashramInfo.name,
+      pts,
+      streak: 7,
+      yogHrs: Number((2.5 + pts / 30).toFixed(1)),
+      tier: pts >= 2500 ? "Tapasvi Ratna" : "Purusharthi"
+    });
+  }
+
+  function openShareModal(kind = "atma") {
+    currentShareType = kind;
+    document.querySelectorAll("#share-type-pills .pill-choice").forEach((b) => {
+      b.classList.toggle("active", b.dataset.stype === kind);
+    });
+    document.getElementById("share-link-output").value = buildShareUrl(kind);
+    document.getElementById("share-modal-feedback").textContent = "";
+    document.getElementById("share-modal").classList.remove("hidden");
+  }
+
+  function consumeIncomingShareHash() {
+    const h = window.location.hash || "";
+    if (!h.startsWith("#bkshare=")) return;
+    try {
+      let b64 = h.replace("#bkshare=", "").replace(/-/g, "+").replace(/_/g, "/");
+      while (b64.length % 4) b64 += "=";
+      const data = JSON.parse(decodeURIComponent(escape(atob(b64))));
+      if (!data || !data.type) return;
+
+      if (data.type === "atma" || data.type === "ashram") {
+        const exists = state.syncedPeers.some((p) => p.name === data.name && Number(p.pts) === Number(data.pts));
+        if (!exists && data.name) {
+          state.syncedPeers.unshift({
+            id: `shared-${Date.now()}`,
+            name: data.name,
+            zone: data.zone || "Mount Abu",
+            ashram: data.ashram || state.ashramInfo.name,
+            pts: Number(data.pts) || 350,
+            streak: Number(data.streak) || 3,
+            yogHrs: Number(data.yogHrs) || 6.0,
+            tier: data.tier || "Purusharthi",
+            isUser: false
+          });
+        }
+        if (data.type === "ashram" && data.ashram) {
+          state.ashramInfo.name = data.ashram;
+          if (data.motto) state.ashramInfo.motto = data.motto;
+        }
+        saveState();
+        switchTab(data.type === "ashram" ? "ashram" : "rankings");
+      } else if (data.type === "vardaan") {
+        if (data.vardaan) {
+          window.BK_SANCTUARY_DATA.vardaans.unshift(data.vardaan);
+          state.vardaanIdx = 0;
+        }
+        saveState();
+        switchTab("kamra");
+      }
+      history.replaceState(null, "", window.location.pathname + window.location.search);
+    } catch (e) {}
+  }
+
   function bindEvents() {
     document.querySelectorAll(".dnav-btn, .bnav-btn, .drawer-link").forEach((btn) => {
       btn.addEventListener("click", () => switchTab(btn.dataset.tab));
@@ -1098,6 +1204,44 @@
     });
   }
 
+
+    // Share modal bindings
+    document.getElementById("header-share-btn").addEventListener("click", () => openShareModal("atma"));
+    document.getElementById("open-ashram-share-btn").addEventListener("click", () => openShareModal("ashram"));
+    document.getElementById("close-share-modal-btn").addEventListener("click", () => {
+      document.getElementById("share-modal").classList.add("hidden");
+    });
+    document.querySelectorAll("#share-type-pills .pill-choice").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        openShareModal(btn.dataset.stype);
+      });
+    });
+    document.getElementById("copy-share-link-btn").addEventListener("click", async () => {
+      const inp = document.getElementById("share-link-output");
+      inp.select();
+      try {
+        await navigator.clipboard.writeText(inp.value);
+      } catch (e) {
+        document.execCommand("copy");
+      }
+      document.getElementById("share-modal-feedback").textContent = "✓ Link copied! Paste it to any BK Bhai/Bahan.";
+    });
+    document.getElementById("native-share-link-btn").addEventListener("click", async () => {
+      const url = document.getElementById("share-link-output").value;
+      if (navigator.share) {
+        try {
+          await navigator.share({
+            title: "Gyan Sarovar — BK Digital Ashram",
+            text: "Om Shanti! Join my Gyan Sarovar Purusharth & Ashram link:",
+            url
+          });
+        } catch (e) {}
+      } else {
+        document.getElementById("share-modal-feedback").textContent = "Use Copy Link to share via WhatsApp, Telegram, or SMS.";
+      }
+    });
+
+  consumeIncomingShareHash();
   if ("serviceWorker" in navigator && window.location.protocol !== "file:") {
     window.addEventListener("load", () => {
       navigator.serviceWorker.register("./sw.js").catch(() => {});

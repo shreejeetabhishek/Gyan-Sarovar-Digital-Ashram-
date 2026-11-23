@@ -40,6 +40,7 @@
       </nav>
 
       <div class="header-actions">
+        <button type="button" class="btn-cream-sm" id="header-share-btn">🔗 Share</button>
         <button type="button" class="btn-ruby-pill" id="header-pause-btn">✨ 1m Pause</button>
         <button type="button" class="icon-menu-btn" id="drawer-open-btn" aria-label="Open Ashram Menu">☰</button>
       </div>
@@ -475,6 +476,7 @@
           <div class="row-center-wrap">
             <button type="button" class="btn-ruby-lg" id="save-ashram-btn">Save Digital Ashram</button>
             <button type="button" class="btn-cream-lg" id="gen-sync-code-btn">Generate Offline Sync Code</button>
+            <button type="button" class="btn-gold-lg" id="open-ashram-share-btn">🔗 Share Ashram Link</button>
           </div>
           <label class="field-lbl">Peer Atma Sync Code (Paste code from another BK Bhai/Bahan)</label>
           <div class="row-gap-sm">
@@ -620,6 +622,32 @@
       <span>Ashram</span>
     </button>
   </nav>
+
+    <!-- SHARE LINK MODAL (HASH-ENCODED OFFLINE-FIRST SHAREABLE URLS) -->
+  <div class="modal-backdrop hidden" id="share-modal">
+    <div class="modal-ivory-card" style="max-width:460px;">
+      <div class="eyebrow-ruby">INSTANT SHAREABLE LINK</div>
+      <h2 class="section-heading">Share Sanctuary / Atma / Ashram Link</h2>
+      <p class="body-muted" style="margin-top:4px;">Anyone opening this link loads Gyan Sarovar directly and automatically previews or merges the shared Atma score, Ashram circle, or blessing—zero backend server needed.</p>
+
+      <div class="lighting-pills" id="share-type-pills" style="margin:8px 0 10px;">
+        <button type="button" class="pill-choice active" data-stype="atma">My Atma &amp; Rank</button>
+        <button type="button" class="pill-choice" data-stype="ashram">Digital Ashram</button>
+        <button type="button" class="pill-choice" data-stype="vardaan">Vardaan &amp; Swaman</button>
+      </div>
+
+      <div class="form-col">
+        <label class="field-lbl">Generated Shareable Link</label>
+        <input type="text" id="share-link-output" readonly />
+        <div class="row-center-wrap" style="margin-top:6px;">
+          <button type="button" class="btn-ruby-lg" id="copy-share-link-btn">📋 Copy Link</button>
+          <button type="button" class="btn-gold-lg" id="native-share-link-btn">📤 Share via Apps</button>
+        </div>
+        <button type="button" class="btn-cream-lg" id="close-share-modal-btn">Close</button>
+        <div class="feedback-text" id="share-modal-feedback" style="text-align:center;font-size:0.82rem;font-weight:700;color:var(--ruby-deep);"></div>
+      </div>
+    </div>
+  </div>
 
   <!-- 1-MINUTE TRAFFIC CONTROL PAUSE MODAL -->
   <div class="modal-backdrop hidden" id="tc-modal">
