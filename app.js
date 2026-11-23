@@ -1,43 +1,43 @@
 (function () {
-  const STORAGE_KEY = "gyan_sarovar_bk_v2";
-  const DEFAULT_BABA_SRC = "./baba-portrait.png";
-  const honorifics = ["Bhai", "Bahan"];
-  const firstNames = [
-    "Aarav", "Meera", "Kiran", "Raghav", "Nandini", "Siddharth", "Kavita", "Devendra",
-    "Ananya", "Prakash", "Sunita", "Vikram", "Pooja", "Manoj", "Deepika", "Ramesh",
-    "Shruti", "Arjun", "Bhavna", "Harish", "Sneha", "Dinesh", "Pallavi", "Gopal"
-  ];
-  const cities = ["Mount Abu", "Angul", "Bhubaneswar", "Cuttack", "Delhi", "Pune", "Indore", "Jaipur"];
-  const ashrams = [
-    "Pandav Bhawan Circle", "Gyan Sarovar Sangh", "Shanti Van Seva Mandal",
-    "Om Shanti Yog Kendra", "Madhuban Smriti Group"
-  ];
+  const STORAGE_KEY = "gyan_sarovar_sanctuary_v3";
+  const DEFAULT_BABA_IMG = "./baba-portrait.png";
 
-  function todayStr(offsetDays = 0) {
+  function isoDate(offsetDays = 0) {
     const d = new Date();
     d.setDate(d.getDate() + offsetDays);
     return d.toISOString().slice(0, 10);
   }
 
-  function createSeededAtmas() {
-    const list = [];
-    for (let i = 0; i < 105; i++) {
-      const name = firstNames[i % firstNames.length];
-      const hon = honorifics[i % honorifics.length];
-      const fullName = `BK ${name} ${hon}`;
-      const amritvelaDays = 28 - (i % 18);
-      const murliDays = 29 - (i % 15);
-      const yogHours = Number((65 - (i % 42) * 1.1).toFixed(1));
-      const pts = Math.max(420, 2650 - i * 19 + ((i * 17) % 45));
+  function buildSeededAtmas() {
+    const topSeeds = [
+      { name: "BK Suryamani Bahan", zone: "Mount Abu", ashram: "Shantivan Tapasya Dham", pts: 3850, streak: 95, yogHrs: 142.5, tier: "Tapasvi Ratna" },
+      { name: "BK Devendra Bhai", zone: "New Delhi", ashram: "Pandav Bhawan Circle", pts: 3835, streak: 94, yogHrs: 139.0, tier: "Tapasvi Ratna" },
+      { name: "BK Padma Bahan", zone: "Mumbai", ashram: "Om Shanti Retreat", pts: 3791, streak: 91, yogHrs: 136.4, tier: "Tapasvi Ratna" }
+    ];
+    const names = [
+      "Aarav", "Meera", "Kiran", "Raghav", "Nandini", "Siddharth", "Kavita", "Ananya",
+      "Prakash", "Sunita", "Vikram", "Pooja", "Manoj", "Deepika", "Ramesh", "Shruti",
+      "Arjun", "Bhavna", "Harish", "Sneha", "Dinesh", "Pallavi", "Gopal", "Swati"
+    ];
+    const zones = ["Mount Abu", "New Delhi", "Mumbai", "Odisha", "Bengaluru"];
+    const ashrams = [
+      "Shantivan Tapasya Dham", "Pandav Bhawan Circle", "Om Shanti Retreat",
+      "Gyan Sarovar Sangh", "Madhuban Smriti Group"
+    ];
+    const list = topSeeds.map((s, idx) => Object.assign({ id: `seed-${idx + 1}`, isUser: false }, s));
+    for (let i = 3; i < 107; i++) {
+      const nm = names[i % names.length];
+      const hon = i % 2 === 0 ? "Bahan" : "Bhai";
+      const pts = Math.max(120, 3740 - i * 33 + ((i * 19) % 41));
       list.push({
         id: `seed-${i + 1}`,
-        name: fullName,
-        city: cities[i % cities.length],
+        name: `BK ${nm} ${hon}`,
+        zone: zones[i % zones.length],
         ashram: ashrams[i % ashrams.length],
         pts,
-        amritvelaDays,
-        murliDays,
-        yogHours,
+        streak: Math.max(3, 90 - (i % 78)),
+        yogHrs: Number((132 - i * 1.05).toFixed(1)),
+        tier: pts >= 2500 ? "Tapasvi Ratna" : pts >= 1200 ? "Yogini / Yogi" : "Purusharthi",
         isUser: false
       });
     }
@@ -47,66 +47,68 @@
   function defaultState() {
     return {
       activeTab: "home",
-      activeAtmaId: "atma-local-1",
+      activeAtmaId: "atma-1",
       babaCustomImg: null,
-      babaImgFit: "contain",
+      babaFit: "contain",
       kamraLighting: "amritvela",
+      offerCount: 0,
+      thoughtIdx: 0,
+      vardaanIdx: 0,
+      courseDayIdx: 0,
+      rankingMode: "top100",
+      zoneFilter: "ALL",
       chimeEnabled: true,
       droneEnabled: false,
-      swamanIdx: 0,
-      vardaanIdx: 0,
-      selectedLessonIdx: 0,
-      rankingMode: "top100",
       profiles: [
-        { id: "atma-local-1", name: "BK Aarav Bhai", city: "Angul", ashram: "Shanti Sarovar Seva Mandal" },
-        { id: "atma-local-2", name: "BK Meera Bahan", city: "Mount Abu", ashram: "Shanti Sarovar Seva Mandal" }
+        { id: "atma-1", name: "BK Shreejeet Bhai", zone: "Mount Abu", ashram: "Shantivan Tapasya Dham" },
+        { id: "atma-2", name: "BK Meera Bahan", zone: "Odisha", ashram: "Shantivan Tapasya Dham" }
       ],
       ashramInfo: {
-        name: "Shanti Sarovar Seva Mandal",
-        motto: "Every thought pure, every karma a yagya",
-        code: "ASHRAM-SHANTI-108",
+        name: "Shantivan Tapasya Dham",
+        motto: "One Father, One World Family — Pure Vibrations for Global Peace",
         wishes: [
-          { by: "BK Aarav Bhai", text: "May peace and sweetness radiate in every home today." },
-          { by: "BK Meera Bahan", text: "Steady Amritvela and loving remembrance with Shiv Baba." }
+          { by: "BK Shreejeet Bhai", text: "May peace, purity, and sweet remembrance fill every home today." }
         ]
       },
       syncedPeers: [],
       chartsByDate: {
-        [todayStr(0)]: {
-          checks: { amritvela: true, murli: true, traffic: false, karmaYog: true, bhojan: true, pothamel: false },
-          virtues: ["Peace", "Purity", "Love"],
-          remembranceNote: "Sweet morning Amritvela & Murli churning",
-          pothamelNote: ""
+        [isoDate(0)]: {
+          checks: {},
+          virtues: {},
+          victories: "",
+          surrender: "",
+          surrendered: false
         }
       },
+      surrenderLog: [],
+      tcCompletedToday: 0,
+      letters: [
+        {
+          id: "let-1",
+          date: isoDate(0),
+          text: "My Sweetest BapDada, Om Shanti! Thank You for giving me this new Brahmin birth and holding my hand in every step of life."
+        }
+      ],
       murliNotes: [
         {
           id: "m-1",
-          date: todayStr(0),
+          date: isoDate(0),
           title: "Become a Lighthouse & Mighthouse",
-          notes: "Stay in soul-consciousness and radiate pure vibrations of peace without getting pulled into body-consciousness."
+          notes: "Stay stable in soul-consciousness and radiate pure vibrations of peace across the globe."
         }
       ],
-      babaLetters: [
-        {
-          id: "l-1",
-          date: todayStr(0),
-          text: "Pyare Shiv Baba & Brahma Baba, thank you for guiding every step with clarity and peace."
-        }
-      ],
-      seededAtmas: createSeededAtmas()
+      seededAtmas: buildSeededAtmas()
     };
   }
 
   let state = loadState();
-  let currentChartDate = todayStr(0);
+  let selectedChartDate = isoDate(0);
 
   function loadState() {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (!raw) return defaultState();
-      const parsed = JSON.parse(raw);
-      return Object.assign(defaultState(), parsed);
+      return Object.assign(defaultState(), JSON.parse(raw));
     } catch (e) {
       return defaultState();
     }
@@ -118,57 +120,57 @@
     } catch (e) {}
   }
 
-  function getActiveProfile() {
+  function getActiveAtma() {
     return state.profiles.find((p) => p.id === state.activeAtmaId) || state.profiles[0];
   }
 
-  function getDayChart(dateStr) {
+  function getChartForDate(dateStr) {
     if (!state.chartsByDate[dateStr]) {
-      state.chartsByDate[dateStr] = {
-        checks: { amritvela: false, murli: false, traffic: false, karmaYog: false, bhojan: false, pothamel: false },
-        virtues: [],
-        remembranceNote: "",
-        pothamelNote: ""
-      };
+      state.chartsByDate[dateStr] = { checks: {}, virtues: {}, victories: "", surrender: "", surrendered: false };
     }
     return state.chartsByDate[dateStr];
   }
 
-  function computeUserPoints() {
-    let total = 350;
+  function computeUserScore() {
+    let pts = 20;
     Object.values(state.chartsByDate).forEach((day) => {
-      window.BK_DATA.purusharthItems.forEach((item) => {
-        if (day.checks && day.checks[item.id]) total += item.pts;
+      window.BK_SANCTUARY_DATA.purusharthItems.forEach((item) => {
+        if (day.checks && day.checks[item.id]) pts += item.pts;
       });
-      total += (day.virtues ? day.virtues.length : 0) * 5;
-      if (day.pothamelNote && day.pothamelNote.trim().length > 0) total += 15;
+      if (day.virtues) {
+        Object.values(day.virtues).forEach((stars) => {
+          pts += Number(stars || 0) * 3;
+        });
+      }
+      if (day.surrendered) pts += 35;
     });
-    total += state.murliNotes.length * 20;
-    total += state.babaLetters.length * 15;
-    return total;
+    pts += (state.tcCompletedToday || 0) * 15;
+    return pts;
   }
 
-  function getCombinedLeaderboard() {
-    const active = getActiveProfile();
-    const userPts = computeUserPoints();
-    const userAmritvela = Object.values(state.chartsByDate).filter((d) => d.checks && d.checks.amritvela).length + 4;
-    const userMurli = Object.values(state.chartsByDate).filter((d) => d.checks && d.checks.murli).length + 5;
-    const userRow = {
-      id: active.id,
-      name: active.name,
-      city: active.city,
-      ashram: state.ashramInfo.name || active.ashram,
-      pts: userPts,
-      amritvelaDays: userAmritvela,
-      murliDays: userMurli,
-      yogHours: Number((18 + userPts / 65).toFixed(1)),
+  function getFullLeaderboard() {
+    const me = getActiveAtma();
+    const myPts = computeUserScore();
+    const userEntry = {
+      id: me.id,
+      name: me.name,
+      zone: me.zone,
+      ashram: state.ashramInfo.name || me.ashram,
+      pts: myPts,
+      streak: Math.max(1, Object.keys(state.chartsByDate).filter((d) => {
+        const c = state.chartsByDate[d];
+        return c && c.checks && Object.values(c.checks).some(Boolean);
+      }).length),
+      yogHrs: Number((2.5 + myPts / 30).toFixed(1)),
+      tier: myPts >= 2500 ? "Tapasvi Ratna" : myPts >= 800 ? "Purusharthi" : "New Atma",
       isUser: true
     };
-    const merged = [userRow, ...state.syncedPeers, ...state.seededAtmas];
-    merged.sort((a, b) => b.pts - a.pts);
-    return merged.map((row, idx) => Object.assign({}, row, { rank: idx + 1 }));
+    const combined = [userEntry, ...state.syncedPeers, ...state.seededAtmas];
+    combined.sort((a, b) => b.pts - a.pts);
+    return combined.map((row, idx) => Object.assign({}, row, { rank: idx + 1 }));
   }
 
+  // AUDIO CHIME & OM SHANTI DRONE
   let audioCtx = null;
   let droneOsc1 = null;
   let droneOsc2 = null;
@@ -179,34 +181,31 @@
       const Ctx = window.AudioContext || window.webkitAudioContext;
       if (Ctx) audioCtx = new Ctx();
     }
-    if (audioCtx && audioCtx.state === "suspended") {
-      audioCtx.resume().catch(() => {});
-    }
+    if (audioCtx && audioCtx.state === "suspended") audioCtx.resume().catch(() => {});
     return audioCtx;
   }
 
-  function playTempleChime() {
+  function playChime() {
     if (!state.chimeEnabled) return;
     const ctx = ensureAudio();
     if (!ctx) return;
     const now = ctx.currentTime;
-    [528, 792].forEach((freq, i) => {
+    [528, 792].forEach((freq, idx) => {
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
       osc.type = "sine";
-      osc.frequency.setValueAtTime(freq, now + i * 0.08);
-      gain.gain.setValueAtTime(0.001, now + i * 0.08);
-      gain.gain.exponentialRampToValueAtTime(0.12, now + i * 0.08 + 0.04);
-      gain.gain.exponentialRampToValueAtTime(0.0001, now + i * 0.08 + 1.8);
+      osc.frequency.setValueAtTime(freq, now + idx * 0.08);
+      gain.gain.setValueAtTime(0.001, now + idx * 0.08);
+      gain.gain.exponentialRampToValueAtTime(0.11, now + idx * 0.08 + 0.04);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.08 + 1.7);
       osc.connect(gain);
       gain.connect(ctx.destination);
-      osc.start(now + i * 0.08);
-      osc.stop(now + i * 0.08 + 1.85);
+      osc.start(now + idx * 0.08);
+      osc.stop(now + idx * 0.08 + 1.75);
     });
   }
 
   function toggleOmDrone() {
-    const btn = document.getElementById("toggle-drone-btn");
     if (!state.droneEnabled) {
       const ctx = ensureAudio();
       if (ctx) {
@@ -225,7 +224,6 @@
         droneOsc2.start();
       }
       state.droneEnabled = true;
-      btn.textContent = "🎶 Om Shanti Drone: On";
     } else {
       try {
         if (droneOsc1) droneOsc1.stop();
@@ -234,357 +232,331 @@
       droneOsc1 = null;
       droneOsc2 = null;
       state.droneEnabled = false;
-      btn.textContent = "🎶 Om Shanti Drone: Off";
     }
+    updateDroneButtons();
   }
 
-  const tabMeta = {
-    home: ["Ashram & Rajyoga Sanctuary", "Soul-consciousness, remembrance, and daily self-checking in warm silence"],
-    kamra: ["Baba Ka Kamra", "Sacred room with Prajapita Brahma Baba's portrait, Akhand Jyoti, Vardaan & Samachar"],
-    chart: ["Purusharth Daily Chart", "Track Amritvela, Murli, Traffic Control, Soul Virtues, and Night Pothamel"],
-    traffic: ["Traffic Control", "Scheduled 1-minute inner pauses to steady thoughts in peace"],
-    ashram: ["Digital Ashram & Groups", "Offline-first spiritual sangathan, peer sync codes, and collective Tapasya"],
-    rankings: ["Top 100 Rankings", "Website Top 100, Atma-Wise Metrics, and Digital Ashram / Group leaderboards"],
-    course: ["7-Day Rajyoga Course", "Core spiritual foundations of soul, Shiv Baba, three worlds, and karma"],
-    murli: ["Murli & Swaman Notebook", "Daily Manan Chintan journal, self-respect Swamans, and Ashta Shakti"],
-    resources: ["BK Wings & Public Portals", "Official public portals and the 20 RERF service wings"],
-    glossary: ["A–Z Glossary & Data Vault", "Brahma Kumaris terms and offline JSON backup / restore"]
-  };
+  function updateDroneButtons() {
+    const hBtn = document.getElementById("home-drone-btn");
+    const kBtn = document.getElementById("kamra-drone-btn");
+    if (hBtn) hBtn.textContent = `🎶 Om Shanti Drone: ${state.droneEnabled ? "On" : "Off"}`;
+    if (kBtn) kBtn.textContent = `🎶 Drone: ${state.droneEnabled ? "ON" : "OFF"}`;
+  }
 
+  // NAVIGATION
   function switchTab(tabId) {
     state.activeTab = tabId;
     saveState();
-    document.querySelectorAll(".nav-btn").forEach((b) => b.classList.toggle("active", b.dataset.tab === tabId));
-    document.querySelectorAll(".tab-panel").forEach((p) => p.classList.toggle("active", p.id === `tab-${tabId}`));
-    const meta = tabMeta[tabId] || tabMeta.home;
-    document.getElementById("page-title").textContent = meta[0];
-    document.getElementById("page-subtitle").textContent = meta[1];
-    document.getElementById("sidebar").classList.remove("open");
+    document.querySelectorAll(".tab-view").forEach((el) => el.classList.toggle("active", el.id === `view-${tabId}`));
+    document.querySelectorAll(".dnav-btn, .bnav-btn, .drawer-link").forEach((btn) => {
+      btn.classList.toggle("active", btn.dataset.tab === tabId);
+    });
+    closeDrawer();
+    window.scrollTo({ top: 0, behavior: "smooth" });
     renderAll();
   }
 
-  function updateClock() {
-    const now = new Date();
-    document.getElementById("live-clock").textContent = now.toLocaleTimeString([], { hour12: true });
-    const h = now.getHours() + now.getMinutes() / 60;
-    let phase = "Day Karma Yog · Soul Consciousness";
-    if (h >= 3.75 && h < 4.75) phase = "Amritvela · 04:00–04:45 AM";
-    else if (h >= 6.5 && h < 8.5) phase = "Daily Murli & Churning Time";
-    else if (h >= 18.5 && h < 19.5) phase = "Numasham Yog · 06:30–07:30 PM";
-    else if (h >= 21.5 || h < 3.75) phase = "Night Pothamel & Silent Rest";
-    document.getElementById("maryada-phase").textContent = phase;
-    updateTrafficCountdown(now);
+  function openDrawer() {
+    document.getElementById("ashram-drawer").classList.add("open");
+    document.getElementById("drawer-backdrop").classList.remove("hidden");
   }
 
-  function updateTrafficCountdown(now) {
+  function closeDrawer() {
+    document.getElementById("ashram-drawer").classList.remove("open");
+    document.getElementById("drawer-backdrop").classList.add("hidden");
+  }
+
+  // CLOCK & TRAFFIC COUNTDOWN
+  function updateClockAndTraffic() {
+    const now = new Date();
+    const clk = document.getElementById("live-clock");
+    if (clk) clk.textContent = now.toLocaleTimeString([], { hour12: true });
+
+    const h = now.getHours() + now.getMinutes() / 60;
+    let phase = "Karma Yoga & Traffic Control";
+    if (h >= 3.75 && h < 4.75) phase = "Amritvela · 04:00–04:45";
+    else if (h >= 6.5 && h < 8.5) phase = "Daily Murli & Churning";
+    else if (h >= 18.5 && h < 19.5) phase = "Numasham Yog · 18:30";
+    else if (h >= 21.5 || h < 3.75) phase = "Night Pothamel & Silence";
+
+    const mb = document.getElementById("maryada-badge");
+    const rp = document.getElementById("rhythm-phase-pill");
+    if (mb) mb.textContent = phase;
+    if (rp) rp.textContent = phase;
+
     const curMins = now.getHours() * 60 + now.getMinutes() + now.getSeconds() / 60;
-    let nextLabel = window.BK_DATA.trafficSlots[0];
-    let diffMins = 24 * 60;
-    for (const slot of window.BK_DATA.trafficSlots) {
-      const [hh, mm] = slot.split(":").map(Number);
-      const slotMins = hh * 60 + mm;
-      if (slotMins > curMins) {
-        diffMins = slotMins - curMins;
-        nextLabel = slot;
+    const slots = window.BK_SANCTUARY_DATA.trafficSlots;
+    let nextSlot = slots[0].time;
+    let diff = 24 * 60;
+    for (const s of slots) {
+      const [hh, mm] = s.time.split(":").map(Number);
+      const sm = hh * 60 + mm;
+      if (sm > curMins) {
+        diff = sm - curMins;
+        nextSlot = s.time;
         break;
       }
     }
-    if (diffMins === 24 * 60) {
-      const [hh, mm] = window.BK_DATA.trafficSlots[0].split(":").map(Number);
-      diffMins = (24 * 60 - curMins) + (hh * 60 + mm);
+    if (diff === 24 * 60) {
+      const [hh, mm] = slots[0].time.split(":").map(Number);
+      diff = (24 * 60 - curMins) + (hh * 60 + mm);
     }
-    const totalSec = Math.max(0, Math.floor(diffMins * 60));
-    const m = String(Math.floor(totalSec / 60)).padStart(2, "0");
-    const s = String(totalSec % 60).padStart(2, "0");
-    document.getElementById("traffic-countdown").textContent = `${m}:${s}`;
-    document.getElementById("next-slot-label").textContent = `Next scheduled pause at ${nextLabel}`;
+    const secTotal = Math.max(0, Math.floor(diff * 60));
+    const mmStr = String(Math.floor(secTotal / 60)).padStart(2, "0");
+    const ssStr = String(secTotal % 60).padStart(2, "0");
+    const cdEl = document.getElementById("tc-next-countdown");
+    const infoEl = document.getElementById("tc-next-slot-info");
+    if (cdEl) cdEl.textContent = `${mmStr} : ${ssStr}`;
+    if (infoEl) infoEl.textContent = `Next bell at ${nextSlot}`;
   }
 
-  let yogSeconds = 180;
-  let yogSelectedPreset = 180;
-  let yogInterval = null;
-  let canvasPulse = 0;
+  // MEDITATION TIMER
+  let yogPreset = 180;
+  let yogRem = 180;
+  let yogTimer = null;
 
-  function formatSec(sec) {
+  function fmtMMSS(sec) {
     const m = String(Math.floor(sec / 60)).padStart(2, "0");
     const s = String(sec % 60).padStart(2, "0");
     return `${m}:${s}`;
   }
 
-  function drawYogCanvas() {
-    const canvas = document.getElementById("yog-canvas");
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    const w = canvas.width;
-    const h = canvas.height;
-    canvasPulse += 0.04;
-    ctx.clearRect(0, 0, w, h);
+  function renderHome() {
+    const me = getActiveAtma();
+    const pts = computeUserScore();
+    const board = getFullLeaderboard();
+    const myRow = board.find((r) => r.isUser);
+    const todayChart = getChartForDate(isoDate(0));
+    const items = window.BK_SANCTUARY_DATA.purusharthItems;
+    const done = items.filter((it) => todayChart.checks[it.id]).length;
+    const pct = Math.round((done / items.length) * 100);
 
-    const grad = ctx.createRadialGradient(w / 2, h / 2, 6, w / 2, h / 2, 130 + Math.sin(canvasPulse) * 14);
-    grad.addColorStop(0, "#ffffff");
-    grad.addColorStop(0.18, "#ffe082");
-    grad.addColorStop(0.5, "rgba(255, 165, 45, 0.24)");
-    grad.addColorStop(1, "rgba(18, 11, 24, 0)");
-    ctx.fillStyle = grad;
-    ctx.fillRect(0, 0, w, h);
+    document.getElementById("drawer-atma-name").textContent = me.name;
+    document.getElementById("drawer-atma-meta").textContent = `${me.zone} · ${pts} pts · Rank #${myRow ? myRow.rank : "—"}`;
 
-    ctx.beginPath();
-    ctx.arc(w / 2, h / 2, 9 + Math.sin(canvasPulse * 1.5) * 1.5, 0, Math.PI * 2);
-    ctx.fillStyle = "#fffef7";
-    ctx.fill();
-    requestAnimationFrame(drawYogCanvas);
-  }
-
-  function startYogTimer() {
-    if (yogInterval) return;
-    document.getElementById("yog-status-tag").textContent = "In Yog";
-    playTempleChime();
-    yogInterval = setInterval(() => {
-      if (yogSeconds > 0) {
-        yogSeconds -= 1;
-        document.getElementById("yog-timer-display").textContent = formatSec(yogSeconds);
-      } else {
-        clearInterval(yogInterval);
-        yogInterval = null;
-        document.getElementById("yog-status-tag").textContent = "Completed";
-        playTempleChime();
-      }
-    }, 1000);
-  }
-
-  function resetYogTimer() {
-    if (yogInterval) {
-      clearInterval(yogInterval);
-      yogInterval = null;
-    }
-    yogSeconds = yogSelectedPreset;
-    document.getElementById("yog-timer-display").textContent = formatSec(yogSeconds);
-    document.getElementById("yog-status-tag").textContent = "Ready";
-  }
-
-  let silenceSeconds = 300;
-  let silenceInterval = null;
-
-  function renderKamra() {
-    const scene = document.getElementById("kamra-scene");
-    scene.className = `kamra-scene light-${state.kamraLighting}`;
-    document.querySelectorAll("#kamra-lighting-btns .chip-btn").forEach((btn) => {
-      btn.classList.toggle("active", btn.dataset.light === state.kamraLighting);
-    });
-
-    const img = document.getElementById("baba-photo-img");
-    img.src = state.babaCustomImg || DEFAULT_BABA_SRC;
-    img.className = state.babaImgFit === "cover" ? "fit-cover" : "fit-contain";
-    document.getElementById("toggle-fit-btn").textContent =
-      `Fit: ${state.babaImgFit === "cover" ? "Cover" : "Contain"}`;
-
-    document.getElementById("baba-img-status").textContent = state.babaCustomImg
-      ? "Showing custom uploaded Baba PNG saved locally in browser."
-      : "Bundled with your Baba PNG at ./baba-portrait.png.";
-
-    document.getElementById("vardaan-text").textContent =
-      `“${window.BK_DATA.vardaans[state.vardaanIdx % window.BK_DATA.vardaans.length]}”`;
-
-    const letterList = document.getElementById("baba-letter-list");
-    letterList.innerHTML = state.babaLetters.map((item) => `
-      <div class="note-item">
-        <div><strong>${item.date}</strong></div>
-        <div>${escapeHtml(item.text)}</div>
-      </div>
-    `).join("");
-  }
-
-  function dropPetals(symbol) {
-    const layer = document.getElementById("kamra-petal-layer");
-    for (let i = 0; i < 12; i++) {
-      const p = document.createElement("span");
-      p.className = "petal";
-      p.textContent = symbol;
-      p.style.left = `${8 + Math.random() * 82}%`;
-      p.style.animationDelay = `${Math.random() * 0.45}s`;
-      layer.appendChild(p);
-      setTimeout(() => p.remove(), 2900);
-    }
-    playTempleChime();
-  }
-
-  function renderProfilesAndHome() {
-    const active = getActiveProfile();
-    const pts = computeUserPoints();
-    const board = getCombinedLeaderboard();
-    const myRankEntry = board.find((r) => r.isUser);
-
-    document.getElementById("sidebar-atma-name").textContent = active.name;
-    document.getElementById("sidebar-atma-meta").textContent = `${active.city} · ${pts} pts`;
-
-    const sel = document.getElementById("atma-profile-select");
+    const sel = document.getElementById("drawer-profile-select");
     sel.innerHTML = state.profiles.map((p) =>
-      `<option value="${p.id}" ${p.id === active.id ? "selected" : ""}>${escapeHtml(p.name)}</option>`
+      `<option value="${p.id}" ${p.id === me.id ? "selected" : ""}>${esc(p.name)}</option>`
     ).join("");
 
-    const dayChart = getDayChart(todayStr(0));
-    const items = window.BK_DATA.purusharthItems;
-    const doneCount = items.filter((it) => dayChart.checks[it.id]).length;
-    const pct = Math.round((doneCount / items.length) * 100);
+    document.getElementById("home-total-pts").textContent = `${pts} pts`;
+    document.getElementById("home-rank-chip").textContent = `#${myRow ? myRow.rank : "—"}`;
+    document.getElementById("home-pct-badge").textContent = `${pct}%`;
+    document.getElementById("home-tc-count").textContent = `${state.tcCompletedToday || 0}/8`;
+    document.getElementById("home-pothamel-status").textContent = todayChart.surrendered ? "Surrendered ✓" : "Pending Surrender";
 
-    document.getElementById("home-score-pill").textContent = `${pts} pts`;
-    document.getElementById("home-progress-fill").style.width = `${pct}%`;
-    document.getElementById("home-completion-pct").textContent = `${pct}%`;
-    document.getElementById("home-streak-days").textContent = `${Math.max(1, Object.keys(state.chartsByDate).length)} day`;
-    document.getElementById("home-rank-badge").textContent = myRankEntry ? `#${myRankEntry.rank}` : "#—";
-
-    document.getElementById("home-quick-checks").innerHTML = items.map((it) => `
-      <div class="check-row">
-        <label>
-          <input type="checkbox" data-cid="${it.id}" ${dayChart.checks[it.id] ? "checked" : ""} />
-          <span>${escapeHtml(it.label)}</span>
-        </label>
-        <span class="pts-tag">+${it.pts}</span>
-      </div>
-    `).join("");
-
-    document.querySelectorAll("#home-quick-checks input[type='checkbox']").forEach((cb) => {
-      cb.addEventListener("change", () => {
-        getDayChart(todayStr(0)).checks[cb.dataset.cid] = cb.checked;
-        saveState();
-        renderAll();
-      });
-    });
+    const thoughts = window.BK_SANCTUARY_DATA.thoughts;
+    document.getElementById("studio-thought-text").textContent = `“${thoughts[state.thoughtIdx % thoughts.length]}”`;
+    updateDroneButtons();
   }
 
-  function renderChartTab() {
-    document.getElementById("chart-date-input").value = currentChartDate;
-    const day = getDayChart(currentChartDate);
-    document.getElementById("purusharth-items").innerHTML = window.BK_DATA.purusharthItems.map((it) => `
-      <div class="check-row">
-        <label>
-          <input type="checkbox" data-chart-cid="${it.id}" ${day.checks[it.id] ? "checked" : ""} />
-          <span>${escapeHtml(it.label)}</span>
-        </label>
-        <span class="pts-tag">+${it.pts} pts</span>
-      </div>
-    `).join("");
+  // BABA KA KAMRA
+  let kamraSec = 300;
+  let kamraTimer = null;
 
-    document.querySelectorAll("input[data-chart-cid]").forEach((cb) => {
-      cb.addEventListener("change", () => {
-        getDayChart(currentChartDate).checks[cb.dataset.chartCid] = cb.checked;
-        saveState();
-        renderProfilesAndHome();
-        renderHeatmap();
-      });
+  function renderKamra() {
+    const stage = document.getElementById("kamra-stage");
+    stage.className = `kamra-sanctuary-stage light-${state.kamraLighting}`;
+    document.querySelectorAll("#kamra-lighting-pills .pill-choice").forEach((b) => {
+      b.classList.toggle("active", b.dataset.light === state.kamraLighting);
     });
 
-    document.getElementById("virtue-chips").innerHTML = window.BK_DATA.virtues.map((v) => {
-      const active = (day.virtues || []).includes(v);
-      return `<button type="button" class="chip-btn ${active ? "active" : ""}" data-virtue="${v}">${v}</button>`;
+    const img = document.getElementById("baba-portrait-img");
+    img.src = state.babaCustomImg || DEFAULT_BABA_IMG;
+    img.className = state.babaFit === "cover" ? "fit-cover" : "fit-contain";
+    document.getElementById("baba-fit-btn").textContent = `Frame: ${state.babaFit === "cover" ? "Cover" : "Contain"}`;
+
+    document.getElementById("offer-count-label").textContent = `${state.offerCount || 0} offered today`;
+    const vards = window.BK_SANCTUARY_DATA.vardaans;
+    document.getElementById("kamra-vardaan-text").textContent = `“${vards[state.vardaanIdx % vards.length]}”`;
+
+    document.getElementById("letters-list-container").innerHTML = state.letters.map((l) => `
+      <div class="saved-entry-card">
+        <div class="row-between" style="margin-bottom:4px;">
+          <strong style="color:var(--ruby-deep);">💌 Offered to BapDada</strong>
+          <span class="eyebrow-muted">${esc(l.date)}</span>
+        </div>
+        <div style="font-style:italic;">“${esc(l.text)}”</div>
+      </div>
+    `).join("");
+  }
+
+  function spawnPetals() {
+    const box = document.getElementById("kamra-petals");
+    const icons = ["🌹", "🪷", "🌸"];
+    for (let i = 0; i < 14; i++) {
+      const el = document.createElement("span");
+      el.className = "falling-petal";
+      el.textContent = icons[i % icons.length];
+      el.style.left = `${6 + Math.random() * 86}%`;
+      el.style.animationDelay = `${Math.random() * 0.45}s`;
+      box.appendChild(el);
+      setTimeout(() => el.remove(), 2900);
+    }
+  }
+
+  // PURUSHARTH CHART & 5-STAR VIRTUES & CALENDAR
+  function renderChart() {
+    document.getElementById("chart-date-picker").value = selectedChartDate;
+    const day = getChartForDate(selectedChartDate);
+
+    document.getElementById("purusharth-checklist").innerHTML = window.BK_SANCTUARY_DATA.purusharthItems.map((it) => {
+      const checked = Boolean(day.checks[it.id]);
+      return `
+        <div class="p-check-card ${checked ? "done" : ""}" data-pitem="${it.id}">
+          <div>
+            <div class="p-check-title">${esc(it.title)}</div>
+            <div class="p-check-sub">${esc(it.desc)} (+${it.pts} pts)</div>
+          </div>
+          <div class="p-circle-toggle">${checked ? "✓" : ""}</div>
+        </div>
+      `;
     }).join("");
 
-    document.querySelectorAll("button[data-virtue]").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const v = btn.dataset.virtue;
-        const arr = getDayChart(currentChartDate).virtues || [];
-        if (arr.includes(v)) {
-          getDayChart(currentChartDate).virtues = arr.filter((x) => x !== v);
-        } else {
-          arr.push(v);
-          getDayChart(currentChartDate).virtues = arr;
-        }
+    document.querySelectorAll(".p-check-card").forEach((card) => {
+      card.addEventListener("click", () => {
+        const id = card.dataset.pitem;
+        const cur = getChartForDate(selectedChartDate);
+        cur.checks[id] = !cur.checks[id];
         saveState();
-        renderChartTab();
-        renderProfilesAndHome();
+        renderChart();
+        renderHome();
       });
     });
 
-    document.getElementById("pothamel-remembrance").value = day.remembranceNote || "";
-    document.getElementById("pothamel-reflection").value = day.pothamelNote || "";
-    renderHeatmap();
-  }
-
-  function renderHeatmap() {
-    const grid = document.getElementById("monthly-heatmap");
-    const cells = [];
-    for (let i = 29; i >= 0; i--) {
-      const ds = todayStr(-i);
-      const d = state.chartsByDate[ds];
-      let count = 0;
-      if (d && d.checks) {
-        count = Object.values(d.checks).filter(Boolean).length;
+    document.getElementById("virtues-rating-list").innerHTML = window.BK_SANCTUARY_DATA.virtues.map((v) => {
+      const stars = Number((day.virtues && day.virtues[v]) || 0);
+      let starBtns = "";
+      for (let s = 1; s <= 5; s++) {
+        starBtns += `<button type="button" class="star-btn ${s <= stars ? "lit" : ""}" data-vname="${esc(v)}" data-star="${s}" aria-label="${s} stars">★</button>`;
       }
-      const lvl = count >= 5 ? "lvl-3" : count >= 3 ? "lvl-2" : count >= 1 ? "lvl-1" : "";
-      cells.push(`<div class="heat-cell ${lvl}" title="${ds}: ${count}/6 items">${30 - i}</div>`);
-    }
-    grid.innerHTML = cells.join("");
-  }
+      return `
+        <div class="virtue-row">
+          <span>${esc(v)}</span>
+          <div class="stars-box">${starBtns}</div>
+        </div>
+      `;
+    }).join("");
 
-  function renderTrafficTab() {
-    document.getElementById("toggle-chime-btn").textContent = `🔔 Chime: ${state.chimeEnabled ? "On" : "Off"}`;
-    document.getElementById("traffic-slots-list").innerHTML = window.BK_DATA.trafficSlots.map((slot, idx) => `
-      <div class="slot-item">
-        <strong>Pause #${idx + 1} · ${slot}</strong>
-        <span>1-Min Peace &amp; Soul Awareness</span>
-      </div>
-    `).join("");
-  }
-
-  function renderAshramTab() {
-    document.getElementById("ashram-name-input").value = state.ashramInfo.name;
-    document.getElementById("ashram-motto-input").value = state.ashramInfo.motto;
-    document.getElementById("ashram-code-badge").textContent = state.ashramInfo.code;
-
-    const board = getCombinedLeaderboard();
-    const ashramMembers = board.filter((r) => r.ashram === state.ashramInfo.name || r.isUser).slice(0, 8);
-    const totalPts = ashramMembers.reduce((sum, m) => sum + m.pts, 0);
-    document.getElementById("ashram-total-pts").textContent = `${totalPts.toLocaleString()} pts`;
-
-    document.getElementById("ashram-members-list").innerHTML = ashramMembers.map((m) => `
-      <div class="note-item">
-        <strong>${escapeHtml(m.name)}</strong> · <span class="muted-text">${escapeHtml(m.city)}</span> — <strong>${m.pts} pts</strong>
-      </div>
-    `).join("");
-
-    document.getElementById("ashram-wish-list").innerHTML = (state.ashramInfo.wishes || []).map((w) => `
-      <div class="note-item">
-        <strong>${escapeHtml(w.by)}:</strong> ${escapeHtml(w.text)}
-      </div>
-    `).join("");
-  }
-
-  function renderRankingsTab() {
-    document.querySelectorAll("#ranking-mode-pills .chip-btn").forEach((btn) => {
-      btn.classList.toggle("active", btn.dataset.rmode === state.rankingMode);
+    document.querySelectorAll(".star-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const vn = btn.dataset.vname;
+        const st = Number(btn.dataset.star);
+        const cur = getChartForDate(selectedChartDate);
+        if (!cur.virtues) cur.virtues = {};
+        cur.virtues[vn] = cur.virtues[vn] === st ? 0 : st;
+        saveState();
+        renderChart();
+        renderHome();
+      });
     });
+
+    document.getElementById("pothamel-victories-input").value = day.victories || "";
+    document.getElementById("pothamel-surrender-input").value = day.surrender || "";
+    document.getElementById("surrender-count-label").textContent = `${state.surrenderLog.length} entries`;
+    document.getElementById("surrender-log-list").innerHTML = state.surrenderLog.length
+      ? state.surrenderLog.slice(0, 5).map((e) => `
+          <div style="padding:6px 0;border-top:1px solid rgba(255,255,255,0.1);">
+            <strong>${esc(e.date)}:</strong> ${esc(e.victories || e.surrender)}
+          </div>
+        `).join("")
+      : `<div style="color:#d4bfa0;margin-top:6px;">No night reports surrendered yet.</div>`;
+
+    renderCalendarGrid();
+  }
+
+  function renderCalendarGrid() {
+    const dt = new Date(selectedChartDate + "T00:00:00");
+    const year = dt.getFullYear();
+    const month = dt.getMonth();
+    const monthName = dt.toLocaleDateString("en-US", { month: "long", year: "numeric" });
+    document.getElementById("calendar-month-label").textContent = monthName;
+
+    const firstDay = new Date(year, month, 1).getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const cells = [];
+    for (let b = 0; b < firstDay; b++) {
+      cells.push(`<div></div>`);
+    }
+    for (let d = 1; d <= daysInMonth; d++) {
+      const ds = `${year}-${String(month + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
+      const entry = state.chartsByDate[ds];
+      const cnt = entry && entry.checks ? Object.values(entry.checks).filter(Boolean).length : 0;
+      const isSel = ds === selectedChartDate;
+      cells.push(`
+        <button type="button" class="cal-day-cell ${isSel ? "active-day" : ""} ${cnt > 0 ? "has-progress" : ""}" data-caldate="${ds}">
+          ${d}
+          <small>${cnt > 0 ? `${cnt}/7` : "—"}</small>
+        </button>
+      `);
+    }
+    document.getElementById("calendar-days-grid").innerHTML = cells.join("");
+    document.querySelectorAll(".cal-day-cell").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        selectedChartDate = btn.dataset.caldate;
+        renderChart();
+      });
+    });
+  }
+
+  // RANKINGS
+  function renderRankings() {
+    document.querySelectorAll("#ranking-subtabs .pill-choice").forEach((b) => {
+      b.classList.toggle("active", b.dataset.rmode === state.rankingMode);
+    });
+
+    const board = getFullLeaderboard();
+    const me = board.find((r) => r.isUser);
+    if (me) {
+      document.getElementById("standing-tier-badge").textContent = me.tier;
+      document.getElementById("standing-rank-num").textContent = `Rank #${me.rank}`;
+      document.getElementById("standing-pts-num").textContent = `${me.pts.toLocaleString()} pts`;
+      document.getElementById("standing-atma-label").textContent = `${me.name} (${me.zone})`;
+      document.getElementById("standing-ashram-rank").textContent = `Ashram #${Math.min(21, Math.ceil(me.rank / 5))}`;
+    }
 
     const q = (document.getElementById("ranking-search-input").value || "").trim().toLowerCase();
-    const board = getCombinedLeaderboard();
-    const me = board.find((r) => r.isUser);
-    document.getElementById("your-rank-summary").textContent = me
-      ? `Your Rank: #${me.rank} (${me.name} · ${me.pts} pts)`
-      : "";
+    const zone = state.zoneFilter;
 
-    const thead = document.getElementById("rankings-thead");
-    const tbody = document.getElementById("rankings-tbody");
+    // Top 3 podium
+    const medals = ["🥇", "🥈", "🥉"];
+    document.getElementById("top3-podium-list").innerHTML = board.slice(0, 3).map((r, i) => `
+      <div class="podium-card">
+        <div>
+          <strong>${medals[i]} ${esc(r.name)}</strong>
+          <div class="p-check-sub">${esc(r.zone)} • ${esc(r.ashram)} · <span style="color:var(--ruby-deep);font-weight:700;">${esc(r.tier)}</span></div>
+        </div>
+        <div style="text-align:right;">
+          <strong style="color:var(--ruby-deep);font-size:1.05rem;">${r.pts.toLocaleString()}</strong>
+          <div class="p-check-sub">${r.streak}d streak</div>
+        </div>
+      </div>
+    `).join("");
+
+    const thead = document.getElementById("rank-table-head");
+    const tbody = document.getElementById("rank-table-body");
 
     if (state.rankingMode === "groupwise") {
-      const map = new Map();
-      board.forEach((row) => {
-        const key = row.ashram || "Independent Atmas";
-        const cur = map.get(key) || { ashram: key, members: 0, pts: 0, yogHours: 0 };
-        cur.members += 1;
-        cur.pts += row.pts;
-        cur.yogHours = Number((cur.yogHours + row.yogHours).toFixed(1));
-        map.set(key, cur);
+      const grp = new Map();
+      board.forEach((r) => {
+        const key = r.ashram || "Independent Atmas";
+        const cur = grp.get(key) || { ashram: key, count: 0, pts: 0, yogHrs: 0 };
+        cur.count += 1;
+        cur.pts += r.pts;
+        cur.yogHrs = Number((cur.yogHrs + r.yogHrs).toFixed(1));
+        grp.set(key, cur);
       });
-      const groups = Array.from(map.values())
+      const rows = Array.from(grp.values())
         .sort((a, b) => b.pts - a.pts)
         .filter((g) => !q || g.ashram.toLowerCase().includes(q));
 
-      thead.innerHTML = "<tr><th>#</th><th>Digital Ashram / Group</th><th>Atmas</th><th>Yog Hours</th><th>Collective Pts</th></tr>";
-      tbody.innerHTML = groups.map((g, i) => `
+      thead.innerHTML = "<tr><th>Rank</th><th>Digital Ashram</th><th>Atmas</th><th>Yog Hrs</th><th>Total Pts</th></tr>";
+      tbody.innerHTML = rows.map((g, i) => `
         <tr>
           <td>#${i + 1}</td>
-          <td><strong>${escapeHtml(g.ashram)}</strong></td>
-          <td>${g.members}</td>
-          <td>${g.yogHours}h</td>
+          <td><strong>${esc(g.ashram)}</strong></td>
+          <td>${g.count}</td>
+          <td>${g.yogHrs}h</td>
           <td><strong>${g.pts.toLocaleString()}</strong></td>
         </tr>
       `).join("");
@@ -592,463 +564,537 @@
     }
 
     const filtered = board
-      .filter((r) => !q || r.name.toLowerCase().includes(q) || r.ashram.toLowerCase().includes(q) || r.city.toLowerCase().includes(q))
+      .filter((r) => (zone === "ALL" || r.zone === zone))
+      .filter((r) => !q || r.name.toLowerCase().includes(q) || r.ashram.toLowerCase().includes(q) || r.zone.toLowerCase().includes(q))
       .slice(0, 100);
 
     if (state.rankingMode === "atmawise") {
-      thead.innerHTML = "<tr><th>#</th><th>Atma</th><th>Amritvela Days</th><th>Murli Days</th><th>Yog Hours</th><th>Pts</th></tr>";
+      thead.innerHTML = "<tr><th>Rank</th><th>Purusharthi Atma</th><th>Streak</th><th>Yog Hrs</th><th>Points</th></tr>";
       tbody.innerHTML = filtered.map((r) => `
-        <tr class="${r.isUser ? "me-row" : ""}">
+        <tr class="${r.isUser ? "is-me" : ""}">
           <td>#${r.rank}</td>
-          <td>${escapeHtml(r.name)}</td>
-          <td>${r.amritvelaDays}d</td>
-          <td>${r.murliDays}d</td>
-          <td>${r.yogHours}h</td>
-          <td>${r.pts.toLocaleString()}</td>
+          <td><strong>${esc(r.name)}</strong><br><small>${esc(r.zone)}</small></td>
+          <td>${r.streak}d</td>
+          <td>${r.yogHrs}h</td>
+          <td><strong>${r.pts.toLocaleString()}</strong></td>
         </tr>
       `).join("");
     } else {
-      thead.innerHTML = "<tr><th>#</th><th>Atma</th><th>Digital Ashram</th><th>City</th><th>Purusharth Pts</th></tr>";
+      thead.innerHTML = "<tr><th>Rank</th><th>Purusharthi Atma</th><th>Digital Ashram</th><th>Points</th></tr>";
       tbody.innerHTML = filtered.map((r) => `
-        <tr class="${r.isUser ? "me-row" : ""}">
+        <tr class="${r.isUser ? "is-me" : ""}">
           <td>#${r.rank}</td>
-          <td><strong>${escapeHtml(r.name)}</strong></td>
-          <td>${escapeHtml(r.ashram)}</td>
-          <td>${escapeHtml(r.city)}</td>
+          <td><strong>${esc(r.name)}</strong><br><small>${esc(r.zone)}</small></td>
+          <td>${esc(r.ashram)}</td>
           <td><strong>${r.pts.toLocaleString()}</strong></td>
         </tr>
       `).join("");
     }
   }
 
-  function renderCourseTab() {
-    const lessons = window.BK_DATA.lessons;
-    const idx = state.selectedLessonIdx % lessons.length;
-    document.getElementById("course-lesson-list").innerHTML = lessons.map((l, i) => `
-      <button type="button" class="lesson-btn ${i === idx ? "active" : ""}" data-lidx="${i}">
-        ${l.day} · ${escapeHtml(l.title)}
-      </button>
+  // ASHRAM, TRAFFIC, COURSE, MURLI, MORE
+  function renderAshram() {
+    document.getElementById("ashram-display-name").textContent = state.ashramInfo.name;
+    document.getElementById("ashram-display-motto").textContent = `“${state.ashramInfo.motto}”`;
+    document.getElementById("ashram-name-field").value = state.ashramInfo.name;
+    document.getElementById("ashram-motto-field").value = state.ashramInfo.motto;
+
+    const board = getFullLeaderboard();
+    const members = board.filter((r) => r.ashram === state.ashramInfo.name || r.isUser).slice(0, 10);
+    const total = members.reduce((acc, m) => acc + m.pts, 0);
+    document.getElementById("ashram-collective-pts").textContent = `${total.toLocaleString()} pts`;
+
+    document.getElementById("ashram-members-stack").innerHTML = members.map((m) => `
+      <div class="saved-entry-card row-between">
+        <div><strong>${esc(m.name)}</strong> · <span class="eyebrow-muted">${esc(m.zone)}</span></div>
+        <strong style="color:var(--ruby-deep);">${m.pts.toLocaleString()} pts</strong>
+      </div>
     `).join("");
 
-    document.querySelectorAll("button[data-lidx]").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        state.selectedLessonIdx = Number(btn.dataset.lidx);
-        saveState();
-        renderCourseTab();
-      });
-    });
-
-    const cur = lessons[idx];
-    document.getElementById("course-lesson-detail").innerHTML = `
-      <span class="eyebrow">${cur.day} FOUNDATION</span>
-      <h2>${escapeHtml(cur.title)}</h2>
-      <p style="margin-top:12px;line-height:1.65;">${escapeHtml(cur.body)}</p>
-    `;
+    document.getElementById("ashram-wishes-stack").innerHTML = (state.ashramInfo.wishes || []).map((w) => `
+      <div class="saved-entry-card"><strong>${esc(w.by)}:</strong> ${esc(w.text)}</div>
+    `).join("");
   }
 
-  function renderMurliAndSwaman() {
-    document.getElementById("murli-date-input").value = todayStr(0);
-    document.getElementById("swaman-spotlight-card").textContent =
-      `“${window.BK_DATA.swamans[state.swamanIdx % window.BK_DATA.swamans.length]}”`;
-    document.getElementById("active-swaman-text").textContent =
-      `“${window.BK_DATA.swamans[state.swamanIdx % window.BK_DATA.swamans.length]}”`;
-
-    document.getElementById("ashta-shakti-grid").innerHTML = window.BK_DATA.ashtaShakti.map((s) => `
-      <div class="mini-card"><strong>${escapeHtml(s.name)}</strong><span>${escapeHtml(s.desc)}</span></div>
-    `).join("");
-
-    const mq = (document.getElementById("murli-search-input").value || "").trim().toLowerCase();
-    const notes = state.murliNotes.filter((n) =>
-      !mq || n.title.toLowerCase().includes(mq) || n.notes.toLowerCase().includes(mq)
-    );
-    document.getElementById("murli-entries-list").innerHTML = notes.map((n) => `
-      <div class="note-item">
-        <strong>${escapeHtml(n.date)} · ${escapeHtml(n.title)}</strong>
-        <div>${escapeHtml(n.notes)}</div>
+  function renderTraffic() {
+    document.getElementById("tc-chime-toggle").textContent = `🔔 Chime: ${state.chimeEnabled ? "ON" : "OFF"}`;
+    document.getElementById("tc-schedule-list").innerHTML = window.BK_SANCTUARY_DATA.trafficSlots.map((s) => `
+      <div class="tt-row">
+        <span class="tt-time">${s.time}</span>
+        <div>
+          <strong>${esc(s.title)}</strong>
+          <p>${esc(s.note)}</p>
+        </div>
       </div>
     `).join("");
   }
 
-  function renderResourcesAndGlossary() {
-    const wq = (document.getElementById("wing-search-input").value || "").trim().toLowerCase();
-    document.getElementById("public-portals-grid").innerHTML = window.BK_DATA.portals
-      .filter((p) => !wq || p.name.toLowerCase().includes(wq) || p.desc.toLowerCase().includes(wq))
-      .map((p) => `
-        <div class="mini-card">
-          <strong>${escapeHtml(p.name)}</strong>
-          <p class="muted-text" style="margin:4px 0 8px;">${escapeHtml(p.desc)}</p>
-          <a href="${p.url}" target="_blank" rel="noopener noreferrer">Open Portal ↗</a>
+  function renderCourse() {
+    const lessons = window.BK_SANCTUARY_DATA.lessons;
+    const idx = state.courseDayIdx % lessons.length;
+    document.getElementById("course-day-pills").innerHTML = lessons.map((l, i) => `
+      <button type="button" class="pill-choice ${i === idx ? "active" : ""}" data-cday="${i}">${l.day}</button>
+    `).join("");
+
+    document.querySelectorAll("button[data-cday]").forEach((b) => {
+      b.addEventListener("click", () => {
+        state.courseDayIdx = Number(b.dataset.cday);
+        saveState();
+        renderCourse();
+      });
+    });
+
+    const cur = lessons[idx];
+    document.getElementById("course-content-box").innerHTML = `
+      <div class="eyebrow-gold">${cur.day} · RAJYOGA FOUNDATION</div>
+      <h3 style="font-size:1.45rem;margin:4px 0 8px;">${esc(cur.title)}</h3>
+      <p style="font-family:'Plus Jakarta Sans',sans-serif;font-size:0.9rem;line-height:1.6;">${esc(cur.body)}</p>
+    `;
+  }
+
+  function renderMurliAndMore() {
+    document.getElementById("murli-date-field").value = isoDate(0);
+    const sws = window.BK_SANCTUARY_DATA.thoughts;
+    document.getElementById("murli-swaman-quote").textContent = `“${sws[state.thoughtIdx % sws.length]}”`;
+
+    const mq = (document.getElementById("murli-search-field").value || "").trim().toLowerCase();
+    document.getElementById("murli-notes-stack").innerHTML = state.murliNotes
+      .filter((n) => !mq || n.title.toLowerCase().includes(mq) || n.notes.toLowerCase().includes(mq))
+      .map((n) => `
+        <div class="saved-entry-card">
+          <div class="row-between"><strong>${esc(n.title)}</strong><span class="eyebrow-muted">${esc(n.date)}</span></div>
+          <p style="margin:4px 0 0;">${esc(n.notes)}</p>
         </div>
       `).join("");
 
-    document.getElementById("rerf-wings-grid").innerHTML = window.BK_DATA.wings
+    document.getElementById("ashta-shakti-cards").innerHTML = window.BK_SANCTUARY_DATA.ashtaShakti.map((s) => `
+      <div class="saved-entry-card">
+        <strong style="color:var(--ruby-deep);display:block;">${esc(s.name)}</strong>
+        <span style="font-size:0.8rem;color:var(--ink-muted);">${esc(s.desc)}</span>
+      </div>
+    `).join("");
+
+    document.getElementById("portals-cards").innerHTML = window.BK_SANCTUARY_DATA.portals.map((p) => `
+      <div class="saved-entry-card">
+        <strong style="color:var(--ruby-deep);display:block;">${esc(p.name)}</strong>
+        <p style="font-size:0.8rem;color:var(--ink-muted);margin:4px 0 6px;">${esc(p.desc)}</p>
+        <a href="${p.url}" target="_blank" rel="noopener noreferrer" style="font-weight:700;font-size:0.8rem;color:var(--ruby-deep);">Visit Portal ↗</a>
+      </div>
+    `).join("");
+
+    const wq = (document.getElementById("wings-filter-input").value || "").trim().toLowerCase();
+    document.getElementById("wings-cards").innerHTML = window.BK_SANCTUARY_DATA.wings
       .filter((w) => !wq || w.toLowerCase().includes(wq))
-      .map((w) => `<div class="mini-card"><strong>${escapeHtml(w)}</strong><span>RERF Seva Wing</span></div>`)
+      .map((w) => `<div class="saved-entry-card"><strong>${esc(w)}</strong></div>`)
       .join("");
 
-    const gq = (document.getElementById("glossary-search-input").value || "").trim().toLowerCase();
-    document.getElementById("glossary-list").innerHTML = window.BK_DATA.glossary
+    const gq = (document.getElementById("glossary-filter-input").value || "").trim().toLowerCase();
+    document.getElementById("glossary-stack").innerHTML = window.BK_SANCTUARY_DATA.glossary
       .filter((g) => !gq || g.term.toLowerCase().includes(gq) || g.def.toLowerCase().includes(gq))
-      .map((g) => `<div class="note-item"><strong>${escapeHtml(g.term)}:</strong> ${escapeHtml(g.def)}</div>`)
+      .map((g) => `<div class="saved-entry-card"><strong style="color:var(--ruby-deep);">${esc(g.term)}:</strong> ${esc(g.def)}</div>`)
       .join("");
   }
 
-  function escapeHtml(str) {
+  function esc(str) {
     return String(str || "").replace(/[&<>"']/g, (m) => ({
       "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
     }[m]));
   }
 
   function renderAll() {
-    renderProfilesAndHome();
+    renderHome();
     renderKamra();
-    renderChartTab();
-    renderTrafficTab();
-    renderAshramTab();
-    renderRankingsTab();
-    renderCourseTab();
-    renderMurliAndSwaman();
-    renderResourcesAndGlossary();
+    renderChart();
+    renderRankings();
+    renderAshram();
+    renderTraffic();
+    renderCourse();
+    renderMurliAndMore();
   }
 
   function bindEvents() {
-    document.querySelectorAll(".nav-btn").forEach((btn) => {
+    document.querySelectorAll(".dnav-btn, .bnav-btn, .drawer-link").forEach((btn) => {
       btn.addEventListener("click", () => switchTab(btn.dataset.tab));
     });
-
-    document.getElementById("menu-toggle-btn").addEventListener("click", () => {
-      document.getElementById("sidebar").classList.toggle("open");
+    document.querySelectorAll("[data-jump]").forEach((btn) => {
+      btn.addEventListener("click", () => switchTab(btn.dataset.jump));
     });
+    document.getElementById("brand-home-trigger").addEventListener("click", () => switchTab("home"));
+    document.getElementById("drawer-open-btn").addEventListener("click", openDrawer);
+    document.getElementById("drawer-close-btn").addEventListener("click", closeDrawer);
+    document.getElementById("drawer-backdrop").addEventListener("click", closeDrawer);
 
-    document.getElementById("quick-kamra-btn").addEventListener("click", () => switchTab("kamra"));
-
-    document.querySelectorAll("#tab-home .chip-btn[data-sec]").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        document.querySelectorAll("#tab-home .chip-btn[data-sec]").forEach((b) => b.classList.remove("active"));
-        btn.classList.add("active");
-        yogSelectedPreset = Number(btn.dataset.sec);
-        resetYogTimer();
+    // Yog presets & timer
+    document.querySelectorAll("#yog-presets .dark-pill").forEach((pill) => {
+      pill.addEventListener("click", () => {
+        document.querySelectorAll("#yog-presets .dark-pill").forEach((p) => p.classList.remove("active"));
+        pill.classList.add("active");
+        yogPreset = Number(pill.dataset.sec);
+        if (yogTimer) { clearInterval(yogTimer); yogTimer = null; }
+        yogRem = yogPreset;
+        document.getElementById("yog-timer-display").textContent = fmtMMSS(yogRem);
+        document.getElementById("yog-start-btn").textContent = "▶ Begin Silence";
       });
     });
-    document.getElementById("yog-start-btn").addEventListener("click", startYogTimer);
-    document.getElementById("yog-reset-btn").addEventListener("click", resetYogTimer);
-    document.getElementById("toggle-drone-btn").addEventListener("click", toggleOmDrone);
-    document.getElementById("next-swaman-btn").addEventListener("click", () => {
-      state.swamanIdx += 1;
-      saveState();
-      renderMurliAndSwaman();
-    });
-    document.getElementById("shuffle-swaman-btn").addEventListener("click", () => {
-      state.swamanIdx += 1;
-      saveState();
-      renderMurliAndSwaman();
+
+    document.getElementById("yog-start-btn").addEventListener("click", () => {
+      if (yogTimer) {
+        clearInterval(yogTimer);
+        yogTimer = null;
+        document.getElementById("yog-start-btn").textContent = "▶ Resume";
+        return;
+      }
+      playChime();
+      document.getElementById("yog-start-btn").textContent = "⏸ Pause";
+      yogTimer = setInterval(() => {
+        if (yogRem > 0) {
+          yogRem -= 1;
+          document.getElementById("yog-timer-display").textContent = fmtMMSS(yogRem);
+        } else {
+          clearInterval(yogTimer);
+          yogTimer = null;
+          document.getElementById("yog-start-btn").textContent = "✓ Completed";
+          playChime();
+        }
+      }, 1000);
     });
 
-    document.querySelectorAll("#kamra-lighting-btns .chip-btn").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        state.kamraLighting = btn.dataset.light;
+    document.getElementById("yog-reset-btn").addEventListener("click", () => {
+      if (yogTimer) { clearInterval(yogTimer); yogTimer = null; }
+      yogRem = yogPreset;
+      document.getElementById("yog-timer-display").textContent = fmtMMSS(yogRem);
+      document.getElementById("yog-start-btn").textContent = "▶ Begin Silence";
+    });
+
+    document.getElementById("next-thought-btn").addEventListener("click", () => {
+      state.thoughtIdx += 1;
+      saveState();
+      renderHome();
+      renderMurliAndMore();
+    });
+
+    document.getElementById("home-drone-btn").addEventListener("click", toggleOmDrone);
+    document.getElementById("kamra-drone-btn").addEventListener("click", toggleOmDrone);
+
+    // Baba Ka Kamra
+    document.querySelectorAll("#kamra-lighting-pills .pill-choice").forEach((b) => {
+      b.addEventListener("click", () => {
+        state.kamraLighting = b.dataset.light;
         saveState();
         renderKamra();
       });
     });
 
-    document.getElementById("baba-png-input").addEventListener("change", (e) => {
+    document.getElementById("baba-upload-input").addEventListener("change", (e) => {
       const file = e.target.files && e.target.files[0];
       if (!file) return;
-      const reader = new FileReader();
-      reader.onload = () => {
-        state.babaCustomImg = reader.result;
+      const r = new FileReader();
+      r.onload = () => {
+        state.babaCustomImg = r.result;
         saveState();
         renderKamra();
       };
-      reader.readAsDataURL(file);
+      r.readAsDataURL(file);
     });
 
-    document.getElementById("toggle-fit-btn").addEventListener("click", () => {
-      state.babaImgFit = state.babaImgFit === "contain" ? "cover" : "contain";
+    document.getElementById("baba-fit-btn").addEventListener("click", () => {
+      state.babaFit = state.babaFit === "contain" ? "cover" : "contain";
       saveState();
       renderKamra();
     });
 
-    document.getElementById("reset-baba-img-btn").addEventListener("click", () => {
+    document.getElementById("baba-reset-btn").addEventListener("click", () => {
       state.babaCustomImg = null;
       saveState();
       renderKamra();
     });
 
-    document.getElementById("offer-rose-btn").addEventListener("click", () => dropPetals("🌹"));
-    document.getElementById("offer-lotus-btn").addEventListener("click", () => dropPetals("🪷"));
-
-    document.getElementById("kamra-silence-btn").addEventListener("click", () => {
-      playTempleChime();
-      if (silenceInterval) {
-        clearInterval(silenceInterval);
-        silenceInterval = null;
-        silenceSeconds = 300;
-        document.getElementById("kamra-timer-display").textContent = "Silence Timer: 05:00";
+    document.getElementById("kamra-sit-btn").addEventListener("click", () => {
+      playChime();
+      if (kamraTimer) {
+        clearInterval(kamraTimer);
+        kamraTimer = null;
+        document.getElementById("kamra-sit-btn").textContent = "▶ Sit in Silence";
         return;
       }
-      silenceInterval = setInterval(() => {
-        if (silenceSeconds > 0) {
-          silenceSeconds -= 1;
-          document.getElementById("kamra-timer-display").textContent = `Silence Timer: ${formatSec(silenceSeconds)}`;
+      document.getElementById("kamra-sit-btn").textContent = "⏸ Pause Silence";
+      kamraTimer = setInterval(() => {
+        if (kamraSec > 0) {
+          kamraSec -= 1;
+          const mm = String(Math.floor(kamraSec / 60)).padStart(2, "0");
+          const ss = String(kamraSec % 60).padStart(2, "0");
+          document.getElementById("kamra-silence-timer").textContent = `${mm} : ${ss}`;
         } else {
-          clearInterval(silenceInterval);
-          silenceInterval = null;
-          silenceSeconds = 300;
-          playTempleChime();
-          document.getElementById("kamra-timer-display").textContent = "Silence Completed · Om Shanti";
+          clearInterval(kamraTimer);
+          kamraTimer = null;
+          kamraSec = 300;
+          document.getElementById("kamra-sit-btn").textContent = "▶ Sit in Silence";
+          playChime();
         }
       }, 1000);
     });
 
-    document.getElementById("new-vardaan-btn").addEventListener("click", () => {
+    document.getElementById("offer-flower-btn").addEventListener("click", () => {
+      state.offerCount = (state.offerCount || 0) + 1;
+      saveState();
+      spawnPetals();
+      playChime();
+      renderKamra();
+    });
+
+    document.getElementById("draw-vardaan-btn").addEventListener("click", () => {
       state.vardaanIdx += 1;
       saveState();
       renderKamra();
     });
 
-    document.getElementById("save-letter-btn").addEventListener("click", () => {
-      const ta = document.getElementById("baba-letter-input");
+    document.getElementById("offer-letter-btn").addEventListener("click", () => {
+      const ta = document.getElementById("baba-letter-textarea");
       const txt = ta.value.trim();
       if (!txt) return;
-      state.babaLetters.unshift({ id: `l-${Date.now()}`, date: todayStr(0), text: txt });
+      state.letters.unshift({ id: `let-${Date.now()}`, date: isoDate(0), text: txt });
       ta.value = "";
       saveState();
+      playChime();
       renderKamra();
-      renderProfilesAndHome();
     });
 
-    document.getElementById("prev-day-btn").addEventListener("click", () => {
-      const d = new Date(currentChartDate + "T00:00:00");
+    // Chart date navigation & Night Surrender
+    document.getElementById("chart-prev-date").addEventListener("click", () => {
+      const d = new Date(selectedChartDate + "T00:00:00");
       d.setDate(d.getDate() - 1);
-      currentChartDate = d.toISOString().slice(0, 10);
-      renderChartTab();
+      selectedChartDate = d.toISOString().slice(0, 10);
+      renderChart();
     });
-    document.getElementById("next-day-btn").addEventListener("click", () => {
-      const d = new Date(currentChartDate + "T00:00:00");
+    document.getElementById("chart-next-date").addEventListener("click", () => {
+      const d = new Date(selectedChartDate + "T00:00:00");
       d.setDate(d.getDate() + 1);
-      currentChartDate = d.toISOString().slice(0, 10);
-      renderChartTab();
+      selectedChartDate = d.toISOString().slice(0, 10);
+      renderChart();
     });
-    document.getElementById("chart-date-input").addEventListener("change", (e) => {
+    document.getElementById("chart-today-btn").addEventListener("click", () => {
+      selectedChartDate = isoDate(0);
+      renderChart();
+    });
+    document.getElementById("chart-date-picker").addEventListener("change", (e) => {
       if (e.target.value) {
-        currentChartDate = e.target.value;
-        renderChartTab();
+        selectedChartDate = e.target.value;
+        renderChart();
       }
     });
 
-    document.getElementById("save-pothamel-btn").addEventListener("click", () => {
-      const day = getDayChart(currentChartDate);
-      day.remembranceNote = document.getElementById("pothamel-remembrance").value.trim();
-      day.pothamelNote = document.getElementById("pothamel-reflection").value.trim();
-      if (day.pothamelNote) day.checks.pothamel = true;
+    document.getElementById("surrender-chart-btn").addEventListener("click", () => {
+      const day = getChartForDate(selectedChartDate);
+      day.victories = document.getElementById("pothamel-victories-input").value.trim();
+      day.surrender = document.getElementById("pothamel-surrender-input").value.trim();
+      day.surrendered = true;
+      state.surrenderLog.unshift({
+        date: selectedChartDate,
+        victories: day.victories,
+        surrender: day.surrender || "Surrendered daily chart at BapDada's lotus feet."
+      });
       saveState();
-      document.getElementById("pothamel-status").textContent = "Night Pothamel offered to Baba & saved locally.";
-      renderChartTab();
-      renderProfilesAndHome();
+      playChime();
+      renderChart();
+      renderHome();
+      renderRankings();
     });
 
-    let overlayTimer = null;
-    function openTrafficOverlay() {
-      playTempleChime();
+    // Traffic Control 1m Pause Modal
+    let tcModalInt = null;
+    function openTcModal() {
+      playChime();
       let rem = 60;
-      const prompts = [
-        "I am a peaceful soul — a point of light shining in the forehead.",
-        "I rise above body-consciousness to Paramdham with Shiv Baba.",
-        "Pure rays of peace and love flow from my soul to the world.",
-        "Steady, light, and unshakeable — Om Shanti."
-      ];
-      document.getElementById("traffic-overlay").classList.remove("hidden");
-      document.getElementById("overlay-countdown").textContent = "01:00";
-      document.getElementById("overlay-prompt").textContent = prompts[0];
-      if (overlayTimer) clearInterval(overlayTimer);
-      overlayTimer = setInterval(() => {
+      const prompts = window.BK_SANCTUARY_DATA.thoughts;
+      document.getElementById("tc-modal").classList.remove("hidden");
+      document.getElementById("tc-modal-timer").textContent = "01 : 00";
+      document.getElementById("tc-modal-prompt").textContent = `“${prompts[0]}”`;
+      if (tcModalInt) clearInterval(tcModalInt);
+      tcModalInt = setInterval(() => {
         rem -= 1;
-        document.getElementById("overlay-countdown").textContent = formatSec(Math.max(0, rem));
-        document.getElementById("overlay-prompt").textContent = prompts[Math.floor((60 - rem) / 15) % prompts.length];
+        document.getElementById("tc-modal-timer").textContent = `00 : ${String(Math.max(0, rem)).padStart(2, "0")}`;
+        document.getElementById("tc-modal-prompt").textContent = `“${prompts[Math.floor((60 - rem) / 15) % prompts.length]}”`;
         if (rem <= 0) {
-          clearInterval(overlayTimer);
-          overlayTimer = null;
-          playTempleChime();
+          clearInterval(tcModalInt);
+          tcModalInt = null;
+          playChime();
         }
       }, 1000);
     }
 
-    document.getElementById("quick-pause-btn").addEventListener("click", openTrafficOverlay);
-    document.getElementById("trigger-traffic-now-btn").addEventListener("click", openTrafficOverlay);
-    document.getElementById("close-traffic-overlay-btn").addEventListener("click", () => {
-      if (overlayTimer) clearInterval(overlayTimer);
-      document.getElementById("traffic-overlay").classList.add("hidden");
-    });
-    document.getElementById("toggle-chime-btn").addEventListener("click", () => {
-      state.chimeEnabled = !state.chimeEnabled;
-      saveState();
-      renderTrafficTab();
-    });
-
-    document.getElementById("open-profile-modal-btn").addEventListener("click", () => {
-      document.getElementById("profile-modal").classList.remove("hidden");
-    });
-    document.getElementById("close-profile-modal-btn").addEventListener("click", () => {
-      document.getElementById("profile-modal").classList.add("hidden");
-    });
-    document.getElementById("create-atma-btn").addEventListener("click", () => {
-      const rawName = document.getElementById("new-atma-name").value.trim() || "Atma";
-      const hon = document.getElementById("new-atma-honorific").value;
-      const city = document.getElementById("new-atma-city").value.trim() || "Mount Abu";
-      const clean = rawName.replace(/^BK\s+/i, "").replace(/\s+(Bhai|Bahan)$/i, "").trim() || "Atma";
-      const fullName = `BK ${clean} ${hon}`;
-      const newProf = {
-        id: `atma-local-${Date.now()}`,
-        name: fullName,
-        city,
-        ashram: state.ashramInfo.name
-      };
-      state.profiles.push(newProf);
-      state.activeAtmaId = newProf.id;
-      document.getElementById("new-atma-name").value = "";
-      document.getElementById("profile-modal").classList.add("hidden");
+    document.getElementById("header-pause-btn").addEventListener("click", openTcModal);
+    document.getElementById("tc-start-now-btn").addEventListener("click", openTcModal);
+    document.getElementById("tc-modal-done-btn").addEventListener("click", () => {
+      if (tcModalInt) clearInterval(tcModalInt);
+      document.getElementById("tc-modal").classList.add("hidden");
+      state.tcCompletedToday = (state.tcCompletedToday || 0) + 1;
+      getChartForDate(isoDate(0)).checks.traffic = true;
       saveState();
       renderAll();
     });
-    document.getElementById("atma-profile-select").addEventListener("change", (e) => {
+
+    document.getElementById("tc-chime-toggle").addEventListener("click", () => {
+      state.chimeEnabled = !state.chimeEnabled;
+      saveState();
+      renderTraffic();
+    });
+
+    // Rankings filters
+    document.querySelectorAll("#ranking-subtabs .pill-choice").forEach((b) => {
+      b.addEventListener("click", () => {
+        state.rankingMode = b.dataset.rmode;
+        saveState();
+        renderRankings();
+      });
+    });
+    document.getElementById("zone-filter-select").addEventListener("change", (e) => {
+      state.zoneFilter = e.target.value;
+      renderRankings();
+    });
+    document.getElementById("ranking-search-input").addEventListener("input", renderRankings);
+
+    // Atma profile modal
+    document.getElementById("open-atma-modal-btn").addEventListener("click", () => {
+      closeDrawer();
+      document.getElementById("atma-modal").classList.remove("hidden");
+    });
+    document.getElementById("modal-cancel-atma-btn").addEventListener("click", () => {
+      document.getElementById("atma-modal").classList.add("hidden");
+    });
+    document.getElementById("modal-save-atma-btn").addEventListener("click", () => {
+      const raw = document.getElementById("modal-atma-name").value.trim() || "Shreejeet";
+      const hon = document.getElementById("modal-atma-hon").value;
+      const zone = document.getElementById("modal-atma-city").value.trim() || "Mount Abu";
+      const clean = raw.replace(/^BK\s+/i, "").replace(/\s+(Bhai|Bahan)$/i, "").trim() || "Atma";
+      const prof = { id: `atma-${Date.now()}`, name: `BK ${clean} ${hon}`, zone, ashram: state.ashramInfo.name };
+      state.profiles.push(prof);
+      state.activeAtmaId = prof.id;
+      document.getElementById("modal-atma-name").value = "";
+      document.getElementById("atma-modal").classList.add("hidden");
+      saveState();
+      renderAll();
+    });
+    document.getElementById("drawer-profile-select").addEventListener("change", (e) => {
       state.activeAtmaId = e.target.value;
       saveState();
       renderAll();
     });
 
+    // Ashram & Peer Sync
     document.getElementById("save-ashram-btn").addEventListener("click", () => {
-      state.ashramInfo.name = document.getElementById("ashram-name-input").value.trim() || "Shanti Sarovar Seva Mandal";
-      state.ashramInfo.motto = document.getElementById("ashram-motto-input").value.trim();
+      state.ashramInfo.name = document.getElementById("ashram-name-field").value.trim() || "Shantivan Tapasya Dham";
+      state.ashramInfo.motto = document.getElementById("ashram-motto-field").value.trim();
       saveState();
-      document.getElementById("ashram-status").textContent = "Ashram details saved locally.";
-      renderAshramTab();
-      renderRankingsTab();
+      document.getElementById("ashram-feedback").textContent = "Digital Ashram saved locally.";
+      renderAshram();
+      renderRankings();
     });
-
-    document.getElementById("export-sync-btn").addEventListener("click", () => {
-      const active = getActiveProfile();
+    document.getElementById("gen-sync-code-btn").addEventListener("click", () => {
+      const me = getActiveAtma();
       const payload = {
-        name: active.name,
-        city: active.city,
+        name: me.name,
+        zone: me.zone,
         ashram: state.ashramInfo.name,
-        pts: computeUserPoints(),
-        amritvelaDays: 14,
-        murliDays: 16,
-        yogHours: 32.5,
+        pts: computeUserScore(),
+        streak: 7,
+        yogHrs: 14.5,
+        tier: "Purusharthi",
         isUser: false
       };
-      const code = "GYAN-SYNC-" + btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
-      document.getElementById("sync-code-box").value = code;
-      document.getElementById("ashram-status").textContent = "Sync code generated. Share with peer Atmas.";
+      document.getElementById("peer-sync-input").value =
+        "GYAN-SYNC-" + btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
+      document.getElementById("ashram-feedback").textContent = "Sync code generated! Share with fellow Atmas.";
     });
-
-    document.getElementById("import-sync-btn").addEventListener("click", () => {
-      const raw = document.getElementById("sync-code-box").value.trim();
-      if (!raw.startsWith("GYAN-SYNC-")) {
-        document.getElementById("ashram-status").textContent = "Enter a valid GYAN-SYNC-... code.";
+    document.getElementById("merge-peer-btn").addEventListener("click", () => {
+      const val = document.getElementById("peer-sync-input").value.trim();
+      if (!val.startsWith("GYAN-SYNC-")) {
+        document.getElementById("ashram-feedback").textContent = "Paste a valid GYAN-SYNC-... code.";
         return;
       }
       try {
-        const jsonStr = decodeURIComponent(escape(atob(raw.replace("GYAN-SYNC-", ""))));
-        const peer = JSON.parse(jsonStr);
-        if (peer && peer.name) {
-          state.syncedPeers.unshift({
-            id: `peer-${Date.now()}`,
-            name: peer.name,
-            city: peer.city || "India",
-            ashram: state.ashramInfo.name,
-            pts: Number(peer.pts) || 800,
-            amritvelaDays: Number(peer.amritvelaDays) || 10,
-            murliDays: Number(peer.murliDays) || 12,
-            yogHours: Number(peer.yogHours) || 20,
-            isUser: false
-          });
-          saveState();
-          document.getElementById("ashram-status").textContent = `Merged ${peer.name} into Ashram & Rankings.`;
-          renderAshramTab();
-          renderRankingsTab();
-        }
+        const peer = JSON.parse(decodeURIComponent(escape(atob(val.replace("GYAN-SYNC-", "")))));
+        state.syncedPeers.unshift({
+          id: `peer-${Date.now()}`,
+          name: peer.name,
+          zone: peer.zone || "Mount Abu",
+          ashram: state.ashramInfo.name,
+          pts: Number(peer.pts) || 500,
+          streak: Number(peer.streak) || 5,
+          yogHrs: Number(peer.yogHrs) || 10,
+          tier: peer.tier || "Purusharthi",
+          isUser: false
+        });
+        saveState();
+        document.getElementById("ashram-feedback").textContent = `Merged ${peer.name} into your Digital Ashram!`;
+        renderAshram();
+        renderRankings();
       } catch (e) {
-        document.getElementById("ashram-status").textContent = "Could not decode sync code.";
+        document.getElementById("ashram-feedback").textContent = "Could not read sync code.";
       }
     });
-
-    document.getElementById("post-wish-btn").addEventListener("click", () => {
+    document.getElementById("post-ashram-wish-btn").addEventListener("click", () => {
       const inp = document.getElementById("ashram-wish-input");
       const txt = inp.value.trim();
       if (!txt) return;
-      state.ashramInfo.wishes.unshift({ by: getActiveProfile().name, text: txt });
+      state.ashramInfo.wishes.unshift({ by: getActiveAtma().name, text: txt });
       inp.value = "";
       saveState();
-      renderAshramTab();
+      renderAshram();
     });
 
-    document.querySelectorAll("#ranking-mode-pills .chip-btn").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        state.rankingMode = btn.dataset.rmode;
-        saveState();
-        renderRankingsTab();
-      });
-    });
-    document.getElementById("ranking-search-input").addEventListener("input", renderRankingsTab);
-
-    document.getElementById("save-murli-btn").addEventListener("click", () => {
-      const title = document.getElementById("murli-title-input").value.trim();
-      const notes = document.getElementById("murli-notes-input").value.trim();
-      const date = document.getElementById("murli-date-input").value || todayStr(0);
-      if (!title && !notes) return;
-      state.murliNotes.unshift({
-        id: `m-${Date.now()}`,
-        date,
-        title: title || "Murli Point",
-        notes
-      });
-      document.getElementById("murli-title-input").value = "";
-      document.getElementById("murli-notes-input").value = "";
+    // Murli & Vault
+    document.getElementById("murli-next-swaman-btn").addEventListener("click", () => {
+      state.thoughtIdx += 1;
       saveState();
-      renderMurliAndSwaman();
-      renderProfilesAndHome();
+      renderHome();
+      renderMurliAndMore();
     });
-    document.getElementById("murli-search-input").addEventListener("input", renderMurliAndSwaman);
-    document.getElementById("wing-search-input").addEventListener("input", renderResourcesAndGlossary);
-    document.getElementById("glossary-search-input").addEventListener("input", renderResourcesAndGlossary);
+    document.getElementById("save-murli-note-btn").addEventListener("click", () => {
+      const title = document.getElementById("murli-title-field").value.trim();
+      const notes = document.getElementById("murli-notes-field").value.trim();
+      const date = document.getElementById("murli-date-field").value || isoDate(0);
+      if (!title && !notes) return;
+      state.murliNotes.unshift({ id: `m-${Date.now()}`, date, title: title || "Murli Saar", notes });
+      document.getElementById("murli-title-field").value = "";
+      document.getElementById("murli-notes-field").value = "";
+      saveState();
+      renderMurliAndMore();
+    });
+    document.getElementById("murli-search-field").addEventListener("input", renderMurliAndMore);
+    document.getElementById("wings-filter-input").addEventListener("input", renderMurliAndMore);
+    document.getElementById("glossary-filter-input").addEventListener("input", renderMurliAndMore);
 
-    document.getElementById("export-json-btn").addEventListener("click", () => {
+    document.getElementById("vault-export-btn").addEventListener("click", () => {
       const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `gyan-sarovar-backup-${todayStr(0)}.json`;
+      a.download = `gyan-sarovar-backup-${isoDate(0)}.json`;
       a.click();
       URL.revokeObjectURL(url);
-      document.getElementById("vault-status").textContent = "JSON backup downloaded.";
+      document.getElementById("vault-feedback").textContent = "JSON backup downloaded.";
     });
-
-    document.getElementById("import-json-input").addEventListener("change", (e) => {
+    document.getElementById("vault-import-input").addEventListener("change", (e) => {
       const file = e.target.files && e.target.files[0];
       if (!file) return;
-      const reader = new FileReader();
-      reader.onload = () => {
+      const r = new FileReader();
+      r.onload = () => {
         try {
-          const parsed = JSON.parse(reader.result);
-          state = Object.assign(defaultState(), parsed);
+          state = Object.assign(defaultState(), JSON.parse(r.result));
           saveState();
           renderAll();
-          document.getElementById("vault-status").textContent = "Local data restored from JSON.";
+          document.getElementById("vault-feedback").textContent = "Local sanctuary restored from JSON.";
         } catch (err) {
-          document.getElementById("vault-status").textContent = "Invalid JSON backup file.";
+          document.getElementById("vault-feedback").textContent = "Invalid JSON file.";
         }
       };
-      reader.readAsText(file);
+      r.readAsText(file);
     });
-
-    document.getElementById("reset-demo-btn").addEventListener("click", () => {
+    document.getElementById("vault-reset-btn").addEventListener("click", () => {
       localStorage.removeItem(STORAGE_KEY);
       state = defaultState();
       renderAll();
-      document.getElementById("vault-status").textContent = "Local storage reset to clean defaults.";
+      document.getElementById("vault-feedback").textContent = "Local data reset to fresh defaults.";
     });
   }
 
@@ -1060,7 +1106,6 @@
 
   bindEvents();
   renderAll();
-  updateClock();
-  setInterval(updateClock, 1000);
-  requestAnimationFrame(drawYogCanvas);
+  updateClockAndTraffic();
+  setInterval(updateClockAndTraffic, 1000);
 })();
