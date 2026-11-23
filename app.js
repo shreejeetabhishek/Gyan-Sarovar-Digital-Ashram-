@@ -1,5 +1,5 @@
 (function () {
-  const STORAGE_KEY = "gyan_sarovar_sanctuary_v13";
+  const STORAGE_KEY = "gyan_sarovar_sanctuary_v14";
   const DEFAULT_BABA_IMG = "./baba-portrait.png";
 
   function isoDate(offsetDays = 0) {
@@ -239,8 +239,21 @@
   function updateDroneButtons() {
     const hBtn = document.getElementById("home-drone-btn");
     const kBtn = document.getElementById("kamra-drone-btn");
-    if (hBtn) hBtn.textContent = `🎶 Om Shanti Drone: ${state.droneEnabled ? "On" : "Off"}`;
-    if (kBtn) kBtn.textContent = `🎶 Drone: ${state.droneEnabled ? "ON" : "OFF"}`;
+    const lang = state.lang || "en";
+    if (hBtn) {
+      hBtn.textContent = lang === "hi"
+        ? `🎶 ओम शान्ति ड्रोन: ${state.droneEnabled ? "चालू" : "बंद"}`
+        : lang === "or"
+        ? `🎶 ଓଁ ଶାନ୍ତି ଡ୍ରୋନ୍: ${state.droneEnabled ? "ଚାଲୁ" : "ବନ୍ଦ"}`
+        : `🎶 Om Shanti Drone: ${state.droneEnabled ? "On" : "Off"}`;
+    }
+    if (kBtn) {
+      kBtn.textContent = lang === "hi"
+        ? `🎶 ड्रोन: ${state.droneEnabled ? "चालू" : "बंद"}`
+        : lang === "or"
+        ? `🎶 ଡ୍ରୋନ୍: ${state.droneEnabled ? "ଚାଲୁ" : "ବନ୍ଦ"}`
+        : `🎶 Drone: ${state.droneEnabled ? "ON" : "OFF"}`;
+    }
   }
 
   // NAVIGATION
@@ -763,8 +776,8 @@
     const lang = state.lang || "en";
     document.documentElement.lang = lang;
     const dict = (window.BK_FULL_TRANSLATIONS && window.BK_FULL_TRANSLATIONS[lang]) || null;
+    const rev = window.BK_REVERSE_TO_EN || {};
 
-    // Cache original English text on first visit so switching back to EN restores 100% cleanly
     const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null);
     let node;
     while ((node = walker.nextNode())) {
@@ -773,17 +786,28 @@
       const raw = node.nodeValue;
       const trimmed = raw.trim();
       if (!trimmed) continue;
-      if (!node.__origEn) {
-        node.__origEn = raw;
+
+      // Resolve canonical English string even if node was freshly rendered or already in Hindi/Odia
+      let canonicalEn = node.__origEn ? node.__origEn.trim() : null;
+      if (!canonicalEn || (!dict && trimmed !== canonicalEn && !rev[trimmed])) {
+        canonicalEn = rev[trimmed] || trimmed;
+        node.__origEn = raw.replace(trimmed, canonicalEn);
+      } else if (rev[trimmed]) {
+        canonicalEn = rev[trimmed];
+        node.__origEn = raw.replace(trimmed, canonicalEn);
       }
+
+      const leading = raw.match(/^\s*/)[0];
+      const trailing = raw.match(/\s*$/)[0];
+
       if (lang === "en") {
-        if (node.nodeValue !== node.__origEn) node.nodeValue = node.__origEn;
-      } else if (dict) {
-        const origTrim = node.__origEn.trim();
-        if (dict[origTrim]) {
-          const leading = node.__origEn.match(/^\s*/)[0];
-          const trailing = node.__origEn.match(/\s*$/)[0];
-          node.nodeValue = leading + dict[origTrim] + trailing;
+        if (trimmed !== canonicalEn) {
+          node.nodeValue = leading + canonicalEn + trailing;
+        }
+      } else if (dict && dict[canonicalEn]) {
+        const target = dict[canonicalEn];
+        if (trimmed !== target) {
+          node.nodeValue = leading + target + trailing;
         }
       }
     }

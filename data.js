@@ -923,3 +923,71 @@ window.BK_DATA_LOCALE = {
     "“Sweet Atma, leave every worldly concern outside the door... sit on the cotton mat before BapDada and absorb rays of pure peace.”": "“ମିଠା ଆତ୍ମା, ସମସ୍ତ ଲୌକିକ ଚିନ୍ତାକୁ ବାହାରେ ରଖି... ବାପଦାଦାଙ୍କ ସମ୍ମୁଖରେ ଶାନ୍ତିର ଆସନରେ ବସନ୍ତୁ ଏବଂ ଦିବ୍ୟ ଶାନ୍ତିର କିରଣ ଗ୍ରହଣ କରନ୍ତୁ ।”"
   });
 })();
+
+
+(function () {
+  if (!window.BK_FULL_TRANSLATIONS) return;
+
+  const extraHi = {
+    "Brahma Baba's Secret:": "ब्रह्मा बाबा का रहस्य:",
+    "“Say 'Good Morning' to Shiv Baba upon waking, and hand over your full chart with 'Good Night' before sleep.”": "“जागते ही शिव बाबा को 'गुड मॉर्निंग' कहें और सोने से पहले 'गुड नाइट' के साथ अपना पूरा चार्ट सौंप दें।”",
+    "Om Shanti Drone: Off": "ओम शान्ति ड्रोन: बंद",
+    "Om Shanti Drone: On": "ओम शान्ति ड्रोन: चालू",
+    "🎶 Om Shanti Drone: Off": "🎶 ओम शान्ति ड्रोन: बंद",
+    "🎶 Om Shanti Drone: On": "🎶 ओम शान्ति ड्रोन: चालू",
+    "Drone: OFF": "ड्रोन: बंद",
+    "Drone: ON": "ड्रोन: चालू",
+    "🎶 Drone: OFF": "🎶 ड्रोन: बंद",
+    "🎶 Drone: ON": "🎶 ड्रोन: चालू",
+    "Full Murli": "पूरी मुरली",
+    "📖 Full Murli": "📖 पूरी मुरली",
+    "Upload Baba Photo / PNG": "बाबा का चित्र / PNG अपलोड करें",
+    "🖼️ Upload Baba Photo / PNG": "🖼️ बाबा का चित्र / PNG अपलोड करें",
+    "Frame: Contain": "फ़्रेम: फिट (Contain)",
+    "Frame: Cover": "फ़्रेम: पूर्ण (Cover)",
+    "0 offered today": "आज 0 अर्पित",
+    "“Sweet Atma, leave every worldly concern outside the door... sit on the cotton mat before BapDada and absorb rays of pure peace.”": "“मीठी आत्मा, हर लौकिक चिन्ता को बाहर छोड़कर... बापदादा के सम्मुख शान्ति के आसन पर बैठें और दिव्य शान्ति की किरणें समाएं।”",
+    "Karma Yoga & Traffic Control": "कर्म योग और ट्रैफिक कंट्रोल",
+    "Night Pothamel:": "रात्रि पोथामेल:",
+    "TODAY": "आज"
+  };
+
+  const extraOr = {
+    "Brahma Baba's Secret:": "ବ୍ରହ୍ମା ବାବାଙ୍କ ରହସ୍ୟ:",
+    "“Say 'Good Morning' to Shiv Baba upon waking, and hand over your full chart with 'Good Night' before sleep.”": "“ଉଠିବା ମାତ୍ରେ ଶିବ ବାବାଙ୍କୁ 'ଗୁଡ୍ ମର୍ଣ୍ଣିଂ' କୁହନ୍ତୁ ଏବଂ ଶୋଇବା ପୂର୍ବରୁ 'ଗୁଡ୍ ନାଇଟ୍' ସହିତ ନିଜ ସମ୍ପୂର୍ଣ୍ଣ ଚାର୍ଟ ସମର୍ପଣ କରନ୍ତୁ ।”",
+    "Om Shanti Drone: Off": "ଓଁ ଶାନ୍ତି ଡ୍ରୋନ୍: ବନ୍ଦ",
+    "Om Shanti Drone: On": "ଓଁ ଶାନ୍ତି ଡ୍ରୋନ୍: ଚାଲୁ",
+    "🎶 Om Shanti Drone: Off": "🎶 ଓଁ ଶାନ୍ତି ଡ୍ରୋନ୍: ବନ୍ଦ",
+    "🎶 Om Shanti Drone: On": "🎶 ଓଁ ଶାନ୍ତି ଡ୍ରୋନ୍: ଚାଲୁ",
+    "Drone: OFF": "ଡ୍ରୋନ୍: ବନ୍ଦ",
+    "Drone: ON": "ଡ୍ରୋନ୍: ଚାଲୁ",
+    "🎶 Drone: OFF": "🎶 ଡ୍ରୋନ୍: ବନ୍ଦ",
+    "🎶 Drone: ON": "🎶 ଡ୍ରୋନ୍: ଚାଲୁ",
+    "Full Murli": "ସମ୍ପୂର୍ଣ୍ଣ ମୁରଲୀ",
+    "📖 Full Murli": "📖 ସମ୍ପୂର୍ଣ୍ଣ ମୁରଲୀ",
+    "Upload Baba Photo / PNG": "ବାବାଙ୍କ ଫଟୋ / PNG ଅପଲୋଡ୍ କରନ୍ତୁ",
+    "🖼️ Upload Baba Photo / PNG": "🖼️ ବାବାଙ୍କ ଫଟୋ / PNG ଅପଲୋଡ୍ କରନ୍ତୁ",
+    "Frame: Contain": "ଫ୍ରେମ୍: ଫିଟ୍ (Contain)",
+    "Frame: Cover": "ଫ୍ରେମ୍: ପୂର୍ଣ୍ଣ (Cover)",
+    "0 offered today": "ଆଜି ୦ ଅର୍ପିତ",
+    "“Sweet Atma, leave every worldly concern outside the door... sit on the cotton mat before BapDada and absorb rays of pure peace.”": "“ମିଠା ଆତ୍ମା, ସମସ୍ତ ଲୌକିକ ଚିନ୍ତାକୁ ବାହାରେ ରଖି... ବାପଦାଦାଙ୍କ ସମ୍ମୁଖରେ ଶାନ୍ତିର ଆସନରେ ବସନ୍ତୁ ଏବଂ ଦିବ୍ୟ ଶାନ୍ତିର କିରଣ ଗ୍ରହଣ କରନ୍ତୁ ।”",
+    "Karma Yoga & Traffic Control": "କର୍ମ ଯୋଗ ଓ ଟ୍ରାଫିକ୍ କଣ୍ଟ୍ରୋଲ୍",
+    "Night Pothamel:": "ରାତ୍ରି ପୋଥାମେଲ୍:",
+    "TODAY": "ଆଜି"
+  };
+
+  Object.assign(window.BK_FULL_TRANSLATIONS.hi, extraHi);
+  Object.assign(window.BK_FULL_TRANSLATIONS.or, extraOr);
+
+  // Build reverse lookup (any Hindi/Odia translated string -> canonical English key)
+  window.BK_REVERSE_TO_EN = {};
+  ["hi", "or"].forEach((code) => {
+    const map = window.BK_FULL_TRANSLATIONS[code] || {};
+    Object.keys(map).forEach((enKey) => {
+      const trVal = (map[enKey] || "").trim();
+      if (trVal && !window.BK_REVERSE_TO_EN[trVal]) {
+        window.BK_REVERSE_TO_EN[trVal] = enKey;
+      }
+    });
+  });
+})();
