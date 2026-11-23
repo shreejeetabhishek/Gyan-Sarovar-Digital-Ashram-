@@ -1,5 +1,5 @@
 (function () {
-  const STORAGE_KEY = "gyan_sarovar_sanctuary_v15";
+  const STORAGE_KEY = "gyan_sarovar_sanctuary_v17";
   const DEFAULT_BABA_IMG = "./baba-portrait.png";
 
   function isoDate(offsetDays = 0) {
@@ -59,15 +59,15 @@
       zoneFilter: "ALL",
       chimeEnabled: true,
       droneEnabled: false,
+      onboardingCompleted: false,
       profiles: [
-        { id: "atma-1", name: "BK Shreejeet Bhai", zone: "Mount Abu", ashram: "Shantivan Tapasya Dham" },
-        { id: "atma-2", name: "BK Meera Bahan", zone: "Odisha", ashram: "Shantivan Tapasya Dham" }
+        { id: "atma-1", name: "BK Atma Bhai", zone: "Mount Abu", ashram: "Shantivan Tapasya Dham" }
       ],
       ashramInfo: {
         name: "Shantivan Tapasya Dham",
         motto: "One Father, One World Family — Pure Vibrations for Global Peace",
         wishes: [
-          { by: "BK Shreejeet Bhai", text: "May peace, purity, and sweet remembrance fill every home today." }
+          { by: "Madhuban Seva", text: "May peace, purity, and sweet remembrance fill every home today." }
         ]
       },
       syncedPeers: [],
@@ -108,7 +108,12 @@
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (!raw) return defaultState();
-      return Object.assign(defaultState(), JSON.parse(raw));
+      const parsed = JSON.parse(raw);
+      const merged = Object.assign(defaultState(), parsed);
+      if (typeof parsed.onboardingCompleted === "undefined") {
+        merged.onboardingCompleted = true;
+      }
+      return merged;
     } catch (e) {
       return defaultState();
     }
@@ -1081,6 +1086,61 @@
     } catch (e) {}
   }
 
+
+  function formatBKAtmaName(rawName, honorific) {
+    const clean = String(rawName || "")
+      .replace(/^BK\s+/i, "")
+      .replace(/\s+(Bhai|Bahan)$/i, "")
+      .trim() || "Atma";
+    const titled = clean.charAt(0).toUpperCase() + clean.slice(1);
+    const hon = honorific === "Bahan" ? "Bahan" : "Bhai";
+    return `BK ${titled} ${hon}`;
+  }
+
+  function updateWelcomePreview() {
+    const nameInp = document.getElementById("welcome-name-input");
+    const honSel = document.getElementById("welcome-hon-select");
+    const zoneInp = document.getElementById("welcome-zone-input");
+    const badge = document.getElementById("welcome-preview-badge");
+    if (!badge) return;
+    const formatted = formatBKAtmaName(nameInp ? nameInp.value : "", honSel ? honSel.value : "Bhai");
+    const zone = (zoneInp && zoneInp.value.trim()) || "Mount Abu";
+    badge.textContent = `${formatted} · ${zone}`;
+  }
+
+  function openWelcomeOnboarding(isEditMode = false) {
+    closeDrawer();
+    const modal = document.getElementById("welcome-onboarding-modal");
+    if (!modal) return;
+    const active = getActiveAtma();
+    const nameInp = document.getElementById("welcome-name-input");
+    const honSel = document.getElementById("welcome-hon-select");
+    const zoneInp = document.getElementById("welcome-zone-input");
+    const ashramInp = document.getElementById("welcome-ashram-input");
+    const cancelBtn = document.getElementById("welcome-close-edit-btn");
+
+    if (cancelBtn) {
+      cancelBtn.classList.toggle("hidden", !isEditMode);
+    }
+
+    if (active && active.name && active.name !== "BK Atma Bhai") {
+      const stripped = active.name.replace(/^BK\s+/i, "").replace(/\s+(Bhai|Bahan)$/i, "").trim();
+      if (nameInp) nameInp.value = stripped;
+      if (honSel) honSel.value = /Bahan$/i.test(active.name) ? "Bahan" : "Bhai";
+    } else if (nameInp) {
+      nameInp.value = "";
+    }
+    if (zoneInp && active && active.zone) zoneInp.value = active.zone;
+    if (ashramInp && state.ashramInfo && state.ashramInfo.name) ashramInp.value = state.ashramInfo.name;
+
+    document.querySelectorAll("#welcome-lang-pills .pill-choice").forEach((b) => {
+      b.classList.toggle("active", b.dataset.lang === (state.lang || "en"));
+    });
+    updateWelcomePreview();
+    modal.classList.remove("hidden");
+    if (nameInp) setTimeout(() => nameInp.focus(), 60);
+  }
+
   function bindEvents() {
     document.querySelectorAll(".dnav-btn, .bnav-btn, .drawer-link").forEach((btn) => {
       btn.addEventListener("click", () => switchTab(btn.dataset.tab));
@@ -1588,6 +1648,67 @@
       renderAll();
       closeFullMurliModal();
     });
+
+
+    // Welcome / Edit Atma Profile Modal bindings
+    const wName = document.getElementById("welcome-name-input");
+    const wHon = document.getElementById("welcome-hon-select");
+    const wZone = document.getElementById("welcome-zone-input");
+    const wForm = document.getElementById("welcome-onboarding-form");
+    const editDrawerBtn = document.getElementById("edit-active-profile-btn");
+    const editStandingBtn = document.getElementById("standing-edit-profile-btn");
+    const cancelEditBtn = document.getElementById("welcome-close-edit-btn");
+
+    if (wName) wName.addEventListener("input", updateWelcomePreview);
+    if (wHon) wHon.addEventListener("change", updateWelcomePreview);
+    if (wZone) wZone.addEventListener("input", updateWelcomePreview);
+    if (editDrawerBtn) editDrawerBtn.addEventListener("click", () => openWelcomeOnboarding(true));
+    if (editStandingBtn) editStandingBtn.addEventListener("click", () => openWelcomeOnboarding(true));
+    if (cancelEditBtn) cancelEditBtn.addEventListener("click", () => {
+      document.getElementById("welcome-onboarding-modal").classList.add("hidden");
+    });
+
+    document.querySelectorAll("#welcome-lang-pills .pill-choice").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        state.lang = btn.dataset.lang || "en";
+        saveState();
+        document.querySelectorAll("#welcome-lang-pills .pill-choice").forEach((b) => {
+          b.classList.toggle("active", b.dataset.lang === state.lang);
+        });
+        renderAll();
+      });
+    });
+
+    if (wForm) {
+      wForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const raw = (wName && wName.value.trim()) || "Atma";
+        const hon = (wHon && wHon.value) || "Bhai";
+        const zone = (wZone && wZone.value.trim()) || "Mount Abu";
+        const ashram = (document.getElementById("welcome-ashram-input")?.value.trim()) || "Shantivan Tapasya Dham";
+        const formatted = formatBKAtmaName(raw, hon);
+
+        const targetProf = getActiveAtma() || state.profiles[0] || { id: "atma-1" };
+        targetProf.name = formatted;
+        targetProf.zone = zone;
+        targetProf.ashram = ashram;
+        if (!state.profiles.length) state.profiles.push(targetProf);
+        state.activeAtmaId = targetProf.id;
+        state.ashramInfo.name = ashram;
+        if (state.ashramInfo.wishes && state.ashramInfo.wishes.length === 1 && state.ashramInfo.wishes[0].by === "Madhuban Seva") {
+          state.ashramInfo.wishes[0].by = formatted;
+        }
+        state.onboardingCompleted = true;
+        saveState();
+        playChime();
+        document.getElementById("welcome-onboarding-modal").classList.add("hidden");
+        renderAll();
+      });
+    }
+
+  if (!state.onboardingCompleted) {
+    openWelcomeOnboarding(false);
+  }
 
   if ("serviceWorker" in navigator && window.location.protocol !== "file:") {
     window.addEventListener("load", () => {

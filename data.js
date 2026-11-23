@@ -991,3 +991,47 @@ window.BK_DATA_LOCALE = {
     });
   });
 })();
+
+
+(function () {
+  if (!window.BK_FULL_TRANSLATIONS) return;
+
+  Object.assign(window.BK_FULL_TRANSLATIONS.hi, {
+    "OM SHANTI · WELCOME TO GYAN SAROVAR": "ओम शान्ति · ज्ञान सरोवर में स्वागत है",
+    "Enter Your Atma Identity": "अपनी आत्मा पहचान दर्ज करें",
+    "Your Purusharth chart, Tapasya score, Digital Ashram, and Top 100 ranking are saved privately offline under your BK name.": "आपका पुरुषार्थ चार्ट, तपस्या स्कोर, डिजिटल आश्रम और टॉप 100 रैंकिंग आपके BK नाम के अंतर्गत ऑफ़लाइन सुरक्षित रहती है।",
+    "Your Good Name (Auto-formatted as BK [Name] Bhai / Bahan)": "आपका शुभ नाम (स्वतः BK [नाम] भाई / बहन बनेगा)",
+    "BK Title (Bhai / Bahan)": "BK सम्मानसूचक (भाई / बहन)",
+    "Zone / City / Seva Kendra": "ज़ोन / शहर / सेवा केन्द्र",
+    "Digital Ashram Name (Optional)": "डिजिटल आश्रम का नाम (वैकल्पिक)",
+    "PREVIEW ATMA IDENTITY": "आत्मा पहचान पूर्वावलोकन",
+    "🙏 Om Shanti — Enter Sanctuary": "🙏 ओम शान्ति — आश्रम में प्रवेश करें"
+  });
+
+  Object.assign(window.BK_FULL_TRANSLATIONS.or, {
+    "OM SHANTI · WELCOME TO GYAN SAROVAR": "ଓଁ ଶାନ୍ତି · ଜ୍ଞାନ ସରୋବରକୁ ସ୍ୱାଗତ",
+    "Enter Your Atma Identity": "ଆପଣଙ୍କ ଆତ୍ମା ପରିଚୟ ଦିଅନ୍ତୁ",
+    "Your Purusharth chart, Tapasya score, Digital Ashram, and Top 100 ranking are saved privately offline under your BK name.": "ଆପଣଙ୍କ ପୁରୁଷାର୍ଥ ଚାର୍ଟ, ତପସ୍ୟା ସ୍କୋର, ଡିଜିଟାଲ୍ ଆଶ୍ରମ ଏବଂ ଟପ୍ ୧୦୦ ର‍୍ୟାଙ୍କିଙ୍ଗ୍ ଆପଣଙ୍କ BK ନାମରେ ଅଫଲାଇନ୍ ସୁରକ୍ଷିତ ରହେ ।",
+    "Your Good Name (Auto-formatted as BK [Name] Bhai / Bahan)": "ଆପଣଙ୍କ ଶୁଭ ନାମ (ସ୍ୱତଃ BK [ନାମ] ଭାଇ / ଭଉଣୀ ହେବ)",
+    "BK Title (Bhai / Bahan)": "BK ସମ୍ମାନସୂଚକ (ଭାଇ / ଭଉଣୀ)",
+    "Zone / City / Seva Kendra": "ଜୋନ୍ / ସହର / ସେବା କେନ୍ଦ୍ର",
+    "Digital Ashram Name (Optional)": "ଡିଜିଟାଲ୍ ଆଶ୍ରମ ନାମ (ଇଚ୍ଛାଧୀନ)",
+    "PREVIEW ATMA IDENTITY": "ଆତ୍ମା ପରିଚୟ ପୂର୍ବାବଲୋକନ",
+    "🙏 Om Shanti — Enter Sanctuary": "🙏 ଓଁ ଶାନ୍ତି — ଆଶ୍ରମରେ ପ୍ରବେଶ କରନ୍ତୁ"
+  });
+})();
+
+
+(function () {
+  if (!window.BK_FULL_TRANSLATIONS) return;
+  Object.assign(window.BK_FULL_TRANSLATIONS.hi, {
+    "✏️ Edit": "✏️ संपादित करें",
+    "✏️ Edit Profile": "✏️ प्रोफ़ाइल बदलें",
+    "🙏 Om Shanti — Save & Enter": "🙏 ओम शान्ति — सहेजें व प्रवेश करें"
+  });
+  Object.assign(window.BK_FULL_TRANSLATIONS.or, {
+    "✏️ Edit": "✏️ ଏଡିଟ୍",
+    "✏️ Edit Profile": "✏️ ପ୍ରୋଫାଇଲ୍ ବଦଳାନ୍ତୁ",
+    "🙏 Om Shanti — Save & Enter": "🙏 ଓଁ ଶାନ୍ତି — ସେଭ୍ ଓ ପ୍ରବେଶ କରନ୍ତୁ"
+  });
+})();

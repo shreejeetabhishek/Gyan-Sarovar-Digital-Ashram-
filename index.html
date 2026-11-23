@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="./styles.css?v=15" />
+  <link rel="stylesheet" href="./styles.css?v=17" />
 </head>
 <body>
   <!-- TOP STICKY HEADER -->
@@ -74,6 +74,7 @@
       <div class="drawer-atma-sub" id="drawer-atma-meta">Mount Abu · 20 pts · Rank #108</div>
       <div class="row-gap-sm" style="margin-top:8px;">
         <select id="drawer-profile-select" aria-label="Switch Active Atma"></select>
+        <button type="button" class="btn-cream-sm" id="edit-active-profile-btn" title="Edit active Atma profile">✏️ Edit</button>
         <button type="button" class="btn-gold-sm" id="open-atma-modal-btn">+ Atma</button>
       </div>
     </div>
@@ -437,8 +438,11 @@
             <div class="standing-pts-big" id="standing-pts-num">20 pts</div>
           </div>
           <div class="row-between" style="margin-top:4px;font-size:0.86rem;color:#f5dfc0;">
-            <span id="standing-atma-label">BK Shreejeet Bhai (Mount Abu)</span>
-            <span id="standing-ashram-rank">Ashram #21</span>
+            <span id="standing-atma-label">BK Atma Bhai (Mount Abu)</span>
+            <div class="row-gap-sm">
+              <span id="standing-ashram-rank">Ashram #21</span>
+              <button type="button" class="btn-gold-sm" id="standing-edit-profile-btn" style="padding:3px 9px;font-size:0.72rem;">✏️ Edit Profile</button>
+            </div>
           </div>
         </div>
 
@@ -657,7 +661,52 @@
     </button>
   </nav>
 
-    <!-- FULL-SCREEN LIVE DAILY MURLI READER OVERLAY -->
+    <!-- FIRST-TIME ATMA ONBOARDING WELCOME POPUP -->
+  <div class="modal-backdrop hidden" id="welcome-onboarding-modal" role="dialog" aria-modal="true" aria-label="Welcome Atma Registration">
+    <div class="modal-ivory-card" style="max-width:440px;border:2px solid var(--gold);">
+      <div style="text-align:center;margin-bottom:8px;">
+        <div class="shiv-emblem" style="width:44px;height:44px;margin:0 auto 8px;"><span class="shiv-core"></span></div>
+        <div class="eyebrow-ruby">OM SHANTI · WELCOME TO GYAN SAROVAR</div>
+        <h2 class="section-heading" style="font-size:1.65rem;margin-top:2px;">Enter Your Atma Identity</h2>
+        <p class="body-muted" style="margin-top:4px;">Your Purusharth chart, Tapasya score, Digital Ashram, and Top 100 ranking are saved privately offline under your BK name.</p>
+      </div>
+
+      <div class="lighting-pills" id="welcome-lang-pills" style="justify-content:center;margin:8px 0 12px;">
+        <button type="button" class="pill-choice active" data-lang="en">English (EN)</button>
+        <button type="button" class="pill-choice" data-lang="hi">हिन्दी (हिं)</button>
+        <button type="button" class="pill-choice" data-lang="or">ଓଡ଼ିଆ (OR)</button>
+      </div>
+
+      <form id="welcome-onboarding-form" class="form-col" autocomplete="off">
+        <label class="field-lbl">Your Good Name (Auto-formatted as BK [Name] Bhai / Bahan)</label>
+        <input type="text" id="welcome-name-input" placeholder="e.g., Aarav or Meera" required />
+
+        <label class="field-lbl">BK Title (Bhai / Bahan)</label>
+        <select id="welcome-hon-select">
+          <option value="Bhai">BK [Name] Bhai (Brother / Male)</option>
+          <option value="Bahan">BK [Name] Bahan (Sister / Female)</option>
+        </select>
+
+        <label class="field-lbl">Zone / City / Seva Kendra</label>
+        <input type="text" id="welcome-zone-input" placeholder="e.g., Mount Abu, Odisha, New Delhi, Mumbai..." value="Mount Abu" />
+
+        <label class="field-lbl">Digital Ashram Name (Optional)</label>
+        <input type="text" id="welcome-ashram-input" placeholder="e.g., Shantivan Tapasya Dham" value="Shantivan Tapasya Dham" />
+
+        <div class="saved-entry-card" style="text-align:center;background:#faeed5;border-color:#d8b16a;">
+          <span class="eyebrow-muted">PREVIEW ATMA IDENTITY</span>
+          <div id="welcome-preview-badge" style="font-weight:700;font-size:1.05rem;color:var(--ruby-deep);margin-top:2px;">BK Atma Bhai · Mount Abu</div>
+        </div>
+
+        <div class="row-center-wrap" style="margin-top:4px;">
+          <button type="submit" class="btn-ruby-lg" id="welcome-start-btn">🙏 Om Shanti — Save &amp; Enter</button>
+          <button type="button" class="btn-cream-lg hidden" id="welcome-close-edit-btn">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- FULL-SCREEN LIVE DAILY MURLI READER OVERLAY -->
   <div class="murli-fs-overlay hidden" id="murli-fullscreen-modal" role="dialog" aria-modal="true" aria-label="Full Screen Daily Murli">
     <div class="murli-fs-topbar">
       <div class="row-gap-sm">
@@ -799,7 +848,7 @@
     </div>
   </div>
 
-  <script src="./data.js?v=15"></script>
-  <script src="./app.js?v=15"></script>
+  <script src="./data.js?v=17"></script>
+  <script src="./app.js?v=17"></script>
 </body>
 </html>
