@@ -1,5 +1,5 @@
 (function () {
-  const STORAGE_KEY = "gyan_sarovar_sanctuary_v14";
+  const STORAGE_KEY = "gyan_sarovar_sanctuary_v15";
   const DEFAULT_BABA_IMG = "./baba-portrait.png";
 
   function isoDate(offsetDays = 0) {
@@ -814,9 +814,13 @@
   }
 
   window.__setBKLang = function (langCode) {
-    state.lang = langCode || "en";
+    const nextLang = langCode || "en";
+    if (state.lang === nextLang) return;
+    state.lang = nextLang;
+    const fsModal = document.getElementById("murli-fullscreen-modal");
+    state.reopenFullMurli = Boolean(fsModal && !fsModal.classList.contains("hidden"));
     saveState();
-    renderAll();
+    window.location.reload();
   };
 
 
@@ -1505,9 +1509,7 @@
 
     document.querySelectorAll("#lang-switcher .lang-pill").forEach((btn) => {
       btn.addEventListener("click", () => {
-        state.lang = btn.dataset.lang;
-        saveState();
-        renderAll();
+        window.__setBKLang(btn.dataset.lang);
       });
     });
     const prevM = document.getElementById("hm-prev-murli");
