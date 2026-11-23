@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gyan Sarovar — Brahma Kumaris Digital Ashram</title>
+  <meta name="description" content="Free, local-first Brahma Kumaris spiritual companion featuring Baba Ka Kamra, Purusharth Charts, Traffic Control, Digital Ashram Groups, Top 100 Atma & Ashram Rankings, Murli Journal, and A-Z Glossary." />
+  <meta name="theme-color" content="#c87d14" />
+  <link rel="manifest" href="./manifest.json" />
+  <link rel="icon" type="image/png" href="./icon-192.png" />
+  <link rel="apple-touch-icon" href="./icon-192.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand-box">
+        <div class="brand-om">✦</div>
+        <div>
+          <div class="brand-title">Gyan Sarovar</div>
+          <div class="brand-sub">BK Digital Ashram · Local-First</div>
+        </div>
+      </div>
+
+      <div class="atma-card">
+        <div class="atma-badge">ACTIVE ATMA PROFILE</div>
+        <div class="atma-name" id="sidebar-atma-name">BK Aarav Bhai</div>
+        <div class="atma-meta" id="sidebar-atma-meta">Angul · 0 pts</div>
+        <div class="atma-row">
+          <select id="atma-profile-select" aria-label="Switch Active Atma"></select>
+          <button type="button" class="btn-mini" id="open-profile-modal-btn" title="Add or edit Atma">+ Atma</button>
+        </div>
+      </div>
+
+      <nav class="nav-list" aria-label="Ashram Sections">
+        <button type="button" class="nav-btn active" data-tab="home"><span class="nav-ico">❖</span><span>Ashram &amp; Yog</span></button>
+        <button type="button" class="nav-btn" data-tab="kamra"><span class="nav-ico">🪔</span><span>Baba Ka Kamra</span></button>
+        <button type="button" class="nav-btn" data-tab="chart"><span class="nav-ico">📋</span><span>Purusharth Chart</span></button>
+        <button type="button" class="nav-btn" data-tab="traffic"><span class="nav-ico">🔔</span><span>Traffic Control</span></button>
+        <button type="button" class="nav-btn" data-tab="ashram"><span class="nav-ico">🏛️</span><span>Ashram &amp; Groups</span></button>
+        <button type="button" class="nav-btn" data-tab="rankings"><span class="nav-ico">🏆</span><span>Top 100 Rankings</span></button>
+        <button type="button" class="nav-btn" data-tab="course"><span class="nav-ico">📖</span><span>7-Day Rajyoga</span></button>
+        <button type="button" class="nav-btn" data-tab="murli"><span class="nav-ico">✍️</span><span>Murli &amp; Swaman</span></button>
+        <button type="button" class="nav-btn" data-tab="resources"><span class="nav-ico">🌐</span><span>BK Wings &amp; Links</span></button>
+        <button type="button" class="nav-btn" data-tab="glossary"><span class="nav-ico">🔤</span><span>A–Z Glossary &amp; Vault</span></button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="pill-ok">● 100% Free &amp; Offline-First</div>
+        <div class="clock-box">
+          <div id="live-clock">--:--:--</div>
+          <div id="maryada-phase">Amritvela · 04:00–04:45</div>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button type="button" class="icon-btn mobile-only" id="menu-toggle-btn" aria-label="Toggle Menu">☰</button>
+          <div>
+            <h1 id="page-title">Ashram &amp; Rajyoga Sanctuary</h1>
+            <p class="page-subtitle" id="page-subtitle">Soul-consciousness, remembrance, and daily self-checking in warm silence</p>
+          </div>
+        </div>
+        <div class="topbar-actions">
+          <button type="button" class="btn-soft" id="quick-pause-btn">🔔 1-Min Pause</button>
+          <button type="button" class="btn-primary" id="quick-kamra-btn">🪔 Baba Ka Kamra</button>
+        </div>
+      </header>
+
+      <!-- TAB 1: HOME & YOG -->
+      <section class="tab-panel active" id="tab-home">
+        <div class="grid-2">
+          <div class="card yog-studio-card">
+            <div class="card-head">
+              <div>
+                <span class="eyebrow">POINT OF LIGHT · PARAMDHAM</span>
+                <h2>Rajyoga Meditation Studio</h2>
+              </div>
+              <span class="tag-gold" id="yog-status-tag">Ready</span>
+            </div>
+
+            <div class="meditation-stage">
+              <canvas id="yog-canvas" width="420" height="240"></canvas>
+              <div class="meditation-overlay">
+                <div class="swaman-quote" id="active-swaman-text">“I am a peaceful soul — a shining point of light in the Supreme Abode.”</div>
+                <div class="timer-readout" id="yog-timer-display">03:00</div>
+              </div>
+            </div>
+
+            <div class="preset-row">
+              <button type="button" class="chip-btn" data-sec="60">1m</button>
+              <button type="button" class="chip-btn active" data-sec="180">3m</button>
+              <button type="button" class="chip-btn" data-sec="900">15m</button>
+              <button type="button" class="chip-btn" data-sec="2700">45m</button>
+              <button type="button" class="btn-primary" id="yog-start-btn">Start Yog</button>
+              <button type="button" class="btn-soft" id="yog-reset-btn">Reset</button>
+            </div>
+
+            <div class="audio-row">
+              <button type="button" class="btn-ghost" id="toggle-drone-btn">🎶 Om Shanti Drone: Off</button>
+              <button type="button" class="btn-ghost" id="next-swaman-btn">✦ Next Swaman</button>
+            </div>
+          </div>
+
+          <div class="stack">
+            <div class="card">
+              <div class="card-head">
+                <div>
+                  <span class="eyebrow">DAILY PURUSHARTH</span>
+                  <h2>Today's Spiritual Progress</h2>
+                </div>
+                <div class="score-pill" id="home-score-pill">0 pts</div>
+              </div>
+              <div class="progress-summary">
+                <div class="progress-bar-wrap">
+                  <div class="progress-bar-fill" id="home-progress-fill" style="width:0%"></div>
+                </div>
+                <div class="progress-stats">
+                  <span>Completion: <strong id="home-completion-pct">0%</strong></span>
+                  <span>Streak: <strong id="home-streak-days">1 day</strong></span>
+                  <span>Rank: <strong id="home-rank-badge">#—</strong></span>
+                </div>
+              </div>
+              <div class="quick-checks" id="home-quick-checks"></div>
+            </div>
+
+            <div class="card">
+              <div class="card-head">
+                <div>
+                  <span class="eyebrow">SHRIMAT &amp; AMRITVELA</span>
+                  <h2>Daily Ashram Rhythm</h2>
+                </div>
+              </div>
+              <ul class="rhythm-list">
+                <li><strong>04:00 – 04:45 AM:</strong> Amritvela — Sweet, silent morning remembrance with Shiv Baba.</li>
+                <li><strong>06:30 – 07:30 AM:</strong> Daily Murli — Listening, noting key points, and churning (<em>Manan Chintan</em>).</li>
+                <li><strong>Hourly / Bells:</strong> Traffic Control — 1-minute pause to stabilize thoughts in peace.</li>
+                <li><strong>06:30 – 07:30 PM:</strong> Numasham Yog — Evening gathering &amp; <em>Mansa Seva</em> for the world.</li>
+                <li><strong>09:30 – 10:00 PM:</strong> Night <em>Pothamel</em> — Giving the daily chart to Baba &amp; sleeping light.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: BABA KA KAMRA -->
+      <section class="tab-panel" id="tab-kamra">
+        <div class="grid-kamra">
+          <div class="card kamra-room-card">
+            <div class="card-head">
+              <div>
+                <span class="eyebrow">PANDAV BHAWAN INSPIRED · SACRED SPACE</span>
+                <h2>Baba Ka Kamra</h2>
+              </div>
+              <div class="lighting-switcher" id="kamra-lighting-btns">
+                <button type="button" class="chip-btn active" data-light="amritvela">Amritvela Dawn</button>
+                <button type="button" class="chip-btn" data-light="morning">Golden Morning</button>
+                <button type="button" class="chip-btn" data-light="numasham">Numasham</button>
+                <button type="button" class="chip-btn" data-light="night">Night Silence</button>
+              </div>
+            </div>
+
+            <div class="kamra-scene light-amritvela" id="kamra-scene">
+              <div class="kamra-arch">
+                <div class="shiv-baba-jyoti" title="Shiv Baba — Radiant Point of Light"></div>
+                <div class="kamra-portrait-frame" id="kamra-portrait-frame">
+                  <img id="baba-photo-img" src="./baba-portrait.png" alt="Prajapita Brahma Baba Portrait" class="fit-contain" />
+                  <div class="petal-layer" id="kamra-petal-layer"></div>
+                </div>
+                <div class="kamra-nameplate">Prajapita Brahma Baba · Sakar &amp; Avyakt Murti</div>
+              </div>
+
+              <div class="kamra-floor">
+                <div class="diya-wrap" title="Akhand Jyoti">
+                  <div class="diya-flame" id="diya-flame"></div>
+                  <div class="diya-bowl"></div>
+                  <span class="diya-label">Akhand Jyoti</span>
+                </div>
+                <div class="asana-mat">Pure Silence Asana</div>
+              </div>
+            </div>
+
+            <div class="kamra-controls-panel">
+              <div class="control-group">
+                <label class="control-label">Baba PNG / Portrait Image</label>
+                <div class="btn-row">
+                  <label class="btn-primary upload-label">
+                    Upload Baba PNG
+                    <input type="file" id="baba-png-input" accept="image/png,image/jpeg,image/webp" hidden />
+                  </label>
+                  <button type="button" class="btn-soft" id="toggle-fit-btn">Fit: Contain</button>
+                  <button type="button" class="btn-ghost" id="reset-baba-img-btn">Reset Default</button>
+                </div>
+                <div class="hint-text" id="baba-img-status">Bundled with your Baba PNG at ./baba-portrait.png.</div>
+              </div>
+
+              <div class="control-group">
+                <label class="control-label">Offerings &amp; Silence</label>
+                <div class="btn-row">
+                  <button type="button" class="btn-soft" id="offer-rose-btn">🌹 Offer Rose</button>
+                  <button type="button" class="btn-soft" id="offer-lotus-btn">🪷 Offer Lotus</button>
+                  <button type="button" class="btn-primary" id="kamra-silence-btn">🕯️ 5-Min Silence</button>
+                </div>
+                <div class="silence-readout" id="kamra-timer-display">Silence Timer: 05:00</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="stack">
+            <div class="card">
+              <div class="card-head">
+                <div>
+                  <span class="eyebrow">AVATARAN BLESSING</span>
+                  <h2>Today's Vardaan Card</h2>
+                </div>
+                <button type="button" class="btn-soft" id="new-vardaan-btn">New Vardaan</button>
+              </div>
+              <blockquote class="vardaan-box" id="vardaan-text">
+                “By remaining stable in the stage of a detached observer and loving remembrance, every karmic account becomes light and sweet.”
+              </blockquote>
+            </div>
+
+            <div class="card">
+              <div class="card-head">
+                <div>
+                  <span class="eyebrow">HEART-TO-HEART SAMACHAR</span>
+                  <h2>Write Letter to BapDada</h2>
+                </div>
+              </div>
+              <form id="baba-letter-form" class="form-stack">
+                <textarea id="baba-letter-input" rows="3" placeholder="Share your heart, gratitude, or purusharth resolution with Shiv Baba &amp; Brahma Baba..."></textarea>
+                <button type="button" class="btn-primary" id="save-letter-btn">Offer Letter to Baba</button>
+              </form>
+              <div class="letter-list" id="baba-letter-list"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: PURUSHARTH CHART -->
+      <section class="tab-panel" id="tab-chart">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-head">
+              <div>
+                <span class="eyebrow">SELF-CHECKING &amp; DHARNA</span>
+                <h2>Daily Purusharth Chart</h2>
+              </div>
+              <div class="date-nav">
+                <button type="button" class="btn-mini" id="prev-day-btn">◀</button>
+                <input type="date" id="chart-date-input" />
+                <button type="button" class="btn-mini" id="next-day-btn">▶</button>
+              </div>
+            </div>
+
+            <div class="chart-list" id="purusharth-items"></div>
+
+            <div class="virtues-section">
+              <h3>Soul Virtues Checked Today (<em>Dharna</em>)</h3>
+              <div class="virtue-chips" id="virtue-chips"></div>
+            </div>
+          </div>
+
+          <div class="stack">
+            <div class="card">
+              <div class="card-head">
+                <div>
+                  <span class="eyebrow">POTHAMEL · NIGHT REPORTING</span>
+                  <h2>Give Your Daily Chart to Baba</h2>
+                </div>
+              </div>
+              <p class="muted-text">Before sleeping, review your day honestly with Shiv Baba: what virtues blossomed, where did waste thoughts arise, and how do you hand over tomorrow's karma?</p>
+              <div class="form-stack">
+                <label class="field-label">Remembrance Hours / Quality Note</label>
+                <input type="text" id="pothamel-remembrance" placeholder="e.g., 4h 30m sweet remembrance, steady in work" />
+                <label class="field-label">Evening Self-Check &amp; Surrender to Baba</label>
+                <textarea id="pothamel-reflection" rows="4" placeholder="Baba, today I experienced... Whatever minor account was created, I surrender at Your lotus feet and sleep light."></textarea>
+                <button type="button" class="btn-primary" id="save-pothamel-btn">Submit Night Pothamel to Baba</button>
+                <div class="status-msg" id="pothamel-status"></div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-head">
+                <div>
+                  <span class="eyebrow">30-DAY CONSISTENCY</span>
+                  <h2>Monthly Purusharth Grid</h2>
+                </div>
+              </div>
+              <div class="heatmap-grid" id="monthly-heatmap"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: TRAFFIC CONTROL -->
+      <section class="tab-panel" id="tab-traffic">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-head">
+              <div>
+                <span class="eyebrow">THOUGHT TRAFFIC CONTROL</span>
+                <h2>Next Sacred Pause Countdown</h2>
+              </div>
+              <button type="button" class="btn-ghost" id="toggle-chime-btn">🔔 Chime: On</button>
+            </div>
+            <div class="traffic-hero">
+              <div class="countdown-big" id="traffic-countdown">--:--</div>
+              <div class="muted-text" id="next-slot-label">Next scheduled pause</div>
+              <button type="button" class="btn-primary" id="trigger-traffic-now-btn">Begin 1-Minute Traffic Control Now</button>
+            </div>
+            <div class="slot-list" id="traffic-slots-list"></div>
+          </div>
+
+          <div class="card">
+            <div class="card-head">
+              <div>
+                <span class="eyebrow">STAGE OF LIGHT &amp; MIGHT</span>
+                <h2>1-Minute Traffic Control Commentary</h2>
+              </div>
+            </div>
+            <div class="commentary-steps">
+              <div class="step-card"><strong>00–15s · Stop:</strong> Pause all physical and mental speed. Step back from roles and tasks.</div>
+              <div class="step-card"><strong>15–30s · Soul Consciousness:</strong> I am a tiny, radiant star of peace — distinct from the body.</div>
+              <div class="step-card"><strong>30–45s · Connection:</strong> Rise to Paramdham and merge in the ocean of light and love of Shiv Baba.</div>
+              <div class="step-card"><strong>45–60s · Radiate:</strong> Return as a master almighty authority, spreading peace to every vibration.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 5: DIGITAL ASHRAM & GROUPS -->
+      <section class="tab-panel" id="tab-ashram">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-head">
+              <div>
+                <span class="eyebrow">OFFLINE-FIRST SANGATHAN</span>
+                <h2>Digital Ashram &amp; Seva Circle</h2>
+              </div>
+              <span class="tag-gold" id="ashram-code-badge">ASHRAM-MADHUBAN</span>
+            </div>
+
+            <div class="form-stack">
+              <label class="field-label">Digital Ashram Name</label>
+              <input type="text" id="ashram-name-input" placeholder="e.g., Shanti Sarovar Seva Mandal" />
+              <label class="field-label">Ashram Motto / Sankalp</label>
+              <input type="text" id="ashram-motto-input" placeholder="e.g., Every thought pure, every karma a yagya" />
+              <div class="btn-row">
+                <button type="button" class="btn-primary" id="save-ashram-btn">Save Ashram</button>
+                <button type="button" class="btn-soft" id="export-sync-btn">Generate Sync Code</button>
+              </div>
+              <label class="field-label">Offline Atma Sync Code (Paste peer code to merge into Ashram)</label>
+              <div class="btn-row">
+                <input type="text" id="sync-code-box" placeholder="GYAN-SYNC-..." />
+                <button type="button" class="btn-soft" id="import-sync-btn">Merge Atma</button>
+              </div>
+              <div class="status-msg" id="ashram-status"></div>
+            </div>
+          </div>
+
+          <div class="stack">
+            <div class="card">
+              <div class="card-head">
+                <div>
+                  <span class="eyebrow">COLLECTIVE TAPASYA</span>
+                  <h2>Ashram Atmas &amp; Combined Score</h2>
+                </div>
+                <div class="score-pill" id="ashram-total-pts">0 pts</div>
+              </div>
+              <div id="ashram-members-list" class="member-list"></div>
+            </div>
+
+            <div class="card">
+              <div class="card-head">
+                <div>
+                  <span class="eyebrow">SUBHASHIT &amp; WISHES</span>
+                  <h2>Ashram Wall of Pure Sankalps</h2>
+                </div>
+              </div>
+              <div class="btn-row">
+                <input type="text" id="ashram-wish-input" placeholder="Write a pure sankalp for the Ashram..." />
+                <button type="button" class="btn-primary" id="post-wish-btn">Post</button>
+              </div>
+              <div id="ashram-wish-list" class="wish-list"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 6: TOP 100 RANKINGS -->
+      <section class="tab-panel" id="tab-rankings">
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <span class="eyebrow">OFFLINE-FIRST PURUSHARTH LEADERBOARD</span>
+              <h2>Top 100 Atmas, Atma-Wise &amp; Ashram Rankings</h2>
+            </div>
+            <div class="subtab-pills" id="ranking-mode-pills">
+              <button type="button" class="chip-btn active" data-rmode="top100">Website Top 100</button>
+              <button type="button" class="chip-btn" data-rmode="atmawise">Atma-Wise Metrics</button>
+              <button type="button" class="chip-btn" data-rmode="groupwise">Ashram / Group-Wise</button>
+            </div>
+          </div>
+
+          <div class="search-bar-row">
+            <input type="text" id="ranking-search-input" placeholder="Search by BK Name Bhai / Bahan, Ashram, or City..." />
+            <span class="muted-text" id="your-rank-summary">Your Rank: —</span>
+          </div>
+
+          <div class="table-wrap">
+            <table class="rank-table" id="rankings-table">
+              <thead id="rankings-thead"></thead>
+              <tbody id="rankings-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 7: 7-DAY RAJYOGA COURSE -->
+      <section class="tab-panel" id="tab-course">
+        <div class="grid-course">
+          <div class="card">
+            <div class="card-head">
+              <div>
+                <span class="eyebrow">FOUNDATION GYAN</span>
+                <h2>7-Day Rajyoga Lessons</h2>
+              </div>
+            </div>
+            <div class="lesson-nav" id="course-lesson-list"></div>
+          </div>
+          <div class="card" id="course-lesson-detail"></div>
+        </div>
+      </section>
+
+      <!-- TAB 8: MURLI & SWAMAN -->
+      <section class="tab-panel" id="tab-murli">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-head">
+              <div>
+                <span class="eyebrow">MANAN CHINTAN NOTEBOOK</span>
+                <h2>Murli Points, Vardaan &amp; Slogans</h2>
+              </div>
+            </div>
+            <div class="form-stack">
+              <input type="date" id="murli-date-input" />
+              <input type="text" id="murli-title-input" placeholder="Murli Essence / Main Point (e.g., Become a lighthouse &amp; mighthouse)" />
+              <textarea id="murli-notes-input" rows="4" placeholder="Churning notes, sweet mahavakyas, and practical dharna for today..."></textarea>
+              <button type="button" class="btn-primary" id="save-murli-btn">Save Murli Note</button>
+            </div>
+            <div class="search-bar-row">
+              <input type="text" id="murli-search-input" placeholder="Search saved Murli notes..." />
+            </div>
+            <div id="murli-entries-list" class="entries-list"></div>
+          </div>
+
+          <div class="stack">
+            <div class="card">
+              <div class="card-head">
+                <div>
+                  <span class="eyebrow">SELF-RESPECT AFFIRMATIONS</span>
+                  <h2>Swaman Deck</h2>
+                </div>
+                <button type="button" class="btn-soft" id="shuffle-swaman-btn">Draw Swaman</button>
+              </div>
+              <div class="swaman-spotlight" id="swaman-spotlight-card"></div>
+            </div>
+
+            <div class="card">
+              <div class="card-head">
+                <div>
+                  <span class="eyebrow">EIGHT SPIRITUAL POWERS</span>
+                  <h2>Ashta Shakti Explorer</h2>
+                </div>
+              </div>
+              <div class="shakti-grid" id="ashta-shakti-grid"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 9: BK WINGS & PUBLIC LINKS -->
+      <section class="tab-panel" id="tab-resources">
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <span class="eyebrow">PUBLIC SEVA &amp; REFERENCE</span>
+              <h2>Official BK Portals &amp; 20 RERF Service Wings</h2>
+            </div>
+            <input type="text" id="wing-search-input" placeholder="Filter portals or 20 service wings..." />
+          </div>
+          <div class="portals-grid" id="public-portals-grid"></div>
+          <h3 class="section-h3">Rajyoga Education &amp; Research Foundation (RERF) Wings</h3>
+          <div class="wings-grid" id="rerf-wings-grid"></div>
+        </div>
+      </section>
+
+      <!-- TAB 10: A-Z GLOSSARY & DATA VAULT -->
+      <section class="tab-panel" id="tab-glossary">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-head">
+              <div>
+                <span class="eyebrow">A TO Z TERMINOLOGY</span>
+                <h2>Brahma Kumaris Glossary</h2>
+              </div>
+              <input type="text" id="glossary-search-input" placeholder="Search A–Z terms..." />
+            </div>
+            <div id="glossary-list" class="glossary-list"></div>
+          </div>
+
+          <div class="card">
+            <div class="card-head">
+              <div>
+                <span class="eyebrow">LOCAL-FIRST BACKUP</span>
+                <h2>Offline JSON Data Vault</h2>
+              </div>
+            </div>
+            <p class="muted-text">All Atma profiles, Purusharth charts, Night Pothamel entries, Murli notes, letters to Baba, and Digital Ashram data live in your browser's <code>localStorage</code>. Export a JSON backup anytime or restore from a file.</p>
+            <div class="btn-row">
+              <button type="button" class="btn-primary" id="export-json-btn">Download JSON Backup</button>
+              <label class="btn-soft upload-label">
+                Restore JSON Backup
+                <input type="file" id="import-json-input" accept="application/json,.json" hidden />
+              </label>
+              <button type="button" class="btn-ghost" id="reset-demo-btn">Reset Local Data</button>
+            </div>
+            <div class="status-msg" id="vault-status"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- 1-MINUTE TRAFFIC CONTROL OVERLAY -->
+  <div class="overlay-modal hidden" id="traffic-overlay">
+    <div class="overlay-card">
+      <span class="eyebrow">TRAFFIC CONTROL · 60 SECONDS</span>
+      <h2>Stop · Soul · Shiv Baba · Radiate</h2>
+      <div class="overlay-timer" id="overlay-countdown">01:00</div>
+      <p class="overlay-prompt" id="overlay-prompt">I am a peaceful soul — a point of light shining in the forehead.</p>
+      <button type="button" class="btn-primary" id="close-traffic-overlay-btn">Complete Pause</button>
+    </div>
+  </div>
+
+  <!-- ATMA PROFILE MODAL -->
+  <div class="overlay-modal hidden" id="profile-modal">
+    <div class="overlay-card">
+      <span class="eyebrow">LOCAL ATMA PROFILE</span>
+      <h2>Create / Add Atma Profile</h2>
+      <div class="form-stack">
+        <label class="field-label">Name (auto-formatted as BK [Name] Bhai / Bahan)</label>
+        <input type="text" id="new-atma-name" placeholder="e.g., Meera" />
+        <label class="field-label">Honorific</label>
+        <select id="new-atma-honorific">
+          <option value="Bhai">BK [Name] Bhai (Male)</option>
+          <option value="Bahan">BK [Name] Bahan (Female)</option>
+        </select>
+        <label class="field-label">Seva Kendra / City</label>
+        <input type="text" id="new-atma-city" placeholder="e.g., Mount Abu / Angul" />
+        <div class="btn-row">
+          <button type="button" class="btn-primary" id="create-atma-btn">Save &amp; Switch Atma</button>
+          <button type="button" class="btn-ghost" id="close-profile-modal-btn">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="./data.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>

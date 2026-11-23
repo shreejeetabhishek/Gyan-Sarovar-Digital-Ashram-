@@ -1,0 +1,22 @@
+{
+  "name": "Gyan Sarovar — BK Digital Ashram",
+  "short_name": "Gyan Sarovar",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#fbf4e6",
+  "theme_color": "#c87d14",
+  "description": "Free, local-first Brahma Kumaris spiritual companion with Baba Ka Kamra, Purusharth Charts, Digital Ashram Groups, and Top 100 Rankings.",
+  "icons": [
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
